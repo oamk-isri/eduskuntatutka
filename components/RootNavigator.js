@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text } from 'react-native';
+import { Image, Text } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Appbar, Drawer } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -44,9 +44,10 @@ export default RootNavigator = () => {
         component={MainView}
         options={{
           header: ({navigation}) => (
-            <Appbar.Header>
+            <Appbar.Header style={{height: 75}}>
               <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
               <Appbar.Content title="Eduskuntatutka" />
+              <Image source={require('../images/tutkalogo.png')} style={{ width: 70, height: 70, marginEnd: 10 }} />
             </Appbar.Header>
           )
         }}
