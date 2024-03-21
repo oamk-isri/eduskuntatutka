@@ -6,13 +6,10 @@ import Representative from "./representative";
 
 
 export default Representatives = ({navigation}) => {
+
   const [seatings, setSeatings] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredSeatings, setFilteredSeatings] = useState([]);
-
-  useEffect(() => {
-
-  }, []);
 
   const handleSearch = (query) => {
     setSearchQuery(query);

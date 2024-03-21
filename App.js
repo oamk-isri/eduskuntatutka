@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Appearance } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { PaperProvider } from 'react-native-paper';
 import RootNavigator from './components/RootNavigator';
@@ -9,11 +9,16 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
 
+  // Force light mode
+  useEffect(() => {
+    Appearance.setColorScheme('light')
+  }, []);  
+
   return (
     <SafeAreaProvider>
       <PaperProvider>
         <NavigationContainer>
-
+          
           <RootNavigator />
 
         </NavigationContainer>
