@@ -5,7 +5,7 @@ import { Text, List, TextInput } from "react-native-paper";
 import Representative from "./representative";
 
 
-export default Representatives = () => {
+export default Representatives = ({navigation}) => {
   const [seatings, setSeatings] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredSeatings, setFilteredSeatings] = useState([]);
@@ -46,8 +46,12 @@ export default Representatives = () => {
             title={<Text>{seat.firstname} {seat.lastname}</Text>}
             description={<Text>{seat.party}</Text>}
 
-          // fix
-          // onPress={<Representative/>}
+          onPress={() => navigation.navigate(
+            "Representative",
+            {
+              id: seat.hetekaId,
+              image: seat.pictureUrl
+            })}
           >
           </List.Item>
         ))}

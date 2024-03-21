@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Appbar, Drawer } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Representatives from '../views/representatives';
+import RepStack from './RepStack';
 
 const MainDrawer = createDrawerNavigator();
 
@@ -31,7 +32,7 @@ function DrawerView() {
 
 function MainView() {
   return (
-    <Representatives/>
+    <RepStack/>
   )
 }
 
