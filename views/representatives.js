@@ -55,8 +55,8 @@ export default Representatives = () => {
       {/* Image at the bottom covering the whole width */}
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Image
-          source={require('../images/eduskunta11.png')} // Replace with your image path
-          style={{ width: '100%', height: 150 }}
+          source={require('../images/eduskuntatalo.png')} // Replace with your image path
+          style={{ width: '100%', height: 120 }}
           resizeMode="stretch"
         />
       </View>
