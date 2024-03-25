@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { PaperProvider } from 'react-native-paper';
 import RootNavigator from './components/RootNavigator';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import DataOriginPopup from './components/PopUp';
 
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <PaperProvider>
+        <DataOriginPopup />
         <NavigationContainer>
           
           <RootNavigator />
