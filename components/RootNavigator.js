@@ -5,8 +5,9 @@ import { Appbar, Drawer } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import PlenumList from '../views/plenumList'; // Import the PlenumList component
 import Representatives from '../views/representatives'; // Import the Representatives component
-import PlenumStack from './PlenumStack';
-import RepStack from './RepStack';
+// import PlenumStack from './PlenumStack';
+// import RepStack from './RepStack';
+import { PlenumsStack, RepresentativesStack } from './StackNavigators';
 
 const MainDrawer = createDrawerNavigator();
 
@@ -16,20 +17,14 @@ function DrawerView({ navigation }) {
       <Drawer.Section title="Some title">
         <Drawer.Item
           label="Plenum List"
-          onPress={() => navigation.navigate('PlenumList')}
+          onPress={() => navigation.navigate('PlenumsStack')}
         />
         <Drawer.Item
           label="Representatives"
-          onPress={() => navigation.navigate('Representatives')}
+          onPress={() => navigation.navigate('RepresentativesStack')}
         />
       </Drawer.Section>
     </SafeAreaView>
-  );
-}
-
-function MainView() {
-  return (
-    <PlenumStack/>
   );
 }
 
@@ -40,7 +35,7 @@ export default RootNavigator = () => {
     >
       <MainDrawer.Screen
         name="MainView"
-        component={MainView}
+        component={RepresentativesStack}
         options={{
           header: ({ navigation }) => (
             <Appbar.Header style={{ height: 75 }}>
@@ -52,14 +47,14 @@ export default RootNavigator = () => {
         }}
       />
       <MainDrawer.Screen
-        name="PlenumList"
-        component={PlenumList}
-        options={{ drawerLabel: 'Plenum List' }}
+        name="PlenumsStack"
+        component={PlenumsStack}
+        options={{drawerLabel: "Plenum List"}}
       />
       <MainDrawer.Screen
-        name="Representatives"
-        component={Representatives}
-        options={{ drawerLabel: 'Representatives' }}
+        name="RepresentativesStack"
+        component={RepresentativesStack}
+        options={{drawerLabel: "Representatives"}}
       />
       
     </MainDrawer.Navigator>
