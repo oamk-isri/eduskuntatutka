@@ -8,6 +8,7 @@ import Representatives from '../views/representatives'; // Import the Representa
 // import PlenumStack from './PlenumStack';
 // import RepStack from './RepStack';
 import { PlenumsStack, RepresentativesStack } from './StackNavigators';
+import Info from '../views/info';
 
 const MainDrawer = createDrawerNavigator();
 
@@ -22,6 +23,10 @@ function DrawerView({ navigation }) {
         <Drawer.Item
           label="Representatives"
           onPress={() => navigation.navigate('RepresentativesStack')}
+        />
+        <Drawer.Item
+          label="Info"
+          onPress={() => navigation.navigate('Info')}
         />
       </Drawer.Section>
     </SafeAreaView>
@@ -56,7 +61,11 @@ export default RootNavigator = () => {
         component={RepresentativesStack}
         options={{drawerLabel: "Representatives"}}
       />
-      
+      <MainDrawer.Screen
+        name="Info"
+        component={Info}
+        options={{ drawerLabel: 'Info'}}
+      />
     </MainDrawer.Navigator>
   );
 };
