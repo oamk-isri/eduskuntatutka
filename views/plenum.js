@@ -15,6 +15,7 @@ export default PlenumDetails = ({ route }) => {
       <WebView
         source={{ uri: videoUrl }}
         style={{ flex: 1 }}
+        allowsFullscreenVideo={true}
       />
     </View>
   );
