@@ -10,7 +10,7 @@ const PlenumsStack = () => {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name="PlenumList" component={plenumList} />
+      <Stack.Screen name="Täysistunnot" component={plenumList} />
       <Stack.Screen name="PlenumDetails" component={PlenumDetails} />
     </Stack.Navigator>
   )
