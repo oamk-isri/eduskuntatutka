@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Linking } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, Linking, TouchableOpacity, ScrollView } from "react-native";
 import { WebView } from 'react-native-webview';
 
 export default PlenumDetails = ({ route, navigation }) => {
   const { event } = route.params;
   const { title, urlName } = event;
   const [decisions, setDecisions] = useState([]);
+  const [expandedDecision, setExpandedDecision] = useState(null);
+  const webViewRef = useRef(null);
 
   // Split the title at the '|' mark and take the first part
   const navigationTitle = title.split('|')[0].trim();
@@ -31,22 +33,9 @@ export default PlenumDetails = ({ route, navigation }) => {
       .catch(error => console.error('Error fetching decisions:', error));
   };
 
-  // Render the decisions as links
-  const renderDecisions = () => {
-    return (
-      <View>
-        {decisions.map((decision, index) => (
-          <Text key={index} style={{ fontSize: 18, fontWeight: 'bold', textDecorationLine: 'underline', fontWeight: 'bold' }} onPress={() => openDocument(decision)}>Täysistunnon pöytäkirja</Text>
-        ))}
-      </View>
-    );
-  };
-
-  // Function to open the document
-  const openDocument = (decision) => {
-    // Prepend 'https://' if it's not already included
-    const decisionUrl = decision.startsWith('https://') ? decision : `https://${decision}`;
-    Linking.openURL(decisionUrl);
+  // Function to toggle decision visibility
+  const toggleDecision = index => {
+    setExpandedDecision(prevIndex => (prevIndex === index ? null : index));
   };
 
   // Set navigation title dynamically
@@ -56,13 +45,39 @@ export default PlenumDetails = ({ route, navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginVertical: 20 }}>{title}</Text> */}
       <WebView
+        ref={webViewRef}
         source={{ uri: videoUrl }}
         style={{ flex: 1 }}
         allowsFullscreenVideo={true}
       />
-      {renderDecisions()}
+      <ScrollView style={{ flex: 1 }}>
+        {decisions.map((decision, index) => {
+          const decisionUrl = decision.startsWith('https:') ? decision : `https:${decision}`;
+          return (
+            <View key={index}>
+              <TouchableOpacity onPress={() => toggleDecision(index)}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', textDecorationLine: 'underline', marginTop: 10 }}>
+                  Täysistunnon pöytäkirja {index + 1}
+                </Text>
+              </TouchableOpacity>
+              {expandedDecision === index && (
+                <WebView
+                  nestedScrollEnabled
+                  source={{ uri: decisionUrl }}
+                  style={{ height: 300, flex: 0 }} // Adjust height as needed
+                  onContentSizeChange={(event) => {
+                    const { height } = event.nativeEvent.contentSize;
+                    webViewRef.current.setNativeProps({
+                      style: { height }
+                    });
+                  }}
+                />
+              )}
+            </View>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 };
