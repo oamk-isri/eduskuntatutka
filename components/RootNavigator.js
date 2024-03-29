@@ -5,7 +5,7 @@ import { Appbar, Drawer } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PlenumsStack, RepresentativesStack } from "./StackNavigators";
 import Info from "../views/info";
-import Landing from "../views/Landing";
+import RssNewsFeed from "../views/RssNewsFeed";
 
 const MainDrawer = createDrawerNavigator();
 
@@ -47,7 +47,7 @@ export default RootNavigator = () => {
     >
       <MainDrawer.Screen
         name="MainView"
-        component={Landing}
+        component={RssNewsFeed}
         options={{
           header: ({ navigation }) => <MainHeader navigation={navigation} />,
         }}
