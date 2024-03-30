@@ -55,7 +55,7 @@ export default function RssNewsFeed() {
                 <View>
                   <View style={styles.newsContainer}>
                     <DateWithFinnishWeekday dateString={item.pubDate} />
-                    {item.title.length > 60 ? (
+                    {item.title.length > 20 ? (
                       <Text style={styles.title}>{item.title}</Text>
                     ) : (
                       <Text style={styles.title}>{item.description}</Text>
