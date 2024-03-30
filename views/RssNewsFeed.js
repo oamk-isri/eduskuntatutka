@@ -55,7 +55,11 @@ export default function RssNewsFeed() {
                 <View>
                   <View style={styles.newsContainer}>
                     <DateWithFinnishWeekday dateString={item.pubDate} />
-                    <Text style={styles.title}>{item.description}</Text>
+                    {item.title.length > 60 ? (
+                      <Text style={styles.title}>{item.title}</Text>
+                    ) : (
+                      <Text style={styles.title}>{item.description}</Text>
+                    )}
                   </View>
                   <Divider my={2} bg="#e0e0e0" />
                 </View>
@@ -79,9 +83,9 @@ const styles = StyleSheet.create({
   newsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center", // Ensures vertical alignment
+    alignItems: "center",
   },
   title: {
-    flex: 0.7, // Takes up 70% of the space
+    flex: 0.7,
   },
 });
