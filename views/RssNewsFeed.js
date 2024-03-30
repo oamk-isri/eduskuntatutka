@@ -4,6 +4,7 @@ import { ActivityIndicator, Divider } from "react-native-paper";
 import RssTags from "../components/RssTags";
 import { RssFeeds } from "../constants/RssFeeds";
 import { NewsCategoryContext } from "../contexts/Contexts";
+import Heading from "../components/Heading";
 import { GetRssFeed } from "../components/GetRssFeed";
 
 export default function RssNewsFeed() {
@@ -22,6 +23,9 @@ export default function RssNewsFeed() {
       value={{ selectedCategory, setSelectedCategory }}
     >
       <View>
+        <View>
+          <Heading size="h2">Tiedotteet</Heading>
+        </View>
         <View style={styles.tagContainer}>
           <ScrollView horizontal>
             <RssTags categoryIndex={0} categoryName="Valtiopäiväasiat" />
