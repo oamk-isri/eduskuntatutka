@@ -4,8 +4,9 @@ import { ActivityIndicator, Divider } from "react-native-paper";
 import RssTags from "../components/RssTags";
 import { RssFeeds } from "../constants/RssFeeds";
 import { NewsCategoryContext } from "../contexts/Contexts";
-import Heading from "../components/Heading";
 import { GetRssFeed } from "../components/GetRssFeed";
+import Heading from "../components/Heading";
+import DateWithFinnishWeekday from "../components/DateParser";
 
 export default function RssNewsFeed() {
   const { getData, data, isLoading, error } = GetRssFeed();
@@ -53,9 +54,8 @@ export default function RssNewsFeed() {
               renderItem={({ item }) => (
                 <View>
                   <View style={styles.newsContainer}>
-                    <Text style={styles.title}>{item.title}</Text>
-                    <Text style={styles.date}>{item.pubDate}</Text>
-                    <Text style={styles.date}>{item.description}</Text>
+                    <DateWithFinnishWeekday dateString={item.pubDate} />
+                    <Text style={styles.title}>{item.description}</Text>
                   </View>
                   <Divider my={2} bg="#e0e0e0" />
                 </View>
@@ -74,5 +74,14 @@ const styles = StyleSheet.create({
     padding: 15,
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+
+  newsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center", // Ensures vertical alignment
+  },
+  title: {
+    flex: 0.7, // Takes up 70% of the space
   },
 });
