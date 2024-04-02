@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text, Linking, TouchableOpacity, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Linking, ScrollView, StyleSheet } from "react-native";
 import { WebView } from 'react-native-webview';
 
 export default PlenumDetails = ({ route, navigation }) => {
   const { event } = route.params;
   const { title, urlName } = event;
   const [decisions, setDecisions] = useState([]);
-  const [expandedDecision, setExpandedDecision] = useState(null);
-  const webViewRef = useRef(null);
+  const [topics, setTopics] = useState([]);
+  const [speakersInfo, setSpeakersInfo] = useState([]);
 
   // Split the title at the '|' mark and take the first part
   const navigationTitle = title.split('|')[0].trim();
@@ -16,10 +16,10 @@ export default PlenumDetails = ({ route, navigation }) => {
   const videoUrl = `https://eduskunta.videosync.fi/${urlName}?embed-view=1`;
 
   useEffect(() => {
-    fetchDecisions();
+    fetchData();
   }, []);
 
-  const fetchDecisions = () => {
+  const fetchData = () => {
     fetch(`https://eduskunta.videosync.fi/${urlName}/data`)
       .then(response => response.json())
       .then(data => {
@@ -29,13 +29,37 @@ export default PlenumDetails = ({ route, navigation }) => {
           const decisionsArray = decisionsFi.split(';').map(decision => decision.trim());
           setDecisions(decisionsArray);
         }
+        if (data && data.eventMeta && data.eventMeta.topics && data.eventMeta.topics.length > 0) {
+          setTopics(data.eventMeta.topics);
+        }
+        if (data && data.eventMeta && data.eventMeta.speakers) {
+          const speakers = data.eventMeta.speakers;
+          const speakersInfoArray = speakers.map(speaker => ({
+            topicId: speaker.topicId,
+            firstname: speaker.firstName,
+            lastname: speaker.lastName,
+            party: speaker.party.fi,
+            time: formatTime(speaker.time)
+          }));
+          setSpeakersInfo(speakersInfoArray);
+        }
       })
-      .catch(error => console.error('Error fetching decisions:', error));
+      .catch(error => console.error('Error fetching data:', error));
   };
 
-  // Function to toggle decision visibility
-  const toggleDecision = index => {
-    setExpandedDecision(prevIndex => (prevIndex === index ? null : index));
+  // Function to format time in seconds to HH:MM:SS
+  const formatTime = (timeInSeconds) => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = timeInSeconds % 60;
+    return `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
+
+  // Function to open the document
+  const openDocument = (decision) => {
+    // Prepend 'https://' if it's not already included
+    const decisionUrl = decision.startsWith('https://') ? decision : `https://${decision}`;
+    Linking.openURL(decisionUrl);
   };
 
   // Set navigation title dynamically
@@ -43,41 +67,71 @@ export default PlenumDetails = ({ route, navigation }) => {
     navigation.setOptions({ title: navigationTitle });
   }, [navigationTitle]);
 
-  return (
-    <View style={{ flex: 1 }}>
-      <WebView
-        ref={webViewRef}
-        source={{ uri: videoUrl }}
-        style={{ flex: 1 }}
-        allowsFullscreenVideo={true}
-      />
-      <ScrollView style={{ flex: 1 }}>
-        {decisions.map((decision, index) => {
-          const decisionUrl = decision.startsWith('https:') ? decision : `https:${decision}`;
+  const renderDecisions = () => {
+    return (
+      <View>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20 }}>Käsiteltävät asiat:</Text>
+        {decisions.map((decision, index) => (
+          <Text key={index} style={{ fontSize: 18, fontWeight: 'bold', textDecorationLine: 'underline' }} onPress={() => openDocument(decision)}>Linkki täysistunnon pöytäkirjaan</Text>
+        ))}
+      </View>
+    );
+  };
+
+  const renderTopics = () => {
+    return (
+      <View style={{ marginTop: 20 }}>
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Keskusteluaiheet:</Text>
+        {topics.map((topic, index) => {
           return (
-            <View key={index}>
-              <TouchableOpacity onPress={() => toggleDecision(index)}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', textDecorationLine: 'underline', marginTop: 10 }}>
-                  Täysistunnon pöytäkirja {index + 1}
-                </Text>
-              </TouchableOpacity>
-              {expandedDecision === index && (
-                <WebView
-                  nestedScrollEnabled
-                  source={{ uri: decisionUrl }}
-                  style={{ height: 300, flex: 0 }} // Adjust height as needed
-                  onContentSizeChange={(event) => {
-                    const { height } = event.nativeEvent.contentSize;
-                    webViewRef.current.setNativeProps({
-                      style: { height }
-                    });
-                  }}
-                />
-              )}
+            <View key={index} style={{ marginTop: 10 }}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{topic.id}. {topic.title.fi}</Text>
+              <Text style={{ marginLeft: 10 }}>{topic.content.kasittelyvaiheNimi.fi}</Text>
             </View>
           );
         })}
-      </ScrollView>
-    </View>
+      </View>
+    );
+  };
+
+  const renderSpeakersInfo = () => {
+    return (
+      <View style={{ marginTop: 20 }}>
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Puheenvuorot ({speakersInfo.length})</Text>
+        {speakersInfo.map((speaker, index) => (
+          <View key={index} style={{ marginTop: 10 }}>
+            <Text style={{ fontWeight: 'bold' }}>Puheaika: {speaker.time}</Text>
+            <View style={{ flexDirection: 'row', marginTop: 5 }}>
+              <Text style={{ fontWeight: 'bold' }}>Aihe: {speaker.topicId}</Text>
+              <Text style={{ fontWeight: 'bold', marginLeft: 10 }}>{speaker.firstname} {speaker.lastname} / {speaker.party}</Text>
+            </View>
+          </View>
+        ))}
+      </View>
+    );
+  };
+
+  return (
+    <ScrollView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <WebView
+          source={{ uri: videoUrl }}
+          style={styles.webView}
+          allowsFullscreenVideo={true}
+        />
+        <View style={{ paddingHorizontal: 10 }}>
+          {renderDecisions()}
+          {renderTopics()}
+          {renderSpeakersInfo()}
+        </View>
+      </View>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  webView: {
+    height: 200, // Adjust the height as needed
+    width: '100%',
+  },
+});
