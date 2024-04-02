@@ -1,11 +1,12 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Appbar, Drawer } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PlenumsStack, RepresentativesStack } from "./StackNavigators";
 import Info from "../views/info";
 import RssNewsFeed from "../views/RssNewsFeed";
+import LogoDark from "../assets/logo/LogoDark.svg";
 
 const MainDrawer = createDrawerNavigator();
 
@@ -32,10 +33,7 @@ const MainHeader = ({ navigation }) => {
     <Appbar.Header style={{ height: 75 }}>
       <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
       <Appbar.Content title="Eduskuntatutka" />
-      <Image
-        source={require("../images/tutkalogo.png")}
-        style={{ width: 70, height: 70, marginEnd: 10 }}
-      />
+      <LogoDark width={60} height={60} />
     </Appbar.Header>
   );
 };
