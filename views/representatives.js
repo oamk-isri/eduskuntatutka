@@ -50,7 +50,7 @@ export default Representatives = ({ navigation }) => {
               description={<Text>{seat.party}</Text>}
 
               onPress={() => navigation.navigate(
-                "Representative",
+                "Kansanedustaja",
                 {
                   id: seat.hetekaId,
                   image: seat.pictureUrl

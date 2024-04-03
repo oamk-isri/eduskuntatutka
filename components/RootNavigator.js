@@ -13,16 +13,18 @@ const MainDrawer = createDrawerNavigator();
 const DrawerView = ({ navigation }) => {
   return (
     <SafeAreaView>
-      <Drawer.Section title="Some title">
+      <Drawer.Section title="Eduskuntatutka">
         <Drawer.Item
-          label="Plenum List"
+          label="Täysistunnot"
           onPress={() => navigation.navigate("PlenumsStack")}
         />
         <Drawer.Item
-          label="Representatives"
+          label="Kansanedustajat"
           onPress={() => navigation.navigate("RepresentativesStack")}
         />
-        <Drawer.Item label="Info" onPress={() => navigation.navigate("Info")} />
+        <Drawer.Item 
+          label="Info" 
+          onPress={() => navigation.navigate("Info")} />
       </Drawer.Section>
     </SafeAreaView>
   );
