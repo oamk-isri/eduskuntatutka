@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Linking, ScrollView, StyleSheet } from "react-native";
 import { WebView } from 'react-native-webview';
 
@@ -8,6 +8,7 @@ export default PlenumDetails = ({ route, navigation }) => {
   const [decisions, setDecisions] = useState([]);
   const [topics, setTopics] = useState([]);
   const [speakersInfo, setSpeakersInfo] = useState([]);
+  const webViewRef = useRef(null); // <-- Define a ref for the WebView
 
   // Split the title at the '|' mark and take the first part
   const navigationTitle = title.split('|')[0].trim();
@@ -70,10 +71,11 @@ export default PlenumDetails = ({ route, navigation }) => {
   const renderDecisions = () => {
     return (
       <View>
-        <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20 }}>Käsiteltävät asiat:</Text>
+
         {decisions.map((decision, index) => (
           <Text key={index} style={{ fontSize: 18, fontWeight: 'bold', textDecorationLine: 'underline' }} onPress={() => openDocument(decision)}>Linkki täysistunnon pöytäkirjaan</Text>
         ))}
+        <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20 }}>Käsiteltävät asiat:</Text>
       </View>
     );
   };
@@ -111,13 +113,27 @@ export default PlenumDetails = ({ route, navigation }) => {
     );
   };
 
+  const handleMessage = () => {
+    // Send a message to the web page to modify the styles
+    webViewRef.current.injectJavaScript(`
+      // Find and modify the CSS rule for footer, section, and elements with class .hidden-state
+      var styleElement = document.createElement('style');
+      styleElement.innerHTML = '.hidden-state { padding: 0; } body { font-size: 12px; }'; // Override padding to 0
+      document.head.appendChild(styleElement);
+    `);
+  };
+
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
         <WebView
+          ref={webViewRef}
           source={{ uri: videoUrl }}
           style={styles.webView}
           allowsFullscreenVideo={true}
+          onLoad={handleMessage}
+          javaScriptEnabled={true}
+          onMessage={(event) => console.log(event.nativeEvent.data)}
         />
         <View style={{ paddingHorizontal: 10 }}>
           {renderDecisions()}
@@ -131,7 +147,7 @@ export default PlenumDetails = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   webView: {
-    height: 200, // Adjust the height as needed
+    height: 220, // Adjust the height as needed
     width: '100%',
   },
 });
