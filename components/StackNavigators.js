@@ -19,8 +19,8 @@ const PlenumsStack = () => {
 const RepresentativesStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Representatives" component={representatives} />
-      <Stack.Screen name="Representative" component={representative} />
+      <Stack.Screen name="Kansanedustajat" component={representatives} />
+      <Stack.Screen name="Kansanedustaja" component={representative} />
     </Stack.Navigator>
   )
 }
