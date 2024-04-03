@@ -3,7 +3,7 @@ import { Image, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Appbar, Drawer } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { PlenumsStack, RepresentativesStack } from "./StackNavigators";
+import { PlenumsStack, RepresentativesStack, ValiokuntaStack, SeminaariStack, TiedotusStack, EsittelyStack, EduRyhmatStack } from "./StackNavigators";
 import Info from "../views/info";
 import RssNewsFeed from "../views/RssNewsFeed";
 import LogoDark from "../assets/logo/LogoDark.svg";
@@ -21,13 +21,38 @@ const DrawerView = ({ navigation }) => {
           onPress={() => navigation.navigate("PlenumsStack")}
         />
         <Drawer.Item
+          icon={() => <Icon name="radio" size={20} />}
+          label="Valiokuntien kuulemiset ja kokoukset"
+          onPress={() => navigation.navigate("ValiokuntaStack")}
+        />
+        <Drawer.Item
+          icon={() => <Icon name="radio" size={20} />}
+          label="Seminaarit"
+          onPress={() => navigation.navigate("SeminaariStack")}
+        />
+        <Drawer.Item
+          icon={() => <Icon name="radio" size={20} />}
+          label="Tiedotustilaisuudet"
+          onPress={() => navigation.navigate("TiedotusStack")}
+        />
+        <Drawer.Item
+          icon={() => <Icon name="radio" size={20} />}
+          label="Esittelyvideot"
+          onPress={() => navigation.navigate("EsittelyStack")}
+        />
+        <Drawer.Item
+          icon={() => <Icon name="radio" size={20} />}
+          label="Eduskuntaryhmät"
+          onPress={() => navigation.navigate("EduRyhmatStack")}
+        />
+        <Drawer.Item
           icon={() => <Icon name="people" size={20} />}
           label="Kansanedustajat"
           onPress={() => navigation.navigate("RepresentativesStack")}
         />
         <Drawer.Item
           icon={() => <Icon name="information" size={20} />}
-          label="Info" 
+          label="Info"
           onPress={() => navigation.navigate("Info")} />
       </Drawer.Section>
     </SafeAreaView>
@@ -59,6 +84,41 @@ export default RootNavigator = () => {
       <MainDrawer.Screen
         name="PlenumsStack"
         component={PlenumsStack}
+        options={{
+          header: ({ navigation }) => <MainHeader navigation={navigation} />,
+        }}
+      />
+      <MainDrawer.Screen
+        name="ValiokuntaStack"
+        component={ValiokuntaStack}
+        options={{
+          header: ({ navigation }) => <MainHeader navigation={navigation} />,
+        }}
+      />
+      <MainDrawer.Screen
+        name="SeminaariStack"
+        component={SeminaariStack}
+        options={{
+          header: ({ navigation }) => <MainHeader navigation={navigation} />,
+        }}
+      />
+      <MainDrawer.Screen
+        name="TiedotusStack"
+        component={TiedotusStack}
+        options={{
+          header: ({ navigation }) => <MainHeader navigation={navigation} />,
+        }}
+      />
+            <MainDrawer.Screen
+        name="EsittelyStack"
+        component={EsittelyStack}
+        options={{
+          header: ({ navigation }) => <MainHeader navigation={navigation} />,
+        }}
+      />
+                 <MainDrawer.Screen
+        name="EduRyhmatStack"
+        component={EduRyhmatStack}
         options={{
           header: ({ navigation }) => <MainHeader navigation={navigation} />,
         }}
