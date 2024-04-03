@@ -7,6 +7,7 @@ import { PlenumsStack, RepresentativesStack } from "./StackNavigators";
 import Info from "../views/info";
 import RssNewsFeed from "../views/RssNewsFeed";
 import LogoDark from "../assets/logo/LogoDark.svg";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const MainDrawer = createDrawerNavigator();
 
@@ -15,14 +16,17 @@ const DrawerView = ({ navigation }) => {
     <SafeAreaView>
       <Drawer.Section title="Eduskuntatutka">
         <Drawer.Item
+          icon={() => <Icon name="radio" size={20} />}
           label="Täysistunnot"
           onPress={() => navigation.navigate("PlenumsStack")}
         />
         <Drawer.Item
+          icon={() => <Icon name="people" size={20} />}
           label="Kansanedustajat"
           onPress={() => navigation.navigate("RepresentativesStack")}
         />
-        <Drawer.Item 
+        <Drawer.Item
+          icon={() => <Icon name="information" size={20} />}
           label="Info" 
           onPress={() => navigation.navigate("Info")} />
       </Drawer.Section>
