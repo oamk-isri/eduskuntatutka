@@ -15,7 +15,14 @@ export default function RssTags({ categoryIndex, categoryName }) {
         ]}
         onPress={() => setSelectedCategory(categoryIndex)}
       >
-        <Text style={styles.tagText}>{categoryName}</Text>
+        <Text
+          style={[
+            styles.tagText,
+            selectedCategory === categoryIndex && styles.activeTagText,
+          ]}
+        >
+          {categoryName}
+        </Text>
       </Pressable>
     </View>
   );
@@ -26,10 +33,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#f2f2f2",
     padding: 10,
     marginHorizontal: 5,
-    borderRadius: 5,
+    // borderRadius: 5,
   },
   activeTag: {
-    backgroundColor: "#e0e0e0",
+    // backgroundColor: "#e0e0e0",
+    borderBottomWidth: 3,
+    borderColor: "#114d9d",
+  },
+  activeTagText: {
+    color: "#114d9d",
+    fontSize: 14,
+    fontWeight: "500",
   },
   tagText: {
     fontSize: 14,
