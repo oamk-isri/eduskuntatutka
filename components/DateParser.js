@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { format } from "date-fns";
-import fi from "date-fns/locale/fi"; // Finnish locale
+import fi from "date-fns/locale/fi";
 import { StyleSheet } from "react-native";
 
 const DateWithFinnishWeekday = ({ dateString }) => {
@@ -26,13 +26,19 @@ const parseDateStringToNumber = (dateString) => {
     return null;
   }
 
-  const formattedDate = format(date, "dd.M", { locale: fi });
+  const formattedDate = format(date, "dd", { locale: fi });
+
+  const dateToDisplay = formattedDate.startsWith("0")
+    ? formattedDate.slice(1)
+    : formattedDate;
+
+  const finalFormattedDate = format(date, `${dateToDisplay}.M`, { locale: fi });
 
   const parsefinnishWeekday = format(date, "EEEE", { locale: fi });
   const finnishWeekday = parsefinnishWeekday.slice(0, -2);
 
   return {
-    date: formattedDate,
+    date: finalFormattedDate,
     weekday: finnishWeekday,
   };
 };
@@ -44,10 +50,11 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 20,
+    color: "#114d9d",
     fontWeight: "bold",
   },
   weekday: {
-    fontSize: 16,
+    fontSize: 12,
     color: "#888",
   },
 });
