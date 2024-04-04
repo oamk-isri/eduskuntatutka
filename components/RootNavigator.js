@@ -12,7 +12,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 const MainDrawer = createDrawerNavigator();
 
 const DrawerView = ({ navigation }) => {
-  const [showVerkkolahetykset, setShowVerkkolahetykset] = useState(true);
+  const [showVerkkolahetykset, setShowVerkkolahetykset] = useState(false);
 
   const toggleVerkkolahetykset = () => {
     setShowVerkkolahetykset(!showVerkkolahetykset);
@@ -29,10 +29,13 @@ const DrawerView = ({ navigation }) => {
         <Drawer.Item
           icon={() => <Icon name="information" size={20} />}
           label="Info"
-          onPress={() => navigation.navigate("Info")} />
-      </Drawer.Section>
-
-      <Drawer.Section title="Verkkolähetykset" >
+          onPress={() => navigation.navigate("Info")}
+        />
+        <Drawer.Item
+          icon={() => <Icon name={showVerkkolahetykset ? "chevron-down" : "chevron-up"} size={20} />}
+          label={'Verkkolähetykset'}
+          onPress={toggleVerkkolahetykset}
+        />
         {showVerkkolahetykset && (
           <>
             <Drawer.Item
@@ -72,12 +75,9 @@ const DrawerView = ({ navigation }) => {
             />
           </>
         )}
-        <Drawer.Item
-          icon={() => <Icon name={showVerkkolahetykset ? "chevron-down" : "chevron-up"} size={20} />}
-          label={showVerkkolahetykset ? "Piilota verkkolähetykset" : "Näytä verkkolähetykset"}
-          onPress={toggleVerkkolahetykset}
-        />
       </Drawer.Section>
+
+      
     </SafeAreaView>
   );
 };
