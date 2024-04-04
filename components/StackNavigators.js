@@ -13,6 +13,8 @@ import esittely from '../views/esittely';
 import esittelyList from '../views/esittelyList';
 import eduryhmat from '../views/eduryhmat';
 import eduryhmatList from '../views/eduryhmatList';
+import live from '../views/live';
+import liveList from '../views/liveList';
 
 const Stack = createStackNavigator();
 
@@ -80,4 +82,13 @@ const EduRyhmatStack = () => {
   )
 }
 
-export {PlenumsStack, RepresentativesStack, ValiokuntaStack, SeminaariStack, TiedotusStack, EsittelyStack, EduRyhmatStack};
+const LiveStack = () => {
+  return(
+    <Stack.Navigator>
+      <Stack.Screen name="Suorat lähetykset" component={liveList}/>
+      <Stack.Screen name="Suora lähetys" component={live}/>
+    </Stack.Navigator>
+  )
+}
+
+export {PlenumsStack, RepresentativesStack, ValiokuntaStack, SeminaariStack, TiedotusStack, EsittelyStack, EduRyhmatStack, LiveStack};
