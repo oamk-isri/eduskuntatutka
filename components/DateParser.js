@@ -46,7 +46,8 @@ const parseDateStringToNumber = (dateString) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    flex: 0.3,
+    //   flex: 0.3,
+    paddingRight: 10,
   },
   date: {
     fontSize: 20,
