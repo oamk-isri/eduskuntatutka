@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Appbar, Drawer } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { PlenumsStack, RepresentativesStack, ValiokuntaStack, SeminaariStack, TiedotusStack, EsittelyStack, EduRyhmatStack } from "./StackNavigators";
+import { PlenumsStack, RepresentativesStack, ValiokuntaStack, SeminaariStack, TiedotusStack, EsittelyStack, EduRyhmatStack, LiveStack } from "./StackNavigators";
 import Info from "../views/info";
 import RssNewsFeed from "../views/RssNewsFeed";
 import LogoDark from "../assets/logo/LogoDark.svg";
@@ -12,39 +12,15 @@ import Icon from "react-native-vector-icons/Ionicons";
 const MainDrawer = createDrawerNavigator();
 
 const DrawerView = ({ navigation }) => {
+  const [showVerkkolahetykset, setShowVerkkolahetykset] = useState(true);
+
+  const toggleVerkkolahetykset = () => {
+    setShowVerkkolahetykset(!showVerkkolahetykset);
+  };
+
   return (
     <SafeAreaView>
       <Drawer.Section title="Eduskuntatutka">
-        <Drawer.Item
-          icon={() => <Icon name="radio" size={20} />}
-          label="Täysistunnot"
-          onPress={() => navigation.navigate("PlenumsStack")}
-        />
-        <Drawer.Item
-          icon={() => <Icon name="radio" size={20} />}
-          label="Valiokuntien kuulemiset ja kokoukset"
-          onPress={() => navigation.navigate("ValiokuntaStack")}
-        />
-        <Drawer.Item
-          icon={() => <Icon name="radio" size={20} />}
-          label="Seminaarit"
-          onPress={() => navigation.navigate("SeminaariStack")}
-        />
-        <Drawer.Item
-          icon={() => <Icon name="radio" size={20} />}
-          label="Tiedotustilaisuudet"
-          onPress={() => navigation.navigate("TiedotusStack")}
-        />
-        <Drawer.Item
-          icon={() => <Icon name="radio" size={20} />}
-          label="Esittelyvideot"
-          onPress={() => navigation.navigate("EsittelyStack")}
-        />
-        <Drawer.Item
-          icon={() => <Icon name="radio" size={20} />}
-          label="Eduskuntaryhmät"
-          onPress={() => navigation.navigate("EduRyhmatStack")}
-        />
         <Drawer.Item
           icon={() => <Icon name="people" size={20} />}
           label="Kansanedustajat"
@@ -54,6 +30,53 @@ const DrawerView = ({ navigation }) => {
           icon={() => <Icon name="information" size={20} />}
           label="Info"
           onPress={() => navigation.navigate("Info")} />
+      </Drawer.Section>
+
+      <Drawer.Section title="Verkkolähetykset" >
+        {showVerkkolahetykset && (
+          <>
+            <Drawer.Item
+              icon={() => <Icon name="radio" size={20} />}
+              label="Suorat lähetykset"
+              onPress={() => navigation.navigate("LiveStack")}
+            />
+            <Drawer.Item
+              icon={() => <Icon name="radio" size={20} />}
+              label="Täysistunnot"
+              onPress={() => navigation.navigate("PlenumsStack")}
+            />
+            <Drawer.Item
+              icon={() => <Icon name="radio" size={20} />}
+              label="Valiokuntien kuulemiset ja kokoukset"
+              onPress={() => navigation.navigate("ValiokuntaStack")}
+            />
+            <Drawer.Item
+              icon={() => <Icon name="radio" size={20} />}
+              label="Seminaarit"
+              onPress={() => navigation.navigate("SeminaariStack")}
+            />
+            <Drawer.Item
+              icon={() => <Icon name="radio" size={20} />}
+              label="Tiedotustilaisuudet"
+              onPress={() => navigation.navigate("TiedotusStack")}
+            />
+            <Drawer.Item
+              icon={() => <Icon name="radio" size={20} />}
+              label="Esittelyvideot"
+              onPress={() => navigation.navigate("EsittelyStack")}
+            />
+            <Drawer.Item
+              icon={() => <Icon name="radio" size={20} />}
+              label="Eduskuntaryhmät"
+              onPress={() => navigation.navigate("EduRyhmatStack")}
+            />
+          </>
+        )}
+        <Drawer.Item
+          icon={() => <Icon name={showVerkkolahetykset ? "chevron-down" : "chevron-up"} size={20} />}
+          label={showVerkkolahetykset ? "Piilota verkkolähetykset" : "Näytä verkkolähetykset"}
+          onPress={toggleVerkkolahetykset}
+        />
       </Drawer.Section>
     </SafeAreaView>
   );
@@ -77,6 +100,13 @@ export default RootNavigator = () => {
       <MainDrawer.Screen
         name="MainView"
         component={RssNewsFeed}
+        options={{
+          header: ({ navigation }) => <MainHeader navigation={navigation} />,
+        }}
+      />
+      <MainDrawer.Screen
+        name="LiveStack"
+        component={LiveStack}
         options={{
           header: ({ navigation }) => <MainHeader navigation={navigation} />,
         }}
@@ -109,14 +139,14 @@ export default RootNavigator = () => {
           header: ({ navigation }) => <MainHeader navigation={navigation} />,
         }}
       />
-            <MainDrawer.Screen
+      <MainDrawer.Screen
         name="EsittelyStack"
         component={EsittelyStack}
         options={{
           header: ({ navigation }) => <MainHeader navigation={navigation} />,
         }}
       />
-                 <MainDrawer.Screen
+      <MainDrawer.Screen
         name="EduRyhmatStack"
         component={EduRyhmatStack}
         options={{
