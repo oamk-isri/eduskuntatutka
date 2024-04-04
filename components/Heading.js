@@ -18,8 +18,9 @@ const Heading = ({ children, size, style }) => {
     [size]: {
       fontSize: getSize(size),
       fontWeight: "bold",
-      marginBottom: 10,
-      marginTop: 10,
+      // marginBottom: 10,
+      marginTop: 20,
+      marginLeft: 30,
     },
   });
 
