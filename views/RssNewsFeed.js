@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { ActivityIndicator, Divider } from "react-native-paper";
 import RssTags from "../components/RssTags";
 import { RssFeeds } from "../constants/RssFeeds";
@@ -35,6 +35,24 @@ export default function RssNewsFeed() {
     }
     fetchData();
   }, [selectedCategory]);
+
+  const NewsItem = ({ item }) => {
+    return (
+      <View style={styles.newsContainer}>
+        <View style={{ flex: 0.2 }}>
+          <DateWithFinnishWeekday dateString={item.pubDate} />
+        </View>
+        <View style={{ flex: 0.8 }}>
+          {item.title.length > 20 ? (
+            <Text style={styles.title}>{item.title}</Text>
+          ) : (
+            <Text style={styles.title}>{item.description}</Text>
+          )}
+          <Divider />
+        </View>
+      </View>
+    );
+  };
 
   return (
     <NewsCategoryContext.Provider
@@ -82,19 +100,7 @@ export default function RssNewsFeed() {
               <FlatList
                 data={data.slice(0, 5)}
                 maxToRenderPerBatch={5}
-                renderItem={({ item }) => (
-                  <View>
-                    <View style={styles.newsContainer}>
-                      <DateWithFinnishWeekday dateString={item.pubDate} />
-                      {item.title.length > 20 ? (
-                        <Text style={styles.title}>{item.title}</Text>
-                      ) : (
-                        <Text style={styles.title}>{item.description}</Text>
-                      )}
-                    </View>
-                    <Divider my={2} bg="#e0e0e0" />
-                  </View>
-                )}
+                renderItem={({ item }) => <NewsItem item={item} />}
                 keyExtractor={(item) => item.link}
               />
             </SwipeableList>
@@ -114,10 +120,14 @@ const styles = StyleSheet.create({
 
   newsContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
+    marginLeft: 10,
+    marginRight: 10,
   },
   title: {
     flex: 0.7,
+    fontSize: 14,
+    paddingBottom: 20,
+    paddingTop: 20,
   },
 });
