@@ -6,7 +6,7 @@ const DataOriginPopup = () => {
   const [dataOrigin, setDataOrigin] = useState('');
 
   useEffect(() => {
-    const origin = "Sovelluksessa käytetty eduskunnan avointa dataa";
+    const origin = "Sovellus käyttää eduskunnan avointa dataa.";
     setDataOrigin(origin);
   }, []);
 
@@ -22,11 +22,11 @@ const DataOriginPopup = () => {
       transparent={true}
       onRequestClose={() => setShowPopup(false)}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, margin: 20 }}>
             <Text>{dataOrigin}</Text>
             <StatusBar backgroundColor="rgba(0, 0, 0, 0.5)" translucent={true} />
                 <TouchableOpacity onPress={handleLinkPress}>
-                <Text>Lue Lisää</Text>
+                <Text style={{textDecorationLine: 'underline', marginTop: 10, color: 'blue'}}>Lue lisää</Text>
                 </TouchableOpacity> 
             <Button title="Ok" onPress={() => setShowPopup(false)} />
         </View>
