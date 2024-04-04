@@ -6,6 +6,7 @@ export default esittely = ({ route, navigation }) => {
   const { event } = route.params;
   const { title, urlName } = event;
   const webViewRef = useRef(null); // <-- Define a ref for the WebView
+  const [eventInfo, setEventInfo] = useState(null);
 
   // Split the title at the '|' mark and take the first part
   const navigationTitle = title.split('|')[0].trim();
@@ -21,8 +22,9 @@ export default esittely = ({ route, navigation }) => {
     fetch(`https://eduskunta.videosync.fi/${urlName}/data`)
       .then(response => response.json())
       .then(data => {
-        if (data && data.eventMeta && data.eventMeta.plenum && data.eventMeta.plenum.decisions && data.eventMeta.plenum.decisions.fi) {
-          const decisionsFi = data.eventMeta.plenum.decisions.fi;
+        if (data && data.about) {
+          const cleanedDescription = data.about.description.replace(/<[^>]+>/g, ''); // Remove HTML-tags
+          setEventInfo({ ...data.about, description: cleanedDescription });
         }
       })
       .catch(error => console.error('Error fetching data:', error));
@@ -56,7 +58,12 @@ export default esittely = ({ route, navigation }) => {
           onMessage={(event) => console.log(event.nativeEvent.data)}
         />
         <View style={{ paddingHorizontal: 10 }}>
-
+          {eventInfo && (
+            <>
+              <Text style={styles.title}>{eventInfo.title}</Text>
+              <Text style={styles.description}>{eventInfo.description}</Text>
+            </>
+          )}
         </View>
       </View>
     </ScrollView>
@@ -67,5 +74,14 @@ const styles = StyleSheet.create({
   webView: {
     height: 220, // Adjust the height as needed
     width: '100%',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  description: {
+    fontSize: 16,
+    marginTop: 5,
   },
 });
