@@ -7,16 +7,11 @@ const SwipeableList = ({ children }) => {
   const { setSelectedCategory } = useContext(NewsCategoryContext);
 
   const handleSwipe = ({ nativeEvent }) => {
-    //swiping right
-    if (nativeEvent.translationX < -100) {
-      // console.log("Swiped Right");
+    if (nativeEvent.translationX < -50) {
       setSelectedCategory((prevIndex) =>
         prevIndex === RssFeeds.length - 1 ? 0 : prevIndex + 1
       );
-    }
-    //swiping left
-    else if (nativeEvent.translationX > 100) {
-      // console.log("Swiped Left");
+    } else if (nativeEvent.translationX > 50) {
       setSelectedCategory((prevIndex) =>
         prevIndex === 0 ? RssFeeds.length - 1 : prevIndex - 1
       );
