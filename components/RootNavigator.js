@@ -3,7 +3,17 @@ import { Image, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Appbar, Drawer } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { PlenumsStack, RepresentativesStack, ValiokuntaStack, SeminaariStack, TiedotusStack, EsittelyStack, EduRyhmatStack, LiveStack } from "./StackNavigators";
+import {
+  PlenumsStack,
+  RepresentativesStack,
+  ValiokuntaStack,
+  SeminaariStack,
+  TiedotusStack,
+  EsittelyStack,
+  EduRyhmatStack,
+  LiveStack,
+  NewsStack,
+} from "./StackNavigators";
 import Info from "../views/info";
 import RssNewsFeed from "../views/RssNewsFeed";
 import LogoDark from "../assets/logo/LogoDark.svg";
@@ -32,8 +42,13 @@ const DrawerView = ({ navigation }) => {
           onPress={() => navigation.navigate("Info")}
         />
         <Drawer.Item
-          icon={() => <Icon name={showVerkkolahetykset ? "chevron-down" : "chevron-up"} size={20} />}
-          label={'Verkkolähetykset'}
+          icon={() => (
+            <Icon
+              name={showVerkkolahetykset ? "chevron-down" : "chevron-up"}
+              size={20}
+            />
+          )}
+          label={"Verkkolähetykset"}
           onPress={toggleVerkkolahetykset}
         />
         {showVerkkolahetykset && (
@@ -76,8 +91,6 @@ const DrawerView = ({ navigation }) => {
           </>
         )}
       </Drawer.Section>
-
-      
     </SafeAreaView>
   );
 };
@@ -98,8 +111,8 @@ export default RootNavigator = () => {
       drawerContent={({ navigation }) => <DrawerView navigation={navigation} />}
     >
       <MainDrawer.Screen
-        name="MainView"
-        component={RssNewsFeed}
+        name="NewsStack"
+        component={NewsStack}
         options={{
           header: ({ navigation }) => <MainHeader navigation={navigation} />,
         }}
