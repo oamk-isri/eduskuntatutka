@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { ActivityIndicator, Divider } from "react-native-paper";
+import { ActivityIndicator, Divider, Modal } from "react-native-paper";
 import RssTags from "../components/RssTags";
 import { RssFeeds } from "../constants/RssFeeds";
 import { NewsCategoryContext } from "../contexts/Contexts";
@@ -9,7 +9,9 @@ import Heading from "../components/Heading";
 import DateWithFinnishWeekday from "../components/DateParser";
 import SwipeableList from "../components/SwipeableList";
 
-export default function RssNewsFeed() {
+import { TouchableOpacity } from "react-native-gesture-handler";
+
+export default function RssNewsFeed({ navigation }) {
   const { getData, data, isLoading, error } = GetRssFeed();
   const [selectedCategory, setSelectedCategory] = useState(0);
   const flatListRef = useRef(null);
@@ -36,21 +38,32 @@ export default function RssNewsFeed() {
     fetchData();
   }, [selectedCategory]);
 
+  // const [showWebView, setShowWebView] = useState(false);
+  // const [webViewLink, setWebViewLink] = useState("");
+
+  const handlePress = (link) => {
+    if (link) {
+      navigation.navigate("WebViewUI", { uri: link });
+    }
+  };
+
   const NewsItem = ({ item }) => {
     return (
-      <View style={styles.newsContainer}>
-        <View style={{ flex: 0.2 }}>
-          <DateWithFinnishWeekday dateString={item.pubDate} />
+      <TouchableOpacity onPress={() => handlePress(item.link)}>
+        <View style={styles.newsContainer}>
+          <View style={{ flex: 0.2 }}>
+            <DateWithFinnishWeekday dateString={item.pubDate} />
+          </View>
+          <View style={{ flex: 0.8 }}>
+            {item.title.length > 20 ? (
+              <Text style={styles.title}>{item.title}</Text>
+            ) : (
+              <Text style={styles.title}>{item.description}</Text>
+            )}
+            <Divider />
+          </View>
         </View>
-        <View style={{ flex: 0.8 }}>
-          {item.title.length > 20 ? (
-            <Text style={styles.title}>{item.title}</Text>
-          ) : (
-            <Text style={styles.title}>{item.description}</Text>
-          )}
-          <Divider />
-        </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
