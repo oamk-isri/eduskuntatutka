@@ -3,8 +3,8 @@ import { View, Text, Linking, ScrollView, StyleSheet } from "react-native";
 import { WebView } from 'react-native-webview';
 
 export default live = ({ route, navigation }) => {
-  const { event } = route.params;
-  const { title, urlName } = event;
+  const { liveEvent } = route.params;
+  const { title, urlName } = liveEvent;
   const webViewRef = useRef(null); // <-- Define a ref for the WebView
   const [eventInfo, setEventInfo] = useState(null);
 
