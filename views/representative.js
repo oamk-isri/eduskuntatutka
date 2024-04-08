@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import Absences from "../components/AbsenceParser";
 
@@ -33,6 +33,7 @@ export default Representative = ({ route }) => {
 
   return (
     <View>
+      <ScrollView>
       <View styles={styles.container}>
         <Image
           source={{ uri: pictureUrl }}
@@ -49,7 +50,7 @@ export default Representative = ({ route }) => {
       ) : (
         <Absences first={firstname} last={lastname} />
       )}
-
+      </ScrollView>
     </View>
   )
 }
