@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { StyleSheet, View, Text, Image } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
+import Absences from "../components/AbsenceParser";
 
 export default Representative = ({ route }) => {
 
@@ -10,6 +12,7 @@ export default Representative = ({ route }) => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [pictureUrl, setPictureUrl] = useState("https://avoindata.eduskunta.fi/" + image);
+  const [isLoading, setIsLoading] = useState(true);
 
   const link =
     `https://avoindata.eduskunta.fi/api/v1/memberofparliament/${hetekaId}/fi`
@@ -19,6 +22,7 @@ export default Representative = ({ route }) => {
     axios.get(link)
       .then((response) => {
         populateState(response.data.jsonNode)
+        setIsLoading(false)
       })
   }, [])
 
@@ -39,6 +43,12 @@ export default Representative = ({ route }) => {
           {firstname} {lastname}
         </Text>
       </View>
+
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <Absences first={firstname} last={lastname} />
+      )}
 
     </View>
   )
