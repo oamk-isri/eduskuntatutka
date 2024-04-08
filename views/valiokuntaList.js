@@ -34,7 +34,7 @@ export default valiokuntaList = ({ navigation }) => {
   return (
     <ScrollView>
       {events.map((event) => (
-        <TouchableOpacity key={event._id} onPress={() => navigation.navigate("Valiokunta", { event })}>
+        <TouchableOpacity key={event._id} onPress={() => navigation.navigate("Valiokunta", { valiokunnatEvent: event })}>
           <Card style={{margin:5}}>
             <Card.Cover source={{ uri: `https://eduskunta.videosync.fi${event.previewImg}` }} />
             <Card.Content>

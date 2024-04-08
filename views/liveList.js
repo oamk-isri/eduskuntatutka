@@ -17,8 +17,9 @@ export default liveList = ({ navigation }) => {
         `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskunta-kanava?include=children,events&states=0&limit=8&page=${page}`
       )
       .then((response) => {
-        if (response.data && response.data.events) {
-          setEvents([...events, ...response.data.events.map(event => {
+        const liveEvents = response.data.children.map(child => child.events).flat(); // Extracting events from children array  
+        if (liveEvents.length > 0) {
+          setEvents([...events, ...liveEvents.map(event => {
             // Split the title at the '|' mark and take the first part
             const title = event.title.split('|')[0].trim();
             return { ...event, title };
@@ -31,15 +32,26 @@ export default liveList = ({ navigation }) => {
       });
   };
 
+  const handlePressEvent = (event) => {
+    const { urlName } = event; // Extracting urlName from the event
+    if (urlName.includes("taysistunto")) {
+      // If urlName includes "tayistunto", navigate to PlenumDetails
+      navigation.navigate("PlenumDetails", { taysistunnotEvent: event });
+    } else {
+      // Otherwise, navigate to Suora lähetys
+      navigation.navigate("Suora lähetys", { liveEvent: event });
+    }
+  };
+
   return (
     <ScrollView>
       {events.length === 0 && (
         <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', marginVertical: 10 }}>
-          Suoria lähetyksiä ei ole käynnissä.
+          Ei suoria lähetyksiä juuri nyt.
         </Text>
       )}
       {events.map((event) => (
-        <TouchableOpacity key={event._id} onPress={() => navigation.navigate("Suorat lähetykset", { event })}>
+        <TouchableOpacity key={event._id} onPress={() => handlePressEvent(event)}>
           <Card style={{margin:5}}>
             <Card.Cover source={{ uri: `https://eduskunta.videosync.fi${event.previewImg}` }} />
             <Card.Content>

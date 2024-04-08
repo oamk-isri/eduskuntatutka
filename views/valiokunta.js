@@ -3,8 +3,8 @@ import { View, Text, Linking, ScrollView, StyleSheet } from "react-native";
 import { WebView } from 'react-native-webview';
 
 export default Valiokunta = ({ route, navigation }) => {
-  const { event } = route.params;
-  const { title, urlName } = event;
+  const { valiokunnatEvent } = route.params;
+  const { title, urlName } = valiokunnatEvent;
   const webViewRef = useRef(null); // <-- Define a ref for the WebView
   const [eventInfo, setEventInfo] = useState(null);
 
