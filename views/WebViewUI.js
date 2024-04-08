@@ -1,75 +1,41 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  TouchableOpacity,
-  SafeAreaView,
-  StyleSheet,
-} from "react-native";
+import { useRef, useState } from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 
 function WebViewUI(props) {
   const webviewRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [hasInitialLoadFinished, setHasInitialLoadFinished] = useState(false);
+  const [progressCount, setProgressCount] = useState(0);
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const timeoutIdRef = useRef(null);
 
-  console.log(isLoading);
+  const handleLoad = async () => {
+    clearTimeout(timeoutIdRef.current);
 
-  const handleShouldStartLoad = (navState) => {
-    setIsLoading(true);
-    return true;
+    if (!hasLoaded) {
+      try {
+        webviewRef.current.injectJavaScript(combinedScript);
+        setHasLoaded(true);
+      } catch (error) {
+        console.error("Error injecting script:", error);
+      }
+    }
   };
 
-  const handleNavigationStateChange = (navState) => {
-    if (navState.url && !hasInitialLoadFinished) {
-      console.log("NavState " + navState.url);
-      setIsLoading(false);
-      setHasInitialLoadFinished(true);
+  const handleLoadEnd = () => {
+    if (!hasLoaded) {
+      setHasLoaded(true);
+      webviewRef.current.injectJavaScript(combinedScript);
     }
   };
 
   function removeContentFromDiv(divId) {
-    // Function to remove content from a div with a specific ID
     const script = `
       var targetDiv = document.getElementById('${divId}');
       if (targetDiv) {
         targetDiv.innerHTML = ''; // Set innerHTML to empty string to remove content
       }
     `;
-    return script;
-  }
-
-  function removeNavigationElements() {
-    // Function to remove elements with role="navigation"
-    const script = `
-      var navigation = document.querySelector('nav'); // Replace with the actual selector if needed
-      if (navigation) {
-        var elementsToRemove = navigation.querySelectorAll('[role="navigation"]');
-        for (var i = 0; i < elementsToRemove.length; i++) {
-          elementsToRemove[i].parentNode.removeChild(elementsToRemove[i]);
-        }
-      }
-    `;
-    return script;
-  }
-
-  function disableLinks() {
-    // Function to remove elements with role="navigation"
-    const script = `
-    var anchors = document.querySelectorAll('a');
-        for (var i = 0; i < anchors.length; i++) {
-           anchors[i].addEventListener('click', function(event) {
-             event.preventDefault(); // Prevent default link behavior
-           });
-           anchors[i].style.color = 'black'; // Set link color to black
-         }
-
-           var header = document.getElementById('header-id');
-           if (header) {
-             header.style.display = 'none';
-           }
-           `;
     return script;
   }
 
@@ -125,116 +91,57 @@ function WebViewUI(props) {
     `;
     return script;
   }
-  // function removeElementsExceptMainArea() {
-  //   const script = `
-  //     var mainArea = document.getElementById('maincontent');
-  //     if (mainArea) {
-  //       var fragment = document.createDocumentFragment();
-  //       fragment.appendChild(mainArea);
 
-  //       document.body.innerHTML = '';
-  //       document.body.appendChild(fragment);
-
-  //       // Check content height and adjust WebView's height if necessary
-  //       if (mainArea.offsetHeight > document.documentElement.clientHeight) {
-  //         // webViewRef.current.style.height = '100%'; // Adjust height as needed
-  //       }
-  //     }
-  //   `;
-  //   return script;
-  // }
-
-  function removeLeftNavigationMobile() {
-    const script = `
-      var leftnavigationMobile = document.getElementById('leftnavigationMobile');
-      if (leftnavigationMobile) {
-        leftnavigationMobile.parentNode.removeChild(leftnavigationMobile);
-      }
-    `;
-    return script;
-  }
-
-  const handleMessage = () => {
-    const divToRemoveId3 = "edk-news-footer";
-    const scriptToInject2 = removeContentFromDiv(divToRemoveId3);
-    // const scriptToInject3 = removeLeftNavigationMobile();
-    const scriptToInject =
-      removeUnwantedElementsAndDisableLinks(divToRemoveId3);
-    webviewRef.current.injectJavaScript(scriptToInject);
-    webviewRef.current.injectJavaScript(scriptToInject2);
-    // webviewRef.current.injectJavaScript(scriptToInject3);
+  const onShouldStartLoadWithRequest = (request) => {
+    return true;
   };
 
-  // const handleMessage = () => {
-  //   const scriptToInject = removeElementsExceptMainArea();
-  //   webviewRef.current.injectJavaScript(scriptToInject);
-  // };
+  const combinedScript = `
+  ${removeUnwantedElementsAndDisableLinks("maincontent")}
+  ${removeContentFromDiv("edk-news-footer")}
+`;
 
-  // const handleMessage = () => {
-  //   const divToRemoveId = "edk-header";
-  //   const divToRemoveId2 = "edk-footer";
-  //   const divToRemoveId3 = "edk-news-footer";
-  //   const divToRemoveId4 = "breadcrumb";
-  //   const scriptToInject1 = removeContentFromDiv(divToRemoveId);
-  //   const scriptToInject2 = removeNavigationElements();
-  //   const scriptToInject3 = disableLinks();
-  //   const scriptToInject4 = removeContentFromDiv(divToRemoveId2);
-  //   const scriptToInject5 = removeContentFromDiv(divToRemoveId3);
-  //   const scriptToInject6 = removeContentFromDiv(divToRemoveId4);
-  //   webviewRef.current.injectJavaScript(scriptToInject1);
-  //   webviewRef.current.injectJavaScript(scriptToInject2);
-  //   webviewRef.current.injectJavaScript(scriptToInject3);
-  //   webviewRef.current.injectJavaScript(scriptToInject4);
-  //   webviewRef.current.injectJavaScript(scriptToInject5);
-  //   webviewRef.current.injectJavaScript(scriptToInject6);
-  // };
+  const handleNavigationStateChange = (navState) => {
+    if (navState.url && !hasInitialLoadFinished) {
+      setHasInitialLoadFinished(true);
+      webviewRef.current.injectJavaScript(combinedScript);
+    }
+  };
 
-  console.log("route " + props.route.params.uri);
+  const handleLoadProgress = (event) => {
+    const { progress } = event.nativeEvent;
+    if (progress === 1) {
+      setProgressCount((prevCount) => prevCount + 1);
+      if (progressCount >= 3) {
+        webviewRef.current.injectJavaScript(combinedScript);
+        setHasLoaded(true);
+      }
+    }
+  };
+
   const renderWebview = () => {
     if (props.route.params.uri) {
       return (
         <>
           <WebView
-            source={{ uri: props.route.params.uri }}
-            // renderLoading={LoadingIndicatorView}
             javaScriptEnabled={true}
-            // onShouldStartLoad={handleShouldStartLoad}
             onNavigationStateChange={handleNavigationStateChange}
-            // startInLoadingState={true}
-            onLoad={handleMessage}
-            onShouldStartLoadWithRequest={(request) => {
-              if (request.url.startsWith(props.route.params.uri)) {
-                // Allow internal navigation
-                return true;
-              } else {
-                // Handle external link opening (e.g., using Linking or a custom function)
-                return false; // Prevent default WebView navigation
-              }
-            }}
-            // setSupportMultipleWindows={false}
-            // originWhitelist={["*"]}
+            onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
             ref={webviewRef}
-            // onShouldStartLoadWithRequest={(request) => {
-            // Only allow navigating within this website
-            // console.log(request);
-            // return request.url.startsWith("https://www.eduskunta.fi");
-            // }}
+            incognito={true}
+            injectedJavaScript={combinedScript}
+            source={{ uri: props.route.params.uri }}
+            onLoadProgress={handleLoadProgress}
+            onLoadEnd={handleLoadEnd}
+            onLoad={handleLoad}
+            startInLoadingState={true}
+            opacity={hasLoaded && progressCount >= 3 ? 1 : 0}
           />
         </>
       );
     }
     return null;
   };
-
-  // function LoadingIndicatorView() {
-  //   return (
-  //     <ActivityIndicator
-  //       color="#009b88"
-  //       size="large"
-  //       style={styles.ActivityIndicatorStyle}
-  //     />
-  //   );
-  // }
 
   return (
     <>
@@ -246,9 +153,10 @@ function WebViewUI(props) {
 }
 
 const styles = StyleSheet.create({
-  ActivityIndicatorStyle: {
+  loadingContainer: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
   },
   flexContainer: {
     flex: 1,
