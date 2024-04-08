@@ -3,8 +3,8 @@ import { View, Text, Linking, ScrollView, StyleSheet } from "react-native";
 import { WebView } from 'react-native-webview';
 
 export default PlenumDetails = ({ route, navigation }) => {
-  const { event } = route.params;
-  const { title, urlName } = event;
+  const { taysistunnotEvent } = route.params;
+  const { title, urlName } = taysistunnotEvent;
   const [decisions, setDecisions] = useState([]);
   const [topics, setTopics] = useState([]);
   const [speakersInfo, setSpeakersInfo] = useState([]);

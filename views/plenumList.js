@@ -35,7 +35,7 @@ export default PlenumList = ({ navigation }) => {
   return (
     <ScrollView>
       {events.map((event) => (
-        <TouchableOpacity key={event._id} onPress={() => navigation.navigate("PlenumDetails", { event })}>
+        <TouchableOpacity key={event._id} onPress={() => navigation.navigate("PlenumDetails", { taysistunnotEvent: event })}>
           <Card style={{margin:5}}>
             <Card.Cover source={{ uri: `https://eduskunta.videosync.fi${event.previewImg}` }} />
             <Card.Content>

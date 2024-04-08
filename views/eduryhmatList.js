@@ -34,7 +34,7 @@ export default eduryhmatList = ({ navigation }) => {
   return (
     <ScrollView>
       {events.map((event) => (
-        <TouchableOpacity key={event._id} onPress={() => navigation.navigate("Eduskuntaryhmä", { event })}>
+        <TouchableOpacity key={event._id} onPress={() => navigation.navigate("Eduskuntaryhmä", { eduskuntaryhmatEvent: event })}>
           <Card style={{margin:5}}>
             <Card.Cover source={{ uri: `https://eduskunta.videosync.fi${event.previewImg}` }} />
             <Card.Content>
