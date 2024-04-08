@@ -3,8 +3,8 @@ import { View, Text, Linking, ScrollView, StyleSheet } from "react-native";
 import { WebView } from 'react-native-webview';
 
 export default esittely = ({ route, navigation }) => {
-  const { event } = route.params;
-  const { title, urlName } = event;
+  const { esittelyvideotEvent } = route.params;
+  const { title, urlName } = esittelyvideotEvent;
   const webViewRef = useRef(null); // <-- Define a ref for the WebView
   const [eventInfo, setEventInfo] = useState(null);
 
