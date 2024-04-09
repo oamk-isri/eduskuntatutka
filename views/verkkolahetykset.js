@@ -103,10 +103,13 @@ export default verkkolahetykset = ({ navigation }) => {
             {liveEvent !== null ? (
     <TouchableOpacity onPress={() => {
         // Check if urlName contains "taysistunto"
-        if (liveEvent.urlName.includes('taysistunto')) {
-            navigation.navigate("PlenumDetails", { taysistunnotEvent });
+        const { urlName } = liveEvent; // Extracting urlName from the event
+        if (urlName.includes("taysistunto")) {
+          // If urlName includes "tayistunto", navigate to PlenumDetails
+          navigation.navigate("PlenumDetails", { taysistunnotEvent: liveEvent });
         } else {
-            navigation.navigate("Suora lähetys", { liveEvent });
+          // Otherwise, navigate to Suora lähetys
+          navigation.navigate("Suora lähetys", { liveEvent: liveEvent });
         }
     }}>
         <Card style={{ margin: 5 }}>
