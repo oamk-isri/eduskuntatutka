@@ -13,12 +13,13 @@ import {
   EduRyhmatStack,
   LiveStack,
   NewsStack,
-  VerkkolahetyksetStack
+  VerkkolahetyksetStack,
 } from "./StackNavigators";
 import Info from "../views/info";
 import RssNewsFeed from "../views/RssNewsFeed";
 import LogoDark from "../assets/logo/LogoDark.svg";
 import Icon from "react-native-vector-icons/Ionicons";
+import MainView from "../views/MainView";
 
 const MainDrawer = createDrawerNavigator();
 
@@ -47,10 +48,7 @@ const DrawerView = ({ navigation }) => {
           label="Verkkolähetykset"
           onPress={() => navigation.navigate("VerkkolahetyksetStack")}
         />
-
       </Drawer.Section>
-
-
     </SafeAreaView>
   );
 };
@@ -71,8 +69,8 @@ export default RootNavigator = () => {
       drawerContent={({ navigation }) => <DrawerView navigation={navigation} />}
     >
       <MainDrawer.Screen
-        name="NewsStack"
-        component={NewsStack}
+        name="MainView"
+        component={MainView}
         options={{
           header: ({ navigation }) => <MainHeader navigation={navigation} />,
         }}
