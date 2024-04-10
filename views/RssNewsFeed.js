@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import { ActivityIndicator, Divider, Modal } from "react-native-paper";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Divider } from "react-native-paper";
 import RssTags from "../components/RssTags";
 import { RssFeeds } from "../constants/RssFeeds";
 import { NewsCategoryContext } from "../contexts/Contexts";
@@ -9,7 +9,7 @@ import Heading from "../components/Heading";
 import DateWithFinnishWeekday from "../components/DateParser";
 import SwipeableList from "../components/SwipeableList";
 
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, ScrollView } from "react-native-gesture-handler";
 
 export default function RssNewsFeed({ navigation }) {
   const { getData, data, isLoading, error } = GetRssFeed();
@@ -38,40 +38,39 @@ export default function RssNewsFeed({ navigation }) {
     fetchData();
   }, [selectedCategory]);
 
-  // const [showWebView, setShowWebView] = useState(false);
-  // const [webViewLink, setWebViewLink] = useState("");
-
   const handlePress = (link) => {
     if (link) {
       navigation.navigate("WebViewUI", { uri: link });
     }
   };
 
-  const NewsItem = ({ item }) => {
-    return (
-      <TouchableOpacity onPress={() => handlePress(item.link)}>
-        <View style={styles.newsContainer}>
-          <View style={{ flex: 0.2 }}>
-            <DateWithFinnishWeekday dateString={item.pubDate} />
-          </View>
-          <View style={{ flex: 0.8 }}>
-            {item.title.length > 20 ? (
-              <Text style={styles.title}>{item.title}</Text>
-            ) : (
-              <Text style={styles.title}>{item.description}</Text>
-            )}
-            <Divider />
-          </View>
+  const NewsItem = ({ item }) => (
+    <TouchableOpacity onPress={() => handlePress(item.link)}>
+      <View style={styles.newsContainer}>
+        <View style={{ flex: 0.2 }}>
+          <DateWithFinnishWeekday dateString={item.pubDate} />
         </View>
-      </TouchableOpacity>
-    );
-  };
+        <View style={{ flex: 0.8 }}>
+          {item.title.length > 20 ? (
+            <Text style={styles.title}>{item.title}</Text>
+          ) : (
+            <Text style={styles.title}>{item.description}</Text>
+          )}
+          <Divider />
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const newsList = data
+    .slice(0, 5)
+    .map((item) => <NewsItem key={item.link} item={item} />);
 
   return (
     <NewsCategoryContext.Provider
       value={{ selectedCategory, setSelectedCategory }}
     >
-      <View>
+      <ScrollView>
         <View>
           <Heading size="h3">Uutisvirta</Heading>
         </View>
@@ -109,17 +108,14 @@ export default function RssNewsFeed({ navigation }) {
           {isLoading ? (
             <ActivityIndicator color="red" />
           ) : (
-            <SwipeableList>
-              <FlatList
-                data={data.slice(0, 5)}
-                maxToRenderPerBatch={5}
-                renderItem={({ item }) => <NewsItem item={item} />}
-                keyExtractor={(item) => item.link}
-              />
-            </SwipeableList>
+            <ScrollView>
+              <SwipeableList>
+                <View>{newsList}</View>
+              </SwipeableList>
+            </ScrollView>
           )}
         </View>
-      </View>
+      </ScrollView>
     </NewsCategoryContext.Provider>
   );
 }
@@ -129,6 +125,7 @@ const styles = StyleSheet.create({
     padding: 15,
     flexDirection: "row",
     justifyContent: "space-between",
+    overflow: "scroll",
   },
 
   newsContainer: {

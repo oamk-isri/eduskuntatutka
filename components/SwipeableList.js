@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { PanGestureHandler } from "react-native-gesture-handler";
+import React, { useContext, useRef, useState } from "react";
+import { PanGestureHandler, ScrollView } from "react-native-gesture-handler";
 import { NewsCategoryContext } from "../contexts/Contexts";
 import { RssFeeds } from "../constants/RssFeeds";
 
@@ -19,9 +19,11 @@ const SwipeableList = ({ children }) => {
   };
 
   return (
-    <PanGestureHandler onHandlerStateChange={handleSwipe}>
-      {children}
-    </PanGestureHandler>
+    <ScrollView>
+      <PanGestureHandler activeOffsetX={[-30, 30]} onGestureEvent={handleSwipe}>
+        {children}
+      </PanGestureHandler>
+    </ScrollView>
   );
 };
 
