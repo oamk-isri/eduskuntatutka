@@ -14,12 +14,11 @@ export default MainViewLive = ({ navigation }) => {
   const fetchEvents = () => {
     axios
       .get(
-        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskunta-kanava?include=children,events&states=0&limit=8&page=${page}`
+        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/taysistunnot?include=events&limit=1&page=${page}`
       )
       .then((response) => {
-        const liveEvents = response.data.children
-          .map((child) => child.events)
-          .flat(); // Extracting events from children array
+        const liveEvents = response.data.events.flat(); // Extracting events from children array
+
         if (liveEvents.length > 0) {
           setEvents([
             ...events,
