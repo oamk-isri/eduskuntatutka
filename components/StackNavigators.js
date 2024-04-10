@@ -15,9 +15,11 @@ import eduryhmat from "../views/eduryhmat";
 import eduryhmatList from "../views/eduryhmatList";
 import live from "../views/live";
 import liveList from "../views/liveList";
-import verkkolahetykset from '../views/verkkolahetykset';
+import verkkolahetykset from "../views/verkkolahetykset";
 import RssNewsFeed from "../views/RssNewsFeed";
 import WebViewUI from "../views/WebViewUI";
+import MainView from "../views/MainView";
+import MainViewLive from "../views/MainViewLive";
 
 const Stack = createStackNavigator();
 
@@ -99,26 +101,29 @@ const LiveStack = () => {
 const NewsStack = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="MainView" component={MainView} />
       <Stack.Screen name="RssNewsFeed" component={RssNewsFeed} />
       <Stack.Screen name="WebViewUI" component={WebViewUI} />
+      <Stack.Screen name="MainViewLive" component={MainViewLive} />
+      <Stack.Screen name="Suora lähetys" component={live} />
     </Stack.Navigator>
   );
 };
 
 const VerkkolahetyksetStack = () => {
-  return(
+  return (
     <Stack.Navigator>
-      <Stack.Screen name="Verkkolähetykset" component={verkkolahetykset}/>
-      <Stack.Screen name="Suora lähetys" component={live}/>
+      <Stack.Screen name="Verkkolähetykset" component={verkkolahetykset} />
+      <Stack.Screen name="Suora lähetys" component={live} />
       <Stack.Screen name="PlenumDetails" component={PlenumDetails} />
-      <Stack.Screen name="Valiokunta" component={valiokunta}/>
+      <Stack.Screen name="Valiokunta" component={valiokunta} />
       <Stack.Screen name="Eduskuntaryhmä" component={eduryhmat} />
-      <Stack.Screen name="Seminaari" component={seminaari}/>
+      <Stack.Screen name="Seminaari" component={seminaari} />
       <Stack.Screen name="Tiedotustilaisuus" component={tiedotus} />
       <Stack.Screen name="Esittelyvideo" component={esittely} />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
 export {
   PlenumsStack,
@@ -130,5 +135,5 @@ export {
   EduRyhmatStack,
   LiveStack,
   NewsStack,
-  VerkkolahetyksetStack
+  VerkkolahetyksetStack,
 };

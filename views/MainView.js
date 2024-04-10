@@ -1,11 +1,11 @@
 import MainViewLive from "./MainViewLive";
 import RssNewsFeed from "./RssNewsFeed";
 
-const MainView = () => {
+const MainView = ({ navigation }) => {
   return (
     <>
-      <RssNewsFeed />
-      <MainViewLive />
+      <RssNewsFeed navigation={navigation} />
+      <MainViewLive navigation={navigation} />
     </>
   );
 };

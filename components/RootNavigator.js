@@ -69,8 +69,8 @@ export default RootNavigator = () => {
       drawerContent={({ navigation }) => <DrawerView navigation={navigation} />}
     >
       <MainDrawer.Screen
-        name="MainView"
-        component={MainView}
+        name="NewsStack"
+        component={NewsStack}
         options={{
           header: ({ navigation }) => <MainHeader navigation={navigation} />,
         }}
