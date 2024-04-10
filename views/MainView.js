@@ -1,5 +1,6 @@
 import MainViewLive from "./MainViewLive";
 import RssNewsFeed from "./RssNewsFeed";
+import LiveList from "./liveList";
 
 const MainView = ({ navigation }) => {
   return (
