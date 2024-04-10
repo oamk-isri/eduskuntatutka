@@ -30,7 +30,12 @@ export default MainViewLive = ({ navigation }) => {
           <Heading size="h3">
             Seuraava {event[0].title.split("|")[0].trim().toLowerCase()}
           </Heading>
-          <TouchableOpacity key={event[0]._id}>
+          <TouchableOpacity
+            key={event[0]._id}
+            onPress={() =>
+              navigation.navigate("Suora lähetys", { liveEvent: event })
+            }
+          >
             <Card style={{ margin: 25 }}>
               <Card.Cover
                 source={{
