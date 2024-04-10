@@ -105,7 +105,8 @@ const NewsStack = () => {
       <Stack.Screen name="RssNewsFeed" component={RssNewsFeed} />
       <Stack.Screen name="WebViewUI" component={WebViewUI} />
       <Stack.Screen name="MainViewLive" component={MainViewLive} />
-      <Stack.Screen name="Suora lähetys" component={live} />
+      <Stack.Screen name="PlenumDetails" component={PlenumDetails} />
+      {/* <Stack.Screen name="Suora lähetys" component={live} /> */}
     </Stack.Navigator>
   );
 };
