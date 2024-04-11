@@ -16,9 +16,11 @@ import {
   VerkkolahetyksetStack,
 } from "./StackNavigators";
 import Info from "../views/info";
+import Eduskunta from "../views/EduskuntaView";
 import RssNewsFeed from "../views/RssNewsFeed";
 import LogoDark from "../assets/logo/LogoDark.svg";
 import Icon from "react-native-vector-icons/Ionicons";
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6"
 import MainView from "../views/MainView";
 
 const MainDrawer = createDrawerNavigator();
@@ -47,6 +49,11 @@ const DrawerView = ({ navigation }) => {
           icon={() => <Icon name="radio" size={20} />}
           label="Verkkolähetykset"
           onPress={() => navigation.navigate("VerkkolahetyksetStack")}
+        />
+        <Drawer.Item
+          icon={() => <FontAwesomeIcon name="building-columns" size={20} />}
+          label="Eduskunta"
+          onPress={() => navigation.navigate("Eduskunta")}
         />
       </Drawer.Section>
     </SafeAreaView>
@@ -141,6 +148,13 @@ export default RootNavigator = () => {
       <MainDrawer.Screen
         name="Info"
         component={Info}
+        options={{
+          header: ({ navigation }) => <MainHeader navigation={navigation} />,
+        }}
+      />
+      <MainDrawer.Screen
+        name="Eduskunta"
+        component={Eduskunta}
         options={{
           header: ({ navigation }) => <MainHeader navigation={navigation} />,
         }}
