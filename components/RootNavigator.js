@@ -52,7 +52,7 @@ const DrawerView = ({ navigation }) => {
         />
         <Drawer.Item
           icon={() => <FontAwesomeIcon name="building-columns" size={20} />}
-          label="Eduskunta"
+          label="Tietoa eduskunnasta"
           onPress={() => navigation.navigate("Eduskunta")}
         />
       </Drawer.Section>
