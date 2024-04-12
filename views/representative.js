@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import Absences from "../components/AbsenceParser";
+import RepSpeeches from "../components/repSpeeches";
 
 export default Representative = ({ route }) => {
 
@@ -44,12 +45,13 @@ export default Representative = ({ route }) => {
           {firstname} {lastname}
         </Text>
       </View>
-
+      <Speeches id={hetekaId}/>
       {isLoading ? (
         <ActivityIndicator />
       ) : (
         <Absences first={firstname} last={lastname} />
       )}
+      
       </ScrollView>
     </View>
   )
