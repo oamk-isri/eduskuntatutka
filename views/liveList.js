@@ -1,12 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  Image,
-  ScrollView,
-  View,
-  TouchableOpacity,
-  Button,
-} from "react-native";
+import { Image, ScrollView, View, TouchableOpacity, Button } from "react-native";
 import { Text, Card } from "react-native-paper";
 
 export default liveList = ({ navigation }) => {
@@ -23,18 +17,13 @@ export default liveList = ({ navigation }) => {
         `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskunta-kanava?include=children,events&states=0&limit=8&page=${page}`
       )
       .then((response) => {
-        const liveEvents = response.data.children
-          .map((child) => child.events)
-          .flat(); // Extracting events from children array
+        const liveEvents = response.data.children.map(child => child.events).flat(); // Extracting events from children array  
         if (liveEvents.length > 0) {
-          setEvents([
-            ...events,
-            ...liveEvents.map((event) => {
-              // Split the title at the '|' mark and take the first part
-              const title = event.title.split("|")[0].trim();
-              return { ...event, title };
-            }),
-          ]);
+          setEvents([...events, ...liveEvents.map(event => {
+            // Split the title at the '|' mark and take the first part
+            const title = event.title.split('|')[0].trim();
+            return { ...event, title };
+          })]);
           setPage(page + 1);
         }
       })
@@ -57,45 +46,21 @@ export default liveList = ({ navigation }) => {
   return (
     <ScrollView>
       {events.length === 0 && (
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            textAlign: "center",
-            marginVertical: 10,
-          }}
-        >
+        <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', marginVertical: 10 }}>
           Ei suoria lähetyksiä juuri nyt.
         </Text>
       )}
       {events.map((event) => (
-        <TouchableOpacity
-          key={event._id}
-          onPress={() => handlePressEvent(event)}
-        >
-          <Card style={{ margin: 5 }}>
-            <Card.Cover
-              source={{
-                uri: `https://eduskunta.videosync.fi${event.previewImg}`,
-              }}
-            />
+        <TouchableOpacity key={event._id} onPress={() => handlePressEvent(event)}>
+          <Card style={{margin:5}}>
+            <Card.Cover source={{ uri: `https://eduskunta.videosync.fi${event.previewImg}` }} />
             <Card.Content>
-              <Text
-                style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
-              >
-                {event.title}
-              </Text>
+              <Text style={{fontSize: 18, fontWeight: 'bold', paddingTop: 10}}>{event.title}</Text>
             </Card.Content>
           </Card>
         </TouchableOpacity>
       ))}
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          marginVertical: 10,
-        }}
-      >
+      <View style={{ alignItems: "center", justifyContent: "center", marginVertical: 10 }}>
         <Button title="Näytä lisää" onPress={fetchEvents} />
       </View>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
