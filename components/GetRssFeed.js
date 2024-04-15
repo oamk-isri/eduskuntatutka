@@ -14,11 +14,19 @@ export const GetRssFeed = () => {
 
       if (!response.ok) {
         console.error("Network response error");
+        throw new Error("Network response error");
       }
 
       const textResponse = await response.text();
       const result = parse(textResponse);
-      const items = result.rss.channel.item;
+
+      let items;
+      if (Array.isArray(result.rss.channel.item)) {
+        items = result.rss.channel.item.flat();
+      } else {
+        items = [result.rss.channel.item];
+      }
+
       setData([...items]);
       setIsLoading(false);
     } catch (error) {

@@ -62,9 +62,10 @@ export default function RssNewsFeed({ navigation }) {
     </TouchableOpacity>
   );
 
-  const newsList = data
-    .slice(0, 5)
-    .map((item) => <NewsItem key={item.link} item={item} />);
+  const newsList =
+    data.length > 5
+      ? data.slice(0, 5).map((item) => <NewsItem key={item.link} item={item} />)
+      : data.map((item) => <NewsItem key={item.link} item={item} />);
 
   return (
     <NewsCategoryContext.Provider
@@ -90,11 +91,11 @@ export default function RssNewsFeed({ navigation }) {
               { categoryIndex: 6, categoryName: "Kysymykset" },
               { categoryIndex: 7, categoryName: "Eduskunnan tiedotteet" },
               { categoryIndex: 8, categoryName: "Valiokuntien tiedotteet" },
-              // { categoryIndex: 9, categoryName: "Kansalaisinfo" },
-              { categoryIndex: 9, categoryName: "Kirjaston tiedotteet" },
-              { categoryIndex: 10, categoryName: "Kirjasto suosittelee" },
-              { categoryIndex: 11, categoryName: "Lainsäädäntöhankkeet" },
-              { categoryIndex: 12, categoryName: "Lausumat ja kannanotot" },
+              { categoryIndex: 9, categoryName: "Kansalaisinfo" },
+              { categoryIndex: 10, categoryName: "Kirjaston tiedotteet" },
+              { categoryIndex: 11, categoryName: "Kirjasto suosittelee" },
+              { categoryIndex: 12, categoryName: "Lainsäädäntöhankkeet" },
+              { categoryIndex: 13, categoryName: "Lausumat ja kannanotot" },
             ]}
             renderItem={({ item }) => (
               <RssTags
