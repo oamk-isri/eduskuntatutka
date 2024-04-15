@@ -19,6 +19,10 @@ const EduskuntaScreen = () => (
 
     <Text style={{fontSize: 18, margin: 10}}> 
       Eduskunta käsittelee lakeja ja säätää niitä, hyväksyy valtion budjetin ja valvoo hallituksen toimintaa.
+    </Text>
+
+    <Text style={{fontSize: 18, margin: 10}}> 
+      Eduskunta on keskeinen osa Suomen demokraattista järjestelmää, ja vastaa kansalaisten äänen kuulumisesta päätöksenteossa.
     </Text> 
       
   </View>
@@ -34,6 +38,8 @@ const ToimintaScreen = () => (
     /> 
     <Text style={{fontSize: 18, margin: 10}}>
       Eduskunta kokoontuu täysistuntoihin, joissa käsitellään lakiesityksiä, tehdään päätöksiä ja keskustellaan ajankohtaisista aiheista.
+    </Text>
+    <Text style={{fontSize: 18, margin: 10}}>
       Lisäksi eduskunnassa toimii erilaisia valiokuntia, jotka valmistelevat lainsäädäntöä ja käsittelevät erityiskysymyksiä. 
       Eduskunnan jäsenet osallistuvat myös erilaisiin kansainvälisiin tehtäviin ja vierailuihin
     </Text>
@@ -47,7 +53,15 @@ const EduskuntaryhmatScreen = () => (
       source={require('../images/eduskunta1.png')} // toinen kuva tähän
       style={{ width: '100%', height: 150 }} 
       resizeMode="stretch"
-    /> 
+    />
+    <Text style={{fontSize: 18, margin: 10}}>
+      Eduskuntaryhmät ovat poliittisia ryhmiä, jotka koostuvat eduskunnan jäsenistä saman puolueen tai poliittisen liikkeen taustalta.
+      Ne toimivat yhteistyössä ja edustavat yhteisiä poliittisia tavoitteita eduskunnassa.
+    </Text>
+    <Text style={{fontSize: 18, margin: 10}}>
+      Eduskuntaryhmät vaikuttavat lainsäädäntötyöhön, tekevät yhteisiä päätöksiä ja valitset omat johtajansa. Niiden kautta edustajat
+      voivat yhdessä ajaa omia näkemyksiään ja vaikuttaa päätöksentekoon.
+    </Text> 
   </View>
 );
 
