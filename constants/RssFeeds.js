@@ -90,4 +90,11 @@ export const RssFeeds = [
     categoryName: "",
     url: "https://www.eduskunta.fi/_layouts/15/feed.aspx?xsl=1&web=/FI/rss-feeds&page=b6372ba3-1140-4648-9535-5d14be9f5814&wp=72e12b16-aaa6-4f1a-a6a2-4d83f6ae69ef&pageurl=/FI/rss-feeds/Sivut/tietopaketit.aspx",
   },
+  {
+    feedIndex: 12,
+    name: "Lausumat ja kannanotot",
+    description: "",
+    categoryName: "",
+    url: "https://avoindata.eduskunta.fi/resolution-register/rss/resolutions.rss",
+  },
 ];
