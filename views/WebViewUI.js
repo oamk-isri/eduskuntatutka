@@ -1,11 +1,13 @@
 import { useRef, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, ProgressBar } from "react-native-paper";
 import { WebView } from "react-native-webview";
 
 function WebViewUI(props) {
   const webviewRef = useRef(null);
   const [hasInitialLoadFinished, setHasInitialLoadFinished] = useState(false);
   const [progressCount, setProgressCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
   const timeoutIdRef = useRef(null);
 
@@ -15,6 +17,7 @@ function WebViewUI(props) {
     if (!hasLoaded) {
       try {
         setHasLoaded(true);
+        setIsLoading(true);
       } catch (error) {
         console.error("Error injecting script:", error);
       }
@@ -24,6 +27,13 @@ function WebViewUI(props) {
   const handleLoadEnd = () => {
     if (!hasLoaded) {
       setHasLoaded(true);
+      setIsLoading(true);
+    }
+  };
+
+  const handleLoadStart = () => {
+    if (!isLoading) {
+      setIsLoading(true);
     }
   };
 
@@ -183,6 +193,7 @@ function WebViewUI(props) {
       setProgressCount((prevCount) => prevCount + 1);
       if (progressCount >= 3) {
         setHasLoaded(true);
+        setIsLoading(false);
       }
     }
   };
@@ -197,42 +208,53 @@ function WebViewUI(props) {
       } else {
         scriptToInject = otherScript;
       }
+
       return (
         <>
-          <WebView
-            javaScriptEnabled={true}
-            onNavigationStateChange={handleNavigationStateChange}
-            onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
-            ref={webviewRef}
-            incognito={true}
-            injectedJavaScript={scriptToInject}
-            source={{ uri: props.route.params.uri }}
-            onLoadProgress={handleLoadProgress}
-            onLoadEnd={handleLoadEnd}
-            onLoad={handleLoad}
-            startInLoadingState={true}
-            opacity={hasLoaded && progressCount >= 3 ? 1 : 0}
-          />
+          <SafeAreaView style={styles.flexContainer}>
+            <WebView
+              javaScriptEnabled={true}
+              onNavigationStateChange={handleNavigationStateChange}
+              onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
+              ref={webviewRef}
+              incognito={true}
+              injectedJavaScript={scriptToInject}
+              source={{ uri: props.route.params.uri }}
+              onLoadProgress={handleLoadProgress}
+              onLoadStart={handleLoadStart}
+              onLoadEnd={handleLoadEnd}
+              onLoad={handleLoad}
+              opacity={hasLoaded && progressCount >= 3 ? 1 : 0}
+            />
+            {!hasLoaded ||
+              (progressCount <= 3 && (
+                <View style={styles.loadingContainer}>
+                  <ActivityIndicator
+                    size="large"
+                    color="#114d9d"
+                    animating={true}
+                  />
+                </View>
+              ))}
+          </SafeAreaView>
         </>
       );
     }
     return null;
   };
 
-  return (
-    <>
-      <SafeAreaView style={styles.flexContainer}>
-        {renderWebview()}
-      </SafeAreaView>
-    </>
-  );
+  return <>{renderWebview()}</>;
 }
 
 const styles = StyleSheet.create({
   loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
     alignItems: "center",
+    justifyContent: "center",
   },
   flexContainer: {
     flex: 1,
