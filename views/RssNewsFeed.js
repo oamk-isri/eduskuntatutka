@@ -93,7 +93,8 @@ export default function RssNewsFeed({ navigation }) {
               // { categoryIndex: 9, categoryName: "Kansalaisinfo" },
               { categoryIndex: 9, categoryName: "Kirjaston tiedotteet" },
               { categoryIndex: 10, categoryName: "Kirjasto suosittelee" },
-              { categoryIndex: 11, categoryName: "Lainssädäntöhankkeet" },
+              { categoryIndex: 11, categoryName: "Lainsäädäntöhankkeet" },
+              { categoryIndex: 12, categoryName: "Lausumat ja kannanotot" },
             ]}
             renderItem={({ item }) => (
               <RssTags

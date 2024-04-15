@@ -92,14 +92,31 @@ function WebViewUI(props) {
     return script;
   }
 
-  const onShouldStartLoadWithRequest = (request) => {
-    return true;
-  };
+  function removeEverythingExceptTargetDiv() {
+    const script = `
+    var targetDiv = document.querySelector('.resolution-register');
+    if (targetDiv) {
+      // Remove everything else from the body
+      var body = document.body;
+      while (body.firstChild) {
+        body.removeChild(body.firstChild);
+      }
+      // Append the targetDiv back to the body
+      body.appendChild(targetDiv);
+    }
+    `;
+    return script;
+  }
 
   const combinedScript = `
   ${removeUnwantedElementsAndDisableLinks("maincontent")}
   ${removeContentFromDiv("edk-news-footer")}
+  ${removeEverythingExceptTargetDiv()}
 `;
+
+  const onShouldStartLoadWithRequest = (request) => {
+    return true;
+  };
 
   const handleNavigationStateChange = (navState) => {
     if (navState.url && !hasInitialLoadFinished) {
