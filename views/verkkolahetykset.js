@@ -104,7 +104,7 @@ export default verkkolahetykset = ({ navigation }) => {
   return (
     <ScrollView>
       {/* Suorat lähetykset */}
-      <TouchableOpacity onPress={() => navigation.navigate("LiveStack")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Suorat lähetykset")}>
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View
             style={{
@@ -179,7 +179,7 @@ export default verkkolahetykset = ({ navigation }) => {
 
       {/* Täysistunnot */}
 
-      <TouchableOpacity onPress={() => navigation.navigate("PlenumsStack")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Täysistunnot")}>
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View
             style={{
@@ -237,7 +237,7 @@ export default verkkolahetykset = ({ navigation }) => {
       </TouchableOpacity>
 
       {/* Valiokunnat */}
-      <TouchableOpacity onPress={() => navigation.navigate("ValiokuntaStack")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Valiokuntien julkiset kuulemiset ja avoimet kokoukset")}>
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View
             style={{
@@ -293,7 +293,7 @@ export default verkkolahetykset = ({ navigation }) => {
       </TouchableOpacity>
 
       {/* Seminaarit */}
-      <TouchableOpacity onPress={() => navigation.navigate("SeminaariStack")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Seminaarit")}>
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View
             style={{
@@ -349,7 +349,7 @@ export default verkkolahetykset = ({ navigation }) => {
       </TouchableOpacity>
 
       {/* Tiedotustilaisuudet */}
-      <TouchableOpacity onPress={() => navigation.navigate("TiedotusStack")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Tiedotustilaisuudet")}>
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View
             style={{
@@ -407,7 +407,7 @@ export default verkkolahetykset = ({ navigation }) => {
       </TouchableOpacity>
 
       {/* Esittelyvideot */}
-      <TouchableOpacity onPress={() => navigation.navigate("EsittelyStack")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Esittelyvideot")}>
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View
             style={{
@@ -465,7 +465,7 @@ export default verkkolahetykset = ({ navigation }) => {
       </TouchableOpacity>
 
       {/* Eduskuntaryhmät */}
-      <TouchableOpacity onPress={() => navigation.navigate("EduRyhmatStack")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Eduskuntaryhmät")}>
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View
             style={{
