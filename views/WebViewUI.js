@@ -42,6 +42,15 @@ function WebViewUI(props) {
   function removeUnwantedElementsAndDisableLinks() {
     const script = `
       var mainContent = document.getElementById('maincontent');
+
+      setInterval(function() {
+        var buttonsToRemove = document.querySelectorAll('button');
+        buttonsToRemove.forEach(function(button) {
+          if (button.innerText.trim() === 'Palaa') {
+            button.parentNode.removeChild(button);
+          }
+        });
+      }, 1000); // Run every 1 second to check for new buttons
   
       if (mainContent) {
         // Create a new document fragment to temporarily hold elements
