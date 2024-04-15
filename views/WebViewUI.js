@@ -14,7 +14,6 @@ function WebViewUI(props) {
 
     if (!hasLoaded) {
       try {
-        webviewRef.current.injectJavaScript(combinedScript);
         setHasLoaded(true);
       } catch (error) {
         console.error("Error injecting script:", error);
@@ -25,7 +24,6 @@ function WebViewUI(props) {
   const handleLoadEnd = () => {
     if (!hasLoaded) {
       setHasLoaded(true);
-      webviewRef.current.injectJavaScript(combinedScript);
     }
   };
 
@@ -42,15 +40,6 @@ function WebViewUI(props) {
   function removeUnwantedElementsAndDisableLinks() {
     const script = `
       var mainContent = document.getElementById('maincontent');
-
-      setInterval(function() {
-        var buttonsToRemove = document.querySelectorAll('button');
-        buttonsToRemove.forEach(function(button) {
-          if (button.innerText.trim() === 'Palaa') {
-            button.parentNode.removeChild(button);
-          }
-        });
-      }, 1000); // Run every 1 second to check for new buttons
   
       if (mainContent) {
         // Create a new document fragment to temporarily hold elements
@@ -101,9 +90,19 @@ function WebViewUI(props) {
     return script;
   }
 
-  function removeEverythingExceptTargetDiv() {
+  function resolutionsScript() {
     const script = `
     var targetDiv = document.querySelector('.resolution-register');
+
+    setInterval(function() {
+      var buttonsToRemove = document.querySelectorAll('button');
+      buttonsToRemove.forEach(function(button) {
+        if (button.innerText.trim() === 'Palaa') {
+          button.parentNode.removeChild(button);
+        }
+      });
+    }, 1000);
+
     if (targetDiv) {
       // Remove everything else from the body
       var body = document.body;
@@ -117,10 +116,55 @@ function WebViewUI(props) {
     return script;
   }
 
-  const combinedScript = `
-  ${removeUnwantedElementsAndDisableLinks("maincontent")}
+  function kansalaisinfoScript() {
+    const script = `
+      (function() {
+        var mainContent = document.querySelector('div[role="main"]');
+        if (mainContent) {
+          // Remove everything else from the body
+          var body = document.body;
+          while (body.firstChild) {
+            body.removeChild(body.firstChild);
+          }
+          // Append the main content back to the body
+          body.appendChild(mainContent);
+          
+          // Ensure the remaining content has sufficient height for scrolling
+          var contentHeight = mainContent.offsetHeight;
+          if (contentHeight < document.documentElement.clientHeight) {
+            document.body.style.minHeight = document.documentElement.clientHeight + 'px';
+          }
+          
+          // Disable links within the main content
+          var anchors = mainContent.querySelectorAll('a');
+          for (var i = 0; i < anchors.length; i++) {
+            anchors[i].addEventListener('click', function(event) {
+              event.preventDefault(); // Prevent default link behavior
+            });
+            anchors[i].style.color = 'black';
+            anchors[i].style.textDecoration = 'none'; // Remove text decoration
+          }
+          
+          // Add 15px padding to the main content
+          mainContent.style.padding = '15px';
+        } else {
+          console.warn("No main content div found");
+        }
+      })();
+    `;
+    return script;
+  }
+  const kansalaisinfo = `
+  ${kansalaisinfoScript()}
+`;
+
+  const resolutions = `
+  ${resolutionsScript()}
+`;
+
+  const otherScript = `
+  ${removeUnwantedElementsAndDisableLinks()}
   ${removeContentFromDiv("edk-news-footer")}
-  ${removeEverythingExceptTargetDiv()}
 `;
 
   const onShouldStartLoadWithRequest = (request) => {
@@ -130,7 +174,6 @@ function WebViewUI(props) {
   const handleNavigationStateChange = (navState) => {
     if (navState.url && !hasInitialLoadFinished) {
       setHasInitialLoadFinished(true);
-      webviewRef.current.injectJavaScript(combinedScript);
     }
   };
 
@@ -139,7 +182,6 @@ function WebViewUI(props) {
     if (progress === 1) {
       setProgressCount((prevCount) => prevCount + 1);
       if (progressCount >= 3) {
-        webviewRef.current.injectJavaScript(combinedScript);
         setHasLoaded(true);
       }
     }
@@ -147,6 +189,14 @@ function WebViewUI(props) {
 
   const renderWebview = () => {
     if (props.route.params.uri) {
+      let scriptToInject;
+      if (props.route.params.uri.includes("resolution")) {
+        scriptToInject = resolutions;
+      } else if (props.route.params.uri.includes("kansalaisinfo")) {
+        scriptToInject = kansalaisinfo;
+      } else {
+        scriptToInject = otherScript;
+      }
       return (
         <>
           <WebView
@@ -155,7 +205,7 @@ function WebViewUI(props) {
             onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
             ref={webviewRef}
             incognito={true}
-            injectedJavaScript={combinedScript}
+            injectedJavaScript={scriptToInject}
             source={{ uri: props.route.params.uri }}
             onLoadProgress={handleLoadProgress}
             onLoadEnd={handleLoadEnd}
