@@ -115,12 +115,29 @@ const VerkkolahetyksetStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Verkkolähetykset" component={verkkolahetykset} />
+
+      <Stack.Screen name="Suorat lähetykset" component={liveList} />
       <Stack.Screen name="Suora lähetys" component={live} />
+
+      <Stack.Screen name="Täysistunnot" component={plenumList} />
       <Stack.Screen name="PlenumDetails" component={PlenumDetails} />
+
+      <Stack.Screen
+        name="Valiokuntien julkiset kuulemiset ja avoimet kokoukset"
+        component={valiokuntaList}
+      />
       <Stack.Screen name="Valiokunta" component={valiokunta} />
+
+      <Stack.Screen name="Eduskuntaryhmät" component={eduryhmatList} />
       <Stack.Screen name="Eduskuntaryhmä" component={eduryhmat} />
+
+      <Stack.Screen name="Seminaarit" component={seminaaritList} />
       <Stack.Screen name="Seminaari" component={seminaari} />
+
+      <Stack.Screen name="Tiedotustilaisuudet" component={tiedotusList} />
       <Stack.Screen name="Tiedotustilaisuus" component={tiedotus} />
+
+      <Stack.Screen name="Esittelyvideot" component={esittelyList} />
       <Stack.Screen name="Esittelyvideo" component={esittely} />
     </Stack.Navigator>
   );
