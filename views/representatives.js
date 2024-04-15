@@ -53,7 +53,8 @@ export default Representatives = ({ navigation }) => {
                 "Kansanedustaja",
                 {
                   id: seat.hetekaId,
-                  image: seat.pictureUrl
+                  image: seat.pictureUrl,
+                  party: seat.party
                 })}
             >
             </List.Item>

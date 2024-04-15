@@ -31,6 +31,13 @@ export default Details = (props) => {
           <List.Item
           title={
           <View>
+            <Text style={styles.title}>Eduskuntaryhmä:</Text>
+            <Text style={styles.content}>{props.longParty}</Text>
+          </View>}
+          />
+          <List.Item
+          title={
+          <View>
             <Text style={styles.title}>Kunta:</Text>
             <Text style={styles.content}>{props.data.NykyinenKotikunta}</Text>
           </View>}
@@ -56,9 +63,10 @@ export default Details = (props) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontWeight: "bold"
+    fontWeight: "bold",
+    paddingBottom: 4
   },
   content: {
-    fontSize: 20
+    fontSize: 16
   }
 });
