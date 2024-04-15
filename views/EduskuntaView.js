@@ -9,8 +9,8 @@ const EduskuntaScreen = () => (
     <Text style={{ fontSize: 24, padding: 10 }}>Suomen eduskunta</Text>
     <Image 
       source={require('../images/eduskunta1.png')}
-      style={{ width: '90%', height: 150, marginHorizontal: "5%" }}
-      resizeMode="contain"
+      style={{ width: '100%', height: 150 }}
+      resizeMode="stretch"
     /> 
     <Text style={{fontSize: 18, margin: 10}}> 
       Suomen eduskunta on maamme lainsäädäntöelin, joka vastaa Suomen yhteiskunnan päätöksenteosta.
@@ -51,7 +51,7 @@ const EduskuntaryhmatScreen = () => (
   </View>
 );
 
-const EduskuntaView = () => {
+const Eduskunta = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -65,4 +65,4 @@ const EduskuntaView = () => {
   );
 };
 
-export default EduskuntaView;
+export default Eduskunta;
