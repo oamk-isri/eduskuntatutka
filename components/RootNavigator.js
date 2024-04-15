@@ -53,7 +53,7 @@ const DrawerView = ({ navigation }) => {
         <Drawer.Item
           icon={() => <FontAwesomeIcon name="building-columns" size={20} />}
           label="Tietoa eduskunnasta"
-          onPress={() => navigation.navigate("Eduskunta")}
+          onPress={() => navigation.navigate("EduskuntaNav")}
         />
       </Drawer.Section>
     </SafeAreaView>
@@ -153,7 +153,7 @@ export default RootNavigator = () => {
         }}
       />
       <MainDrawer.Screen
-        name="Eduskunta"
+        name="EduskuntaNav"
         component={Eduskunta}
         options={{
           header: ({ navigation }) => <MainHeader navigation={navigation} />,
