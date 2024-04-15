@@ -51,7 +51,7 @@ export default function RssNewsFeed({ navigation }) {
           <DateWithFinnishWeekday dateString={item.pubDate} />
         </View>
         <View style={{ flex: 0.8 }}>
-          {item.title.length > 20 ? (
+          {item.title.length > 40 || !item.description.length ? (
             <Text style={styles.title}>{item.title}</Text>
           ) : (
             <Text style={styles.title}>{item.description}</Text>
