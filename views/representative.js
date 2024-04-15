@@ -3,7 +3,8 @@ import { useEffect, useState } from "react"
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import Absences from "../components/AbsenceParser";
-import RepSpeeches from "../components/repSpeeches";
+import Speeches from "../components/repSpeeches";
+import Details from "../components/repDetails";
 
 export default Representative = ({ route }) => {
 
@@ -14,6 +15,7 @@ export default Representative = ({ route }) => {
   const [lastname, setLastname] = useState("");
   const [pictureUrl, setPictureUrl] = useState("https://avoindata.eduskunta.fi/" + image);
   const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState([]);
 
   const link =
     `https://avoindata.eduskunta.fi/api/v1/memberofparliament/${hetekaId}/fi`
@@ -30,6 +32,7 @@ export default Representative = ({ route }) => {
   const populateState = (data) => {
     setFirstname(data.Henkilo.KutsumaNimi);
     setLastname(data.Henkilo.SukuNimi)
+    setData(data.Henkilo)
   }
 
   return (
@@ -45,7 +48,8 @@ export default Representative = ({ route }) => {
           {firstname} {lastname}
         </Text>
       </View>
-      <Speeches id={hetekaId}/>
+      <Details data={data} />
+      <Speeches id={hetekaId} />
       {isLoading ? (
         <ActivityIndicator />
       ) : (
