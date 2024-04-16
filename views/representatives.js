@@ -33,7 +33,7 @@ export default Representatives = ({ navigation }) => {
   }, [])
 
   return (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{right: 1}}>
       <TextInput
         placeholder="Hae kansanedustajaa"
         value={searchQuery}
