@@ -8,7 +8,7 @@ import {
   Button,
 } from "react-native";
 import { Text, Card } from "react-native-paper";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 
 export default verkkolahetykset = ({ navigation }) => {
   const [liveEvent, setLiveEvent] = useState(null);
@@ -103,6 +103,37 @@ export default verkkolahetykset = ({ navigation }) => {
 
   return (
     <ScrollView>
+
+      {/* Verkkolähetysten haku */}
+
+      <TouchableOpacity onPress={() => navigation.navigate("Verkkolähetysten haku")}>
+        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "bold",
+                padding: 10,
+                margin: 5,
+              }}
+            >
+              Verkkolähetysten haku
+            </Text>
+            <FontAwesome name="search" 
+              size={24}
+              color="black"
+              style={{ paddingEnd: 15 }}
+            />
+          </View>
+        </Card>
+      </TouchableOpacity>
+
       {/* Suorat lähetykset */}
       <TouchableOpacity onPress={() => navigation.navigate("Suorat lähetykset")}>
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
