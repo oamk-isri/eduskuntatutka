@@ -2,6 +2,7 @@ import axios from "axios";
 import react, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { List } from "react-native-paper";
+import { parse, isAfter, isBefore } from "date-fns";
 
 export default Speeches = (props) => {
 
@@ -10,14 +11,29 @@ export default Speeches = (props) => {
   const [expanded, setExpanded] = useState(true);
   const handlePress = () => setExpanded(!expanded);
 
-  const valtiopaiva_start = "12.4.2023"
+  const valtiopaiva_start = "2023-4-12"
 
   useEffect(() => {
     (async () => {
       let list = await createList(props.id)
-      setSpeeches(list);
+      let filteredList = filterList(list)
+      setSpeeches(filteredList);
     })();
   }, [])
+
+  const filterList = (list) => {
+    for (const item of list) {
+      if (isBefore(
+        parse(valtiopaiva_start, "yyyy-MM-dd", new Date()),
+        parse(item[11], "yyyy-MM-dd HH:mm:ss", new Date())
+      )) {
+        const filteredList = list.slice(list.indexOf(item))
+        return filteredList;
+      }
+    }
+  // if there isn't any speeches newer than valtiopaiva_start
+  return []
+  }
 
   const createList = async (id) => {
 
