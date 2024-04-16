@@ -133,7 +133,12 @@ export default MainViewLive = ({ navigation }) => {
   }, []);
 
   const handlePressEvent = (event) => {
-    navigation.navigate("Suora lähetys", { liveEvent: event });
+    const { urlName } = event;
+    if (urlName.includes("taysistunto")) {
+      navigation.navigate("PlenumDetails", { taysistunnotEvent: event });
+    } else {
+      navigation.navigate("Suora lähetys", { liveEvent: event });
+    }
   };
 
   return (
