@@ -40,7 +40,7 @@ export default Valiokunta = ({ route, navigation }) => {
     webViewRef.current.injectJavaScript(`
       // Find and modify the CSS rule for footer, section, and elements with class .hidden-state
       var styleElement = document.createElement('style');
-      styleElement.innerHTML = '.hidden-state { padding: 0; } body { font-size: 12px; }'; // Override padding to 0
+      styleElement.innerHTML = '.hidden-state { padding: 0; } body { font-size: 8px; }'; // Override padding to 0
       document.head.appendChild(styleElement);
     `);
   };
