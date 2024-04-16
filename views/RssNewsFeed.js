@@ -15,6 +15,31 @@ export default function RssNewsFeed({ navigation }) {
   const { getData, data, isLoading, error } = GetRssFeed();
   const [selectedCategory, setSelectedCategory] = useState(0);
   const flatListRef = useRef(null);
+  const newsfeedHeightRef = useRef(null);
+  const [measuredHeight, setMeasuredHeight] = useState(null);
+
+  const onLayout = (event) => {
+    const {
+      layout: { height },
+    } = event.nativeEvent;
+    if (height > 100) {
+      setMeasuredHeight(height);
+    }
+  };
+
+  const onContentSizeChange = (contentWidth, contentHeight) => {
+    setMeasuredHeight(contentHeight);
+  };
+
+  useEffect(() => {
+    if (newsfeedHeightRef.current) {
+      onLayout({
+        nativeEvent: {
+          layout: { height: newsfeedHeightRef.current.offsetHeight },
+        },
+      });
+    }
+  }, [selectedCategory]);
 
   useEffect(() => {
     scrollToSelectedTag();
@@ -62,10 +87,9 @@ export default function RssNewsFeed({ navigation }) {
     </TouchableOpacity>
   );
 
-  const newsList =
-    data.length > 5
-      ? data.slice(0, 5).map((item) => <NewsItem key={item.link} item={item} />)
-      : data.map((item) => <NewsItem key={item.link} item={item} />);
+  const newsList = data
+    .slice(0, 5)
+    .map((item) => <NewsItem key={item.link} item={item} />);
 
   return (
     <NewsCategoryContext.Provider
@@ -78,7 +102,6 @@ export default function RssNewsFeed({ navigation }) {
         <View style={styles.tagContainer}>
           <FlatList
             ref={flatListRef}
-            // initialScrollIndex={5}
             showsHorizontalScrollIndicator={false}
             horizontal
             data={[
@@ -106,16 +129,25 @@ export default function RssNewsFeed({ navigation }) {
             keyExtractor={(item) => item.categoryIndex}
           />
         </View>
-        <View>
-          {isLoading ? (
-            <ActivityIndicator color="red" />
-          ) : (
-            <ScrollView>
-              <SwipeableList>
-                <View>{newsList}</View>
-              </SwipeableList>
-            </ScrollView>
-          )}
+        <View ref={newsfeedHeightRef} onLayout={onLayout}>
+          <View style={{ height: measuredHeight }}>
+            {isLoading ? (
+              <ActivityIndicator
+                size="large"
+                color="#114d9d"
+                style={[
+                  styles.centeredIndicator,
+                  { top: measuredHeight / 2 - 12 },
+                ]}
+              />
+            ) : (
+              <ScrollView onContentSizeChange={onContentSizeChange}>
+                <SwipeableList>
+                  <View>{newsList}</View>
+                </SwipeableList>
+              </ScrollView>
+            )}
+          </View>
         </View>
       </ScrollView>
     </NewsCategoryContext.Provider>
