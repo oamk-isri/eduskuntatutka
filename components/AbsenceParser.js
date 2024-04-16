@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, List } from "react-native-paper";
+import { Text, List, ActivityIndicator} from "react-native-paper";
 import { View } from "react-native";
 import { usePapaParse } from "react-papaparse";
 
@@ -11,6 +11,7 @@ export default Absences = (props) => {
   const [absences, setAbsences] = useState([]);
   const [firstname, setFirstname] = useState(props.first);
   const [lastname, setLastname] = useState(props.last);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [expanded, setExpanded] = useState(true);
   const handlePress = () => setExpanded(!expanded);
@@ -32,7 +33,8 @@ export default Absences = (props) => {
   };
 
   useEffect(() => {
-    handleReadRemoteFile()
+    handleReadRemoteFile();
+    setIsLoading(false);
   }, [firstname, lastname])
 
   const format = (absenceDate) => {
@@ -48,7 +50,11 @@ export default Absences = (props) => {
   return (
     <View>
       <List.Accordion
-        title={"Poissaolot (" + absences.length + ")"}
+        title={isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          "Poissaolot (" + absences.length + ")"
+        )}
         left={props => <List.Icon {...props} icon="account-cancel" />}
         expanded={expanded}
         onPress={handlePress}>

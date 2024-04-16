@@ -1,12 +1,13 @@
 import axios from "axios";
 import react, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { List } from "react-native-paper";
+import { ActivityIndicator, List } from "react-native-paper";
 import { parse, isAfter, isBefore } from "date-fns";
 
 export default Speeches = (props) => {
 
   const [speeches, setSpeeches] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [expanded, setExpanded] = useState(true);
   const handlePress = () => setExpanded(!expanded);
@@ -15,9 +16,10 @@ export default Speeches = (props) => {
 
   useEffect(() => {
     (async () => {
-      let list = await createList(props.id)
-      let filteredList = filterList(list)
+      let list = await createList(props.id);
+      let filteredList = filterList(list);
       setSpeeches(filteredList);
+      setIsLoading(false);
     })();
   }, [])
 
@@ -27,7 +29,7 @@ export default Speeches = (props) => {
         parse(valtiopaiva_start, "yyyy-MM-dd", new Date()),
         parse(item[11], "yyyy-MM-dd HH:mm:ss", new Date())
       )) {
-        const filteredList = list.slice(list.indexOf(item))
+        const filteredList = list.slice(list.indexOf(item));
         return filteredList;
       }
     }
@@ -52,12 +54,12 @@ export default Speeches = (props) => {
       speechList = await axiosFetch(link);
       hasMore = speechList.hasMore;
       (speechList.rowData).map((row) => {
-        acc.push(row)
+        acc.push(row);
       })
       page++;
 
     } while (hasMore);
-    return acc
+    return acc;
   }
 
   const axiosFetch = async (link) => {
@@ -72,7 +74,13 @@ export default Speeches = (props) => {
   return (
     <View>
       <List.Accordion
-        title={"Puheenvuorot (" + speeches.length + ")"}
+        title={
+          isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            "Puheenvuorot (" + speeches.length + ")"
+          )}
+          
         left={props => <List.Icon {...props} icon="account-voice" />}
         expanded={expanded}
         onPress={handlePress}>
