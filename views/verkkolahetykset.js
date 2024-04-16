@@ -102,7 +102,7 @@ export default verkkolahetykset = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{right: 1}}>
 
       {/* Verkkolähetysten haku */}
 
