@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 import Absences from "../components/AbsenceParser";
 import Speeches from "../components/repSpeeches";
 import Details from "../components/repDetails";
@@ -17,7 +16,6 @@ export default Representative = ({ route }) => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [pictureUrl, setPictureUrl] = useState("https://avoindata.eduskunta.fi/" + image);
-  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
 
   const link =
@@ -28,7 +26,6 @@ export default Representative = ({ route }) => {
     axios.get(link)
       .then((response) => {
         populateState(response.data.jsonNode)
-        setIsLoading(false)
       })
   }, [])
 
@@ -54,13 +51,10 @@ export default Representative = ({ route }) => {
         <Text
           style={styles.longParty}>{longParty}</Text>
       </View>
+
       <Details data={data} longParty={longParty} />
       <Speeches id={hetekaId} />
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <Absences first={firstname} last={lastname} />
-      )}
+      <Absences first={firstname} last={lastname} />
       
       </ScrollView>
     </View>
