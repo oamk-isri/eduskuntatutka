@@ -21,6 +21,7 @@ import WebViewUI from "../views/WebViewUI";
 import MainView from "../views/MainView";
 import MainViewLive from "../views/MainViewLive";
 import lahetysHaku from "../views/lahetysHaku";
+import AllNews from "../views/AllNews";
 
 const Stack = createStackNavigator();
 
@@ -104,6 +105,7 @@ const NewsStack = () => {
     <Stack.Navigator>
       <Stack.Screen name="MainView" component={MainView} />
       <Stack.Screen name="RssNewsFeed" component={RssNewsFeed} />
+      <Stack.Screen name="AllNews" component={AllNews} />
       <Stack.Screen name="WebViewUI" component={WebViewUI} />
       <Stack.Screen name="MainViewLive" component={MainViewLive} />
       <Stack.Screen name="PlenumDetails" component={PlenumDetails} />
