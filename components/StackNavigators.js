@@ -20,6 +20,7 @@ import RssNewsFeed from "../views/RssNewsFeed";
 import WebViewUI from "../views/WebViewUI";
 import MainView from "../views/MainView";
 import MainViewLive from "../views/MainViewLive";
+import lahetysHaku from "../views/lahetysHaku";
 
 const Stack = createStackNavigator();
 
@@ -115,6 +116,8 @@ const VerkkolahetyksetStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Verkkolähetykset" component={verkkolahetykset} />
+
+      <Stack.Screen name="Verkkolähetysten haku" component={lahetysHaku} />
 
       <Stack.Screen name="Suorat lähetykset" component={liveList} />
       <Stack.Screen name="Suora lähetys" component={live} />
