@@ -125,7 +125,7 @@ setIsLoading(false); // Set loading state to false after results are fetched
   const handleStartDateConfirm = (date) => {
     setStartDate(date);
     setStartDatePickerVisible(false); // Hide the startDate picker
-    setEndDatePickerVisible(true); // Show the endDate picker
+    setEndDatePickerVisible(); // Show the endDate picker
   };
 
   const handleEndDateConfirm = (date) => {
