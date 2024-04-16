@@ -69,6 +69,10 @@ export default function RssNewsFeed({ navigation }) {
     }
   };
 
+  const handleShowAll = (catIndex, title) => {
+    navigation.navigate("AllNews", { catIndex, title });
+  };
+
   const NewsItem = ({ item }) => (
     <TouchableOpacity onPress={() => handlePress(item.link)}>
       <View style={styles.newsContainer}>
@@ -96,8 +100,20 @@ export default function RssNewsFeed({ navigation }) {
       value={{ selectedCategory, setSelectedCategory }}
     >
       <ScrollView>
-        <View>
+        <View style={styles.headingContainer}>
           <Heading size="h3">Uutisvirta</Heading>
+          <TouchableOpacity
+            onPress={() =>
+              handleShowAll(
+                selectedCategory,
+                RssFeeds[selectedCategory].categoryName
+              )
+            }
+            hitSlop={{ top: 25, bottom: 25, left: 15, right: 15 }}
+            style={styles.buttonRight}
+          >
+            <Text style={styles.buttonText}>{">"}</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.tagContainer}>
           <FlatList
@@ -173,5 +189,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingBottom: 20,
     paddingTop: 20,
+  },
+  headingContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  buttonRight: {
+    marginLeft: "auto",
+    marginRight: 30,
+    marginTop: 10,
+  },
+  buttonText: {
+    fontWeight: "bold",
+    fontSize: 25,
   },
 });
