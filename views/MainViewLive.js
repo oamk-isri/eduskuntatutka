@@ -116,8 +116,10 @@ export default MainViewLive = ({ navigation }) => {
           isSameDay(parseISO(event.publishingDate), new Date())
         );
 
-        const upcomingEvents = allEvents.filter((event) =>
-          isAfter(parseISO(event.publishingDate), new Date())
+        const upcomingEvents = allEvents.filter(
+          (event) =>
+            isAfter(parseISO(event.publishingDate), new Date()) &&
+            !todaysEvents.some((todayEvent) => todayEvent._id === event._id)
         );
 
         setEventsToday(todaysEvents);
