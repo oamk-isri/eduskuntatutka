@@ -2,6 +2,7 @@ import { ScrollView } from "react-native";
 import MainViewLive from "./MainViewLive";
 import RssNewsFeed from "./RssNewsFeed";
 import LiveList from "./liveList";
+import Votes from "./Votes";
 
 const MainView = ({ navigation }) => {
   return (
@@ -9,6 +10,7 @@ const MainView = ({ navigation }) => {
       <ScrollView>
         <RssNewsFeed navigation={navigation} />
         <MainViewLive navigation={navigation} />
+        <Votes />
       </ScrollView>
     </>
   );
