@@ -1,3 +1,4 @@
+import { Header } from "./Header";
 import { createStackNavigator } from "@react-navigation/stack";
 import representatives from "../views/representatives";
 import representative from "../views/representative";
@@ -28,8 +29,20 @@ const Stack = createStackNavigator();
 const PlenumsStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Täysistunnot" component={plenumList} />
-      <Stack.Screen name="PlenumDetails" component={PlenumDetails} />
+      <Stack.Screen
+        name="Täysistunnot"
+        component={plenumList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Täysistunnot" />
+        }} />
+      <Stack.Screen
+        name="PlenumDetails"
+        component={PlenumDetails}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Täysistunto" />
+        }} />
     </Stack.Navigator>
   );
 };
@@ -37,8 +50,20 @@ const PlenumsStack = () => {
 const RepresentativesStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Kansanedustajat" component={representatives} />
-      <Stack.Screen name="Kansanedustaja" component={representative} />
+      <Stack.Screen
+        name="Kansanedustajat"
+        component={representatives}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Kansanedustajat" />,
+        }} />
+      <Stack.Screen
+        name="Kansanedustaja"
+        component={representative}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Kansanedustaja" />,
+        }} />
     </Stack.Navigator>
   );
 };
@@ -49,8 +74,17 @@ const ValiokuntaStack = () => {
       <Stack.Screen
         name="Valiokuntien julkiset kuulemiset ja avoimet kokoukset"
         component={valiokuntaList}
-      />
-      <Stack.Screen name="Valiokunta" component={valiokunta} />
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Valiokuntien kuulemiset" />
+        }}/>
+      <Stack.Screen
+        name="Valiokunta"
+        component={valiokunta}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Valiokunta" />
+        }} />
     </Stack.Navigator>
   );
 };
@@ -58,8 +92,20 @@ const ValiokuntaStack = () => {
 const SeminaariStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Seminaarit" component={seminaaritList} />
-      <Stack.Screen name="Seminaari" component={seminaari} />
+      <Stack.Screen
+        name="Seminaarit"
+        component={seminaaritList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Seminaarit" />
+        }} />
+      <Stack.Screen
+        name="Seminaari"
+        component={seminaari}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Seminaari" />
+        }}/>
     </Stack.Navigator>
   );
 };
@@ -67,8 +113,20 @@ const SeminaariStack = () => {
 const TiedotusStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Tiedotustilaisuudet" component={tiedotusList} />
-      <Stack.Screen name="Tiedotustilaisuus" component={tiedotus} />
+      <Stack.Screen
+        name="Tiedotustilaisuudet"
+        component={tiedotusList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Tiedotustilaisuudet" />
+        }} />
+      <Stack.Screen
+        name="Tiedotustilaisuus"
+        component={tiedotus}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Tiedotustilaisuus" />
+        }}/>
     </Stack.Navigator>
   );
 };
@@ -76,8 +134,20 @@ const TiedotusStack = () => {
 const EsittelyStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Esittelyvideot" component={esittelyList} />
-      <Stack.Screen name="Esittelyvideo" component={esittely} />
+      <Stack.Screen
+        name="Esittelyvideot"
+        component={esittelyList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Esitelyvideot" />
+        }} />
+      <Stack.Screen
+        name="Esittelyvideo"
+        component={esittely}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Esittelyvideo" />
+        }} />
     </Stack.Navigator>
   );
 };
@@ -85,8 +155,20 @@ const EsittelyStack = () => {
 const EduRyhmatStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Eduskuntaryhmät" component={eduryhmatList} />
-      <Stack.Screen name="Eduskuntaryhmä" component={eduryhmat} />
+      <Stack.Screen
+        name="Eduskuntaryhmät"
+        component={eduryhmatList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Eduskuntaryhmät" />
+        }} />
+      <Stack.Screen
+        name="Eduskuntaryhmä"
+        component={eduryhmat}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Eduskuntaryhmät" />
+        }} />
     </Stack.Navigator>
   );
 };
@@ -94,8 +176,20 @@ const EduRyhmatStack = () => {
 const LiveStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Suorat lähetykset" component={liveList} />
-      <Stack.Screen name="Suora lähetys" component={live} />
+      <Stack.Screen
+        name="Suorat lähetykset"
+        component={liveList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Suorat lähetykset" />
+        }} />
+      <Stack.Screen
+        name="Suora lähetys"
+        component={live}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Suora lähetys" />
+        }} />
     </Stack.Navigator>
   );
 };
@@ -103,13 +197,51 @@ const LiveStack = () => {
 const NewsStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="MainView" component={MainView} />
-      <Stack.Screen name="RssNewsFeed" component={RssNewsFeed} />
-      <Stack.Screen name="AllNews" component={AllNews} />
-      <Stack.Screen name="WebViewUI" component={WebViewUI} />
-      <Stack.Screen name="MainViewLive" component={MainViewLive} />
-      <Stack.Screen name="PlenumDetails" component={PlenumDetails} />
-      <Stack.Screen name="Suora lähetys" component={live} />
+      <Stack.Screen
+        name="MainView"
+        component={MainView}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Eduskuntatutka" isBack={false} />
+        }} />
+      <Stack.Screen
+        name="RssNewsFeed"
+        component={RssNewsFeed}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Syötteet" />
+        }} />
+      <Stack.Screen
+        name="AllNews"
+        component={AllNews}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Jotain fiksua tähän" />
+        }} />
+      <Stack.Screen
+        name="WebViewUI"
+        component={WebViewUI}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Verkkonäkymä" />
+        }} />
+      <Stack.Screen
+        name="MainViewLive"
+        component={MainViewLive} />
+      <Stack.Screen
+        name="PlenumDetails"
+        component={PlenumDetails}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Täysistunto" />
+        }} />
+      <Stack.Screen
+        name="Suora lähetys"
+        component={live}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Suora lähetys" />
+        }} />
     </Stack.Navigator>
   );
 };
@@ -117,33 +249,121 @@ const NewsStack = () => {
 const VerkkolahetyksetStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Verkkolähetykset" component={verkkolahetykset} />
+      <Stack.Screen
+       name="Verkkolähetykset"
+       component={verkkolahetykset}
+       options={{
+        header: ({ navigation }) =>
+          <Header navigation={navigation} title="Verkkolähetykset" />
+      }} />
+      <Stack.Screen
+        name="Verkkolähetysten haku"
+        component={lahetysHaku}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Verkkolähetysten haku" />
+        }} />
+      <Stack.Screen
+        name="Suorat lähetykset"
+        component={liveList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Suorat lähetykset" />
+        }} />
+      <Stack.Screen
+        name="Suora lähetys"
+        component={live}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Suora lähetys" />
+        }} />
 
-      <Stack.Screen name="Verkkolähetysten haku" component={lahetysHaku} />
-
-      <Stack.Screen name="Suorat lähetykset" component={liveList} />
-      <Stack.Screen name="Suora lähetys" component={live} />
-
-      <Stack.Screen name="Täysistunnot" component={plenumList} />
-      <Stack.Screen name="PlenumDetails" component={PlenumDetails} />
+      <Stack.Screen
+        name="Täysistunnot"
+        component={plenumList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Täysistunnot" />
+        }} />
+      <Stack.Screen
+        name="PlenumDetails"
+        component={PlenumDetails}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Täysinstunto" />
+        }} />
 
       <Stack.Screen
         name="Valiokuntien julkiset kuulemiset ja avoimet kokoukset"
         component={valiokuntaList}
-      />
-      <Stack.Screen name="Valiokunta" component={valiokunta} />
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Valiokunnan kuulemiset" />
+        }} /> 
+      <Stack.Screen
+        name="Valiokunta"
+        component={valiokunta}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Valiokunta" />
+        }} />
+      <Stack.Screen
+        name="Eduskuntaryhmät"
+        component={eduryhmatList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Eduskuntaryhmät" />
+        }} />
+      <Stack.Screen
+        name="Eduskuntaryhmä"
+        component={eduryhmat}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Eduskuntaryhmä" />
+        }} />
 
-      <Stack.Screen name="Eduskuntaryhmät" component={eduryhmatList} />
-      <Stack.Screen name="Eduskuntaryhmä" component={eduryhmat} />
-
-      <Stack.Screen name="Seminaarit" component={seminaaritList} />
-      <Stack.Screen name="Seminaari" component={seminaari} />
-
-      <Stack.Screen name="Tiedotustilaisuudet" component={tiedotusList} />
-      <Stack.Screen name="Tiedotustilaisuus" component={tiedotus} />
-
-      <Stack.Screen name="Esittelyvideot" component={esittelyList} />
-      <Stack.Screen name="Esittelyvideo" component={esittely} />
+      <Stack.Screen
+        name="Seminaarit"
+        component={seminaaritList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Seminaarit" />
+        }} />
+      <Stack.Screen
+        name="Seminaari"
+        component={seminaari}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Seminaari" />
+        }} />
+      <Stack.Screen
+        name="Tiedotustilaisuudet"
+        component={tiedotusList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Tiedotustilaisuudet" />
+        }} />
+      <Stack.Screen
+        name="Tiedotustilaisuus"
+        component={tiedotus}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Tiedotustilaisuus" />
+        }} />
+      <Stack.Screen
+        name="Esittelyvideot"
+        component={esittelyList}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Valiokunta" />
+        }} />
+      <Stack.Screen
+        name="Esittelyvideo"
+        component={esittely}
+        options={{
+          header: ({ navigation }) =>
+            <Header navigation={navigation} title="Valiokunta" />
+        }} />
     </Stack.Navigator>
   );
 };
