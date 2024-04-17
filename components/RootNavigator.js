@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Image, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Appbar, Drawer } from "react-native-paper";
+import { Drawer } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   PlenumsStack,
@@ -18,7 +18,6 @@ import {
 import Info from "../views/info";
 import Eduskunta from "../views/EduskuntaView";
 import RssNewsFeed from "../views/RssNewsFeed";
-import LogoDark from "../assets/logo/LogoDark.svg";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6"
 import MainView from "../views/MainView";
@@ -60,104 +59,61 @@ const DrawerView = ({ navigation }) => {
   );
 };
 
-const MainHeader = ({ navigation }) => {
-  return (
-    <Appbar.Header style={{ height: 75 }}>
-      <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-      <Appbar.Content title="Eduskuntatutka" />
-      <LogoDark width={60} height={60} />
-    </Appbar.Header>
-  );
-};
-
 export default RootNavigator = () => {
   return (
     <MainDrawer.Navigator
       drawerContent={({ navigation }) => <DrawerView navigation={navigation} />}
+      screenOptions={{
+        headerShown: false
+      }}
     >
       <MainDrawer.Screen
         name="NewsStack"
         component={NewsStack}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
       <MainDrawer.Screen
         name="VerkkolahetyksetStack"
         component={VerkkolahetyksetStack}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
       <MainDrawer.Screen
         name="LiveStack"
         component={LiveStack}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
       <MainDrawer.Screen
         name="PlenumsStack"
         component={PlenumsStack}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
       <MainDrawer.Screen
         name="ValiokuntaStack"
         component={ValiokuntaStack}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
       <MainDrawer.Screen
         name="SeminaariStack"
         component={SeminaariStack}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
       <MainDrawer.Screen
         name="TiedotusStack"
         component={TiedotusStack}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
       <MainDrawer.Screen
         name="EsittelyStack"
         component={EsittelyStack}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
       <MainDrawer.Screen
         name="EduRyhmatStack"
         component={EduRyhmatStack}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
       <MainDrawer.Screen
         name="RepresentativesStack"
         component={RepresentativesStack}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
       <MainDrawer.Screen
         name="Info"
         component={Info}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
       <MainDrawer.Screen
         name="EduskuntaNav"
         component={Eduskunta}
-        options={{
-          header: ({ navigation }) => <MainHeader navigation={navigation} />,
-        }}
       />
     </MainDrawer.Navigator>
   );
