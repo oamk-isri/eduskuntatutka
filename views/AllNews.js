@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { ActivityIndicator, Divider } from "react-native-paper";
+import { Divider } from "react-native-paper";
 import { RssFeeds } from "../constants/RssFeeds";
 import { GetRssFeed } from "../components/GetRssFeed";
 import DateWithFinnishWeekday from "../components/DateParser";
@@ -8,7 +8,7 @@ import DateWithFinnishWeekday from "../components/DateParser";
 import { FlatList } from "react-native-gesture-handler";
 
 export default function AllNews({ navigation, route }) {
-  const { getData, data, isLoading, error } = GetRssFeed();
+  const { getData, data } = GetRssFeed();
   const { title, catIndex } = route.params;
 
   useEffect(() => {
@@ -48,32 +48,17 @@ export default function AllNews({ navigation, route }) {
 
   return (
     <View>
-      {isLoading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#114d9d" animating={true} />
-        </View>
-      ) : (
-        <FlatList
-          data={data}
-          maxToRenderPerBatch={5}
-          renderItem={({ item }) => <NewsItem item={item} />}
-          keyExtractor={(item) => item.link}
-        />
-      )}
+      <FlatList
+        data={data}
+        maxToRenderPerBatch={5}
+        renderItem={({ item }) => <NewsItem item={item} />}
+        keyExtractor={(item) => item.link}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  loadingContainer: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   tagContainer: {
     padding: 15,
     flexDirection: "row",

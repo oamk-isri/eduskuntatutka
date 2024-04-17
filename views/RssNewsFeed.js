@@ -76,7 +76,7 @@ export default function RssNewsFeed({ navigation }) {
   const NewsItem = ({ item }) => (
     <TouchableOpacity onPress={() => handlePress(item.link)}>
       <View style={styles.newsContainer}>
-        <View style={{ flex: 0.2 }}>
+        <View style={{ flex: 0.2, paddingTop: 10, paddingBottom: 10 }}>
           <DateWithFinnishWeekday dateString={item.pubDate} />
         </View>
         <View style={{ flex: 0.8 }}>
@@ -112,7 +112,7 @@ export default function RssNewsFeed({ navigation }) {
             hitSlop={{ top: 25, bottom: 25, left: 15, right: 15 }}
             style={styles.buttonRight}
           >
-            <Text style={styles.buttonText}>{">"}</Text>
+            <Text style={styles.buttonText}>Näytä kaikki {">"}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.tagContainer}>
@@ -197,10 +197,10 @@ const styles = StyleSheet.create({
   buttonRight: {
     marginLeft: "auto",
     marginRight: 30,
-    marginTop: 10,
+    marginTop: 20,
   },
   buttonText: {
     fontWeight: "bold",
-    fontSize: 25,
+    fontSize: 15,
   },
 });
