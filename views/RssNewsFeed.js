@@ -91,7 +91,11 @@ export default function RssNewsFeed({ navigation }) {
     </TouchableOpacity>
   );
 
-  const newsList = data
+  const sortedData = [...data].sort(
+    (a, b) => new Date(b.pubDate) - new Date(a.pubDate)
+  );
+
+  const newsList = sortedData
     .slice(0, 5)
     .map((item) => <NewsItem key={item.link} item={item} />);
 
