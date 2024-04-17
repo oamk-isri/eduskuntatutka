@@ -28,6 +28,10 @@ export default function AllNews({ navigation, route }) {
     }
   };
 
+  const sortedData = [...data].sort(
+    (a, b) => new Date(b.pubDate) - new Date(a.pubDate)
+  );
+
   const NewsItem = ({ item }) => (
     <TouchableOpacity onPress={() => handlePress(item.link)}>
       <View style={styles.newsContainer}>
@@ -49,7 +53,7 @@ export default function AllNews({ navigation, route }) {
   return (
     <View>
       <FlatList
-        data={data}
+        data={sortedData}
         maxToRenderPerBatch={5}
         renderItem={({ item }) => <NewsItem item={item} />}
         keyExtractor={(item) => item.link}
