@@ -4,15 +4,14 @@ import { ActivityIndicator, Divider } from "react-native-paper";
 import RssTags from "../components/RssTags";
 import { RssFeeds } from "../constants/RssFeeds";
 import { NewsCategoryContext } from "../contexts/Contexts";
-import { GetRssFeed } from "../components/GetRssFeed";
 import Heading from "../components/Heading";
-import DateWithFinnishWeekday from "../components/DateParser";
 import SwipeableList from "../components/SwipeableList";
-
 import { FlatList, ScrollView } from "react-native-gesture-handler";
+import FinnishDate from "../components/parsers/FinnishDate";
+import Xml from "../components/parsers/Xml";
 
 export default function RssNewsFeed({ navigation }) {
-  const { getData, data, isLoading, error } = GetRssFeed();
+  const { getData, data, isLoading, error } = Xml();
   const [selectedCategory, setSelectedCategory] = useState(0);
   const flatListRef = useRef(null);
   const newsfeedHeightRef = useRef(null);
@@ -77,7 +76,7 @@ export default function RssNewsFeed({ navigation }) {
     <TouchableOpacity onPress={() => handlePress(item.link)}>
       <View style={styles.newsContainer}>
         <View style={{ flex: 0.2, paddingTop: 10, paddingBottom: 10 }}>
-          <DateWithFinnishWeekday dateString={item.pubDate} />
+          <FinnishDate dateString={item.pubDate} />
         </View>
         <View style={{ flex: 0.8 }}>
           {item.title.length > 40 || !item.description.length ? (

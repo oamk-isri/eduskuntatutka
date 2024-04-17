@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { parse } from "fast-xml-parser";
 
-export const GetRssFeed = () => {
+export default Xml = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const [data, setData] = useState([]);
