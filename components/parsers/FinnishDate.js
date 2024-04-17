@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import fi from "date-fns/locale/fi";
 import { StyleSheet } from "react-native";
 
-const DateWithFinnishWeekday = ({ dateString }) => {
+export default FinnishDate = ({ dateString }) => {
   const parsedDate = parseDateStringToNumber(dateString);
 
   if (!parsedDate) {
@@ -65,5 +65,3 @@ const styles = StyleSheet.create({
     color: "#888",
   },
 });
-
-export default DateWithFinnishWeekday;

@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Divider } from "react-native-paper";
 import { RssFeeds } from "../constants/RssFeeds";
-import { GetRssFeed } from "../components/GetRssFeed";
-import DateWithFinnishWeekday from "../components/DateParser";
-
 import { FlatList } from "react-native-gesture-handler";
+import FinnishDate from "../components/parsers/FinnishDate";
+import Xml from "../components/parsers/Xml";
 
 export default function AllNews({ navigation, route }) {
-  const { getData, data } = GetRssFeed();
+  const { getData, data } = Xml();
   const { title, catIndex } = route.params;
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export default function AllNews({ navigation, route }) {
     <TouchableOpacity onPress={() => handlePress(item.link)}>
       <View style={styles.newsContainer}>
         <View style={{ flex: 0.2 }}>
-          <DateWithFinnishWeekday dateString={item.pubDate} />
+          <FinnishDate dateString={item.pubDate} />
         </View>
         <View style={{ flex: 0.8 }}>
           {item.title.length > 40 || !item.description.length ? (
