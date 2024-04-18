@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import { ActivityIndicator, ProgressBar } from "react-native-paper";
+import { ActivityIndicator } from "react-native-paper";
 import { WebView } from "react-native-webview";
 
-function WebViewUI(props) {
+export default Browser = (props) => {
   const webviewRef = useRef(null);
   const [hasInitialLoadFinished, setHasInitialLoadFinished] = useState(false);
   const [progressCount, setProgressCount] = useState(0);
@@ -244,7 +244,7 @@ function WebViewUI(props) {
   };
 
   return <>{renderWebview()}</>;
-}
+};
 
 const styles = StyleSheet.create({
   loadingContainer: {
@@ -278,5 +278,3 @@ const styles = StyleSheet.create({
     height: 20,
   },
 });
-
-export default WebViewUI;
