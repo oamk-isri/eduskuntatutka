@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
 
-const Heading = ({ children, size, style }) => {
+export default Heading = ({ children, size, style }) => {
   const getSize = (size) => {
     switch (size) {
       case "h1":
@@ -26,5 +26,3 @@ const Heading = ({ children, size, style }) => {
 
   return <Text style={[headingStyles[size], style]}>{children}</Text>;
 };
-
-export default Heading;

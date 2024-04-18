@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useState } from "react";
 import { PanGestureHandler, ScrollView } from "react-native-gesture-handler";
-import { NewsCategoryContext } from "../contexts/Contexts";
-import { RssFeeds } from "../constants/RssFeeds";
+import { NewsCategoryContext } from "../../contexts/Contexts";
+import { RssFeeds } from "../../constants/RssFeeds";
 
-const SwipeableList = ({ children }) => {
+export default SwipeableList = ({ children }) => {
   const { setSelectedCategory } = useContext(NewsCategoryContext);
 
   const handleSwipe = ({ nativeEvent }) => {
@@ -26,5 +26,3 @@ const SwipeableList = ({ children }) => {
     </ScrollView>
   );
 };
-
-export default SwipeableList;
