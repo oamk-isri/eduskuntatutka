@@ -11,7 +11,7 @@ const EduskuntaScreen = () => (
         Suomen eduskunta
       </Text>
       <Image
-        source={require("../assets/images/EduskuntaTalo.png")}
+        source={require("../../assets/images/EduskuntaTalo.png")}
         style={{ width: "100%", height: 150, marginVertical: 10, marginTop: 5 }}
         resizeMode="stretch"
       />
@@ -39,7 +39,7 @@ const ToimintaScreen = () => (
     <View style={{ paddingHorizontal: 10 }}>
       <Text style={{ fontSize: 24, paddingVertical: 10 }}>Toiminta</Text>
       <Image
-        source={require("../assets/images/Taysistunto.jpg")}
+        source={require("../../assets/images/Taysistunto.jpg")}
         style={{ width: "100%", height: 200, marginVertical: 10, marginTop: 5 }}
         resizeMode="stretch"
       />
@@ -68,7 +68,7 @@ const EduskuntaryhmatScreen = () => (
     <View style={{ paddingHorizontal: 10 }}>
       <Text style={{ fontSize: 24, paddingVertical: 10 }}>Eduskuntaryhmät</Text>
       <Image
-        source={require("../assets/images/EduskuntaRyhmat.jpg")}
+        source={require("../../assets/images/EduskuntaRyhmat.jpg")}
         style={{ width: "100%", height: 200, marginVertical: 10, marginTop: 5 }}
         resizeMode="stretch"
       />
@@ -97,7 +97,7 @@ const EduskuntaryhmatScreen = () => (
   </ScrollView>
 );
 
-const Eduskunta = () => {
+export default Parliament = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -115,5 +115,3 @@ const Eduskunta = () => {
     </Tab.Navigator>
   );
 };
-
-export default Eduskunta;
