@@ -89,7 +89,7 @@ const EduskuntaryhmatScreen = () => (
         kansanedustajat osallistuvat yhdessä valiokuntatyöhön.
       </Text>
       <Text style={{ fontSize: 18, marginVertical: 10, paddingBottom: 50 }}>
-        Oppositioryhmillä on tärkeä rooloi demokratiassa: ne arvostelevat
+        Oppositioryhmillä on tärkeä rooli demokratiassa: ne arvostelevat
         hallituksen toimintaa, esittävät vaihtoehtoja ja vaativat ministereitä
         perustelemaan hallituksen tekemiä ratkaisuja.
       </Text>
