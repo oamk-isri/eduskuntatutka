@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { ActivityIndicator, Divider } from "react-native-paper";
-import RssTags from "../components/RssTags";
+
 import { RssFeeds } from "../constants/RssFeeds";
 import { NewsCategoryContext } from "../contexts/Contexts";
-import Heading from "../components/Heading";
-import SwipeableList from "../components/SwipeableList";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import FinnishDate from "../components/parsers/FinnishDate";
 import Xml from "../components/parsers/Xml";
+import Heading from "../components/elements/Heading";
+import SwipeableList from "../components/elements/SwipeableList";
+import NewsTags from "../components/elements/NewsTags";
 
 export default function RssNewsFeed({ navigation }) {
   const { getData, data, isLoading, error } = Xml();
@@ -140,7 +141,7 @@ export default function RssNewsFeed({ navigation }) {
               { categoryIndex: 13, categoryName: "Lausumat ja kannanotot" },
             ]}
             renderItem={({ item }) => (
-              <RssTags
+              <NewsTags
                 categoryIndex={item.categoryIndex}
                 categoryName={item.categoryName}
               />

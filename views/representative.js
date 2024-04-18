@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
-import Speeches from "../components/repSpeeches";
-import Details from "../components/repDetails";
 import parties from "../styles/parties";
 import Absence from "../components/parsers/Absence";
 import { ActivityIndicator, List } from "react-native-paper";
+import RepDetails from "../components/elements/RepDetails";
+import RepSpeeches from "../components/elements/RepSpeeches";
 
 export default Representative = ({ route }) => {
   const { id, image, party } = route.params;
@@ -51,19 +51,17 @@ export default Representative = ({ route }) => {
           <Text style={styles.longParty}>{longParty}</Text>
         </View>
 
-        <Details data={data} longParty={longParty} />
-        <Speeches id={hetekaId} />
-        {
-          isLoading ? (
-            // mockup list
-            <List.Accordion
+        <RepDetails data={data} longParty={longParty} />
+        <RepSpeeches id={hetekaId} />
+        {isLoading ? (
+          // mockup list
+          <List.Accordion
             left={(props) => <List.Icon {...props} icon="account-cancel" />}
-              title={<ActivityIndicator />}
-            />
-          ) : (
-            <Absence first={firstname} last={lastname} />
-          )
-        }
+            title={<ActivityIndicator />}
+          />
+        ) : (
+          <Absence first={firstname} last={lastname} />
+        )}
       </ScrollView>
     </View>
   );

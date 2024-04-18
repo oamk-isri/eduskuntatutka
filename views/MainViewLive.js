@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Text, Card } from "react-native-paper";
 import { isSameDay, parseISO, isAfter } from "date-fns";
-import Heading from "../components/Heading";
+import Heading from "../components/elements/Heading";
 
 const TodayEvents = ({ events, handlePressEvent }) => {
   return (
@@ -26,7 +26,7 @@ const TodayEvents = ({ events, handlePressEvent }) => {
               <Text
                 style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
               >
-                Tänään: {event.title.split("|")[0].trim().toLowerCase()}
+                {event.title.split("|")[0].trim().toLowerCase()}
               </Text>
             </Card.Content>
           </Card>
