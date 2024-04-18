@@ -19,10 +19,10 @@ import liveList from "../../views/liveList";
 import verkkolahetykset from "../../views/verkkolahetykset";
 import WebViewUI from "../../views/WebViewUI";
 import MainView from "../../views/MainView";
-import MainViewLive from "../../views/MainViewLive";
 import lahetysHaku from "../../views/lahetysHaku";
 import NewsFeed from "../newsfeed/NewsFeed";
 import News from "../newsfeed/News";
+import Events from "../events/Events";
 
 const Stack = createStackNavigator();
 
@@ -269,7 +269,7 @@ const NewsStack = () => {
           ),
         }}
       />
-      <Stack.Screen name="MainViewLive" component={MainViewLive} />
+      <Stack.Screen name="Events" component={Events} />
       <Stack.Screen
         name="PlenumDetails"
         component={PlenumDetails}
