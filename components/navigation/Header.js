@@ -1,7 +1,7 @@
 import { Appbar } from "react-native-paper";
-import LogoDark from "../assets/logo/LogoDark.svg";
+import LogoDark from "../../assets/logo/LogoDark.svg";
 
-export const Header = ({ navigation, title, isBack=true }) => {
+export default Header = ({ navigation, title, isBack = true }) => {
   return (
     <Appbar.Header style={{ height: 75 }}>
       <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
@@ -10,7 +10,7 @@ export const Header = ({ navigation, title, isBack=true }) => {
       ) : (
         <></>
       )}
-      
+
       <Appbar.Content title={title} />
       <LogoDark width={60} height={60} />
     </Appbar.Header>
