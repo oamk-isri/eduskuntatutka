@@ -23,7 +23,7 @@ export default News = ({ navigation, route }) => {
 
   const handlePress = (link) => {
     if (link) {
-      navigation.navigate("WebViewUI", { uri: link });
+      navigation.navigate("Browser", { uri: link });
     }
   };
 

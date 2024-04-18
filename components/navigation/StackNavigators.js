@@ -2,8 +2,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Header from "./Header";
 import representatives from "../../views/representatives";
 import representative from "../../views/representative";
-import WebViewUI from "../../views/WebViewUI";
-import MainView from "../../views/MainView";
 import NewsFeed from "../newsfeed/NewsFeed";
 import News from "../newsfeed/News";
 import Events from "../events/Events";
@@ -23,6 +21,8 @@ import LiveList from "../../views/broadcasts/live/LiveList";
 import Live from "../../views/broadcasts/live/Live";
 import Broadcasts from "../../views/broadcasts/Broadcasts";
 import Search from "../../views/broadcasts/search/Search";
+import Main from "../../views/frontpage/Main";
+import Browser from "../../views/frontpage/Browser";
 
 const Stack = createStackNavigator();
 
@@ -230,8 +230,8 @@ const NewsStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="MainView"
-        component={MainView}
+        name="Main"
+        component={Main}
         options={{
           header: ({ navigation }) => (
             <Header
@@ -261,8 +261,8 @@ const NewsStack = () => {
         })}
       />
       <Stack.Screen
-        name="WebViewUI"
-        component={WebViewUI}
+        name="Browser"
+        component={Browser}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Verkkonäkymä" />
