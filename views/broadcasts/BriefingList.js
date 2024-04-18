@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Text, Card } from "react-native-paper";
 
-export default valiokuntaList = ({ navigation }) => {
+export default BriefingList = ({ navigation }) => {
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -20,7 +20,7 @@ export default valiokuntaList = ({ navigation }) => {
   const fetchEvents = () => {
     axios
       .get(
-        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/valiokuntien-julkiset-kuulemiset-ja-avoimet-kokoukset?include=events&limit=16&page=${page}`
+        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/tiedotustilaisuudet?include=events&limit=16&page=${page}`
       )
       .then((response) => {
         if (response.data && response.data.events) {
@@ -46,7 +46,9 @@ export default valiokuntaList = ({ navigation }) => {
         <TouchableOpacity
           key={event._id}
           onPress={() =>
-            navigation.navigate("Valiokunta", { valiokunnatEvent: event })
+            navigation.navigate("Tiedotustilaisuus", {
+              tiedotustilaisuudetEvent: event,
+            })
           }
         >
           <Card style={{ margin: 5 }}>

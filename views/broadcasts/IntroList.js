@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Text, Card } from "react-native-paper";
 
-export default tiedotusList = ({ navigation }) => {
+export default IntroList = ({ navigation }) => {
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -20,7 +20,7 @@ export default tiedotusList = ({ navigation }) => {
   const fetchEvents = () => {
     axios
       .get(
-        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/tiedotustilaisuudet?include=events&limit=16&page=${page}`
+        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/esittelyvideot?include=events&limit=16&page=${page}`
       )
       .then((response) => {
         if (response.data && response.data.events) {
@@ -46,9 +46,7 @@ export default tiedotusList = ({ navigation }) => {
         <TouchableOpacity
           key={event._id}
           onPress={() =>
-            navigation.navigate("Tiedotustilaisuus", {
-              tiedotustilaisuudetEvent: event,
-            })
+            navigation.navigate("Esittelyvideo", { esittelyvideotEvent: event })
           }
         >
           <Card style={{ margin: 5 }}>

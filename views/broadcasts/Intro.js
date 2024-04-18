@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Linking, ScrollView, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 
-export default live = ({ route, navigation }) => {
-  const { liveEvent } = route.params;
-  const { title, urlName } = liveEvent;
+export default Intro = ({ route, navigation }) => {
+  const { esittelyvideotEvent } = route.params;
+  const { title, urlName } = esittelyvideotEvent;
   const webViewRef = useRef(null); // <-- Define a ref for the WebView
   const [eventInfo, setEventInfo] = useState(null);
 
@@ -43,7 +43,7 @@ export default live = ({ route, navigation }) => {
     webViewRef.current.injectJavaScript(`
       // Find and modify the CSS rule for footer, section, and elements with class .hidden-state
       var styleElement = document.createElement('style');
-      styleElement.innerHTML = '.hidden-state { padding: 0; } body { font-size: 8px; }'; // Override padding to 0
+      styleElement.innerHTML = '.hidden-state { padding: 0; } body { font-size: 12px; }'; // Override padding to 0
       document.head.appendChild(styleElement);
     `);
   };

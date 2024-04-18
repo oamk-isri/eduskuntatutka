@@ -2,27 +2,27 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Header from "./Header";
 import representatives from "../../views/representatives";
 import representative from "../../views/representative";
-import plenumList from "../../views/plenumList";
-import PlenumDetails from "../../views/plenum";
-import valiokunta from "../../views/valiokunta";
-import valiokuntaList from "../../views/valiokuntaList";
-import seminaari from "../../views/seminaari";
-import seminaaritList from "../../views/seminaaritList";
-import tiedotus from "../../views/tiedotus";
-import tiedotusList from "../../views/tiedotusList";
-import esittely from "../../views/esittely";
-import esittelyList from "../../views/esittelyList";
-import eduryhmat from "../../views/eduryhmat";
-import eduryhmatList from "../../views/eduryhmatList";
-import live from "../../views/live";
-import liveList from "../../views/liveList";
-import verkkolahetykset from "../../views/verkkolahetykset";
 import WebViewUI from "../../views/WebViewUI";
 import MainView from "../../views/MainView";
-import lahetysHaku from "../../views/lahetysHaku";
 import NewsFeed from "../newsfeed/NewsFeed";
 import News from "../newsfeed/News";
 import Events from "../events/Events";
+import Plenum from "../../views/broadcasts/Plenum";
+import PlenumList from "../../views/broadcasts/PlenumList";
+import CommitteeList from "../../views/broadcasts/CommitteeList";
+import Committee from "../../views/broadcasts/Committee";
+import SeminarList from "../../views/broadcasts/SeminarList";
+import Seminar from "../../views/broadcasts/Seminar";
+import BriefingList from "../../views/broadcasts/BriefingList";
+import Briefing from "../../views/broadcasts/Briefing";
+import IntroList from "../../views/broadcasts/IntroList";
+import Intro from "../../views/broadcasts/Intro";
+import RepGroupList from "../../views/broadcasts/RepGroupList";
+import RepGroup from "../../views/broadcasts/RepGroup";
+import LiveList from "../../views/broadcasts/live/LiveList";
+import Live from "../../views/broadcasts/live/Live";
+import Broadcasts from "../../views/broadcasts/Broadcasts";
+import Search from "../../views/broadcasts/search/Search";
 
 const Stack = createStackNavigator();
 
@@ -31,7 +31,7 @@ const PlenumsStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Täysistunnot"
-        component={plenumList}
+        component={PlenumList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Täysistunnot" />
@@ -39,8 +39,8 @@ const PlenumsStack = () => {
         }}
       />
       <Stack.Screen
-        name="PlenumDetails"
-        component={PlenumDetails}
+        name="Täysistunto"
+        component={Plenum}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Täysistunto" />
@@ -81,7 +81,7 @@ const ValiokuntaStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Valiokuntien julkiset kuulemiset ja avoimet kokoukset"
-        component={valiokuntaList}
+        component={CommitteeList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Valiokuntien kuulemiset" />
@@ -90,7 +90,7 @@ const ValiokuntaStack = () => {
       />
       <Stack.Screen
         name="Valiokunta"
-        component={valiokunta}
+        component={Committee}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Valiokunta" />
@@ -106,7 +106,7 @@ const SeminaariStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Seminaarit"
-        component={seminaaritList}
+        component={SeminarList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Seminaarit" />
@@ -115,7 +115,7 @@ const SeminaariStack = () => {
       />
       <Stack.Screen
         name="Seminaari"
-        component={seminaari}
+        component={Seminar}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Seminaari" />
@@ -131,7 +131,7 @@ const TiedotusStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Tiedotustilaisuudet"
-        component={tiedotusList}
+        component={BriefingList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Tiedotustilaisuudet" />
@@ -140,7 +140,7 @@ const TiedotusStack = () => {
       />
       <Stack.Screen
         name="Tiedotustilaisuus"
-        component={tiedotus}
+        component={Briefing}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Tiedotustilaisuus" />
@@ -156,7 +156,7 @@ const EsittelyStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Esittelyvideot"
-        component={esittelyList}
+        component={IntroList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Esittelyvideot" />
@@ -165,7 +165,7 @@ const EsittelyStack = () => {
       />
       <Stack.Screen
         name="Esittelyvideo"
-        component={esittely}
+        component={Intro}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Esittelyvideo" />
@@ -181,7 +181,7 @@ const EduRyhmatStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Eduskuntaryhmät"
-        component={eduryhmatList}
+        component={RepGroupList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Eduskuntaryhmät" />
@@ -190,7 +190,7 @@ const EduRyhmatStack = () => {
       />
       <Stack.Screen
         name="Eduskuntaryhmä"
-        component={eduryhmat}
+        component={RepGroup}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Eduskuntaryhmä" />
@@ -206,7 +206,7 @@ const LiveStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Suorat lähetykset"
-        component={liveList}
+        component={LiveList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Suorat lähetykset" />
@@ -215,7 +215,7 @@ const LiveStack = () => {
       />
       <Stack.Screen
         name="Suora lähetys"
-        component={live}
+        component={Live}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Suora lähetys" />
@@ -271,8 +271,8 @@ const NewsStack = () => {
       />
       <Stack.Screen name="Events" component={Events} />
       <Stack.Screen
-        name="PlenumDetails"
-        component={PlenumDetails}
+        name="Täysistunto"
+        component={Plenum}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Täysistunto" />
@@ -281,7 +281,7 @@ const NewsStack = () => {
       />
       <Stack.Screen
         name="Suora lähetys"
-        component={live}
+        component={Live}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Suora lähetys" />
@@ -297,7 +297,7 @@ const VerkkolahetyksetStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Verkkolähetykset"
-        component={verkkolahetykset}
+        component={Broadcasts}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Verkkolähetykset" />
@@ -306,7 +306,7 @@ const VerkkolahetyksetStack = () => {
       />
       <Stack.Screen
         name="Verkkolähetysten haku"
-        component={lahetysHaku}
+        component={Search}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Verkkolähetysten haku" />
@@ -315,7 +315,7 @@ const VerkkolahetyksetStack = () => {
       />
       <Stack.Screen
         name="Suorat lähetykset"
-        component={liveList}
+        component={LiveList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Suorat lähetykset" />
@@ -324,7 +324,7 @@ const VerkkolahetyksetStack = () => {
       />
       <Stack.Screen
         name="Suora lähetys"
-        component={live}
+        component={Live}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Suora lähetys" />
@@ -334,7 +334,7 @@ const VerkkolahetyksetStack = () => {
 
       <Stack.Screen
         name="Täysistunnot"
-        component={plenumList}
+        component={PlenumList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Täysistunnot" />
@@ -342,8 +342,8 @@ const VerkkolahetyksetStack = () => {
         }}
       />
       <Stack.Screen
-        name="PlenumDetails"
-        component={PlenumDetails}
+        name="Täysistunto"
+        component={Plenum}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Täysistunto" />
@@ -353,7 +353,7 @@ const VerkkolahetyksetStack = () => {
 
       <Stack.Screen
         name="Valiokuntien julkiset kuulemiset ja avoimet kokoukset"
-        component={valiokuntaList}
+        component={CommitteeList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Valiokunnan kuulemiset" />
@@ -362,7 +362,7 @@ const VerkkolahetyksetStack = () => {
       />
       <Stack.Screen
         name="Valiokunta"
-        component={valiokunta}
+        component={Committee}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Valiokunta" />
@@ -371,7 +371,7 @@ const VerkkolahetyksetStack = () => {
       />
       <Stack.Screen
         name="Eduskuntaryhmät"
-        component={eduryhmatList}
+        component={RepGroupList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Eduskuntaryhmät" />
@@ -380,7 +380,7 @@ const VerkkolahetyksetStack = () => {
       />
       <Stack.Screen
         name="Eduskuntaryhmä"
-        component={eduryhmat}
+        component={RepGroup}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Eduskuntaryhmä" />
@@ -390,7 +390,7 @@ const VerkkolahetyksetStack = () => {
 
       <Stack.Screen
         name="Seminaarit"
-        component={seminaaritList}
+        component={SeminarList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Seminaarit" />
@@ -399,7 +399,7 @@ const VerkkolahetyksetStack = () => {
       />
       <Stack.Screen
         name="Seminaari"
-        component={seminaari}
+        component={Seminar}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Seminaari" />
@@ -408,7 +408,7 @@ const VerkkolahetyksetStack = () => {
       />
       <Stack.Screen
         name="Tiedotustilaisuudet"
-        component={tiedotusList}
+        component={BriefingList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Tiedotustilaisuudet" />
@@ -417,7 +417,7 @@ const VerkkolahetyksetStack = () => {
       />
       <Stack.Screen
         name="Tiedotustilaisuus"
-        component={tiedotus}
+        component={Briefing}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Tiedotustilaisuus" />
@@ -426,7 +426,7 @@ const VerkkolahetyksetStack = () => {
       />
       <Stack.Screen
         name="Esittelyvideot"
-        component={esittelyList}
+        component={IntroList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Esittelyvideot" />
@@ -435,7 +435,7 @@ const VerkkolahetyksetStack = () => {
       />
       <Stack.Screen
         name="Esittelyvideo"
-        component={esittely}
+        component={Intro}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Esittelyvideo" />
