@@ -43,11 +43,12 @@ export default DataOriginPopup = () => {
             padding: 20,
             borderRadius: 10,
             margin: 20,
+            alignItems: 'center'
           }}
         >
           <Text>{dataOrigin}</Text>
           <StatusBar backgroundColor="rgba(0, 0, 0, 0.5)" translucent={true} />
-          <TouchableOpacity onPress={handleLinkPress}>
+          <TouchableOpacity onPress={handleLinkPress} style={{alignSelf: "flex-start"}}>
             <Text
               style={{
                 textDecorationLine: "underline",
@@ -58,7 +59,9 @@ export default DataOriginPopup = () => {
               Lue lisää
             </Text>
           </TouchableOpacity>
+          <View style={{backgroundColor: 'blue', borderRadius: 5, marginTop: 15, width: 75, alignItems: 'center'}}>
           <Button title="Ok" onPress={() => setShowPopup(false)} />
+          </View>
         </View>
       </View>
     </Modal>
