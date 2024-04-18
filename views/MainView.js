@@ -1,14 +1,14 @@
 import { ScrollView } from "react-native";
-import MainViewLive from "./MainViewLive";
 import Votes from "./Votes";
 import NewsFeed from "../components/newsfeed/NewsFeed";
+import Events from "../components/events/Events";
 
 const MainView = ({ navigation }) => {
   return (
     <>
       <ScrollView>
         <NewsFeed navigation={navigation} />
-        <MainViewLive navigation={navigation} />
+        <Events navigation={navigation} />
         <Votes />
       </ScrollView>
     </>
