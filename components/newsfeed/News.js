@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Divider } from "react-native-paper";
-import { RssFeeds } from "../constants/RssFeeds";
+import { RssFeeds } from "../../constants/RssFeeds";
 import { FlatList } from "react-native-gesture-handler";
-import FinnishDate from "../components/parsers/FinnishDate";
-import Xml from "../components/parsers/Xml";
+import FinnishDate from "../parsers/FinnishDate";
+import Xml from "../parsers/Xml";
 
-export default function AllNews({ navigation, route }) {
+export default News = ({ navigation, route }) => {
   const { getData, data } = Xml();
   const { title, catIndex } = route.params;
 
@@ -59,7 +59,7 @@ export default function AllNews({ navigation, route }) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   tagContainer: {

@@ -17,12 +17,12 @@ import eduryhmatList from "../../views/eduryhmatList";
 import live from "../../views/live";
 import liveList from "../../views/liveList";
 import verkkolahetykset from "../../views/verkkolahetykset";
-import RssNewsFeed from "../../views/RssNewsFeed";
 import WebViewUI from "../../views/WebViewUI";
 import MainView from "../../views/MainView";
 import MainViewLive from "../../views/MainViewLive";
 import lahetysHaku from "../../views/lahetysHaku";
-import AllNews from "../../views/AllNews";
+import NewsFeed from "../newsfeed/NewsFeed";
+import News from "../newsfeed/News";
 
 const Stack = createStackNavigator();
 
@@ -243,8 +243,8 @@ const NewsStack = () => {
         }}
       />
       <Stack.Screen
-        name="RssNewsFeed"
-        component={RssNewsFeed}
+        name="NewsFeed"
+        component={NewsFeed}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Syötteet" />
@@ -252,8 +252,8 @@ const NewsStack = () => {
         }}
       />
       <Stack.Screen
-        name="AllNews"
-        component={AllNews}
+        name="News"
+        component={News}
         options={({ route }) => ({
           header: ({ navigation }) => (
             <Header navigation={navigation} title={route.params.title} />

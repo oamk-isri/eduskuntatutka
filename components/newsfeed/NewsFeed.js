@@ -1,17 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { ActivityIndicator, Divider } from "react-native-paper";
-
-import { RssFeeds } from "../constants/RssFeeds";
-import { NewsCategoryContext } from "../contexts/Contexts";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
-import FinnishDate from "../components/parsers/FinnishDate";
-import Xml from "../components/parsers/Xml";
-import Heading from "../components/elements/Heading";
-import SwipeableList from "../components/elements/SwipeableList";
-import NewsTags from "../components/elements/NewsTags";
+import FinnishDate from "../parsers/FinnishDate";
+import Xml from "../parsers/Xml";
+import Heading from "../elements/Heading";
+import SwipeableList from "../elements/SwipeableList";
+import NewsTags from "./NewsTags";
+import { RssFeeds } from "../../constants/RssFeeds";
+import { NewsCategoryContext } from "../../contexts/Contexts";
 
-export default function RssNewsFeed({ navigation }) {
+export default NewsFeed = ({ navigation }) => {
   const { getData, data, isLoading, error } = Xml();
   const [selectedCategory, setSelectedCategory] = useState(0);
   const flatListRef = useRef(null);
@@ -172,7 +171,7 @@ export default function RssNewsFeed({ navigation }) {
       </ScrollView>
     </NewsCategoryContext.Provider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   tagContainer: {
