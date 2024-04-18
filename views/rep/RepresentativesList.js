@@ -2,9 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Image, ScrollView, View } from "react-native";
 import { Text, List, TextInput, ActivityIndicator } from "react-native-paper";
-import Representative from "./representative";
 
-export default Representatives = ({ navigation }) => {
+export default RepresentativesList = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [seatings, setSeatings] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
