@@ -14,10 +14,10 @@ import {
   NewsStack,
   VerkkolahetyksetStack,
 } from "./StackNavigators";
-import Info from "../../views/info";
 import Eduskunta from "../../views/EduskuntaView";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
+import Info from "../../views/info/Info";
 
 const MainDrawer = createDrawerNavigator();
 
