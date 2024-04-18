@@ -42,11 +42,6 @@ const DrawerView = ({ navigation }) => {
           onPress={() => navigation.navigate("RepresentativesStack")}
         />
         <Drawer.Item
-          icon={() => <Icon name="information" size={20} />}
-          label="Info"
-          onPress={() => navigation.navigate("Info")}
-        />
-        <Drawer.Item
           icon={() => <Icon name="radio" size={20} />}
           label="Verkkolähetykset"
           onPress={() => navigation.navigate("VerkkolahetyksetStack")}
@@ -55,6 +50,11 @@ const DrawerView = ({ navigation }) => {
           icon={() => <FontAwesomeIcon name="building-columns" size={20} />}
           label="Tietoa eduskunnasta"
           onPress={() => navigation.navigate("EduskuntaNav")}
+        />
+        <Drawer.Item
+          icon={() => <Icon name="information" size={20} />}
+          label="Info"
+          onPress={() => navigation.navigate("Info")}
         />
       </Drawer.Section>
     </SafeAreaView>

@@ -59,7 +59,7 @@ export default DataOriginPopup = () => {
               Lue lisää
             </Text>
           </TouchableOpacity>
-          <View style={{backgroundColor: 'blue', borderRadius: 5, marginTop: 15, width: 75, alignItems: 'center'}}>
+          <View style={{ borderRadius: 5, marginTop: 15, width: 75, alignItems: 'center'}}>
           <Button title="Ok" onPress={() => setShowPopup(false)} />
           </View>
         </View>
