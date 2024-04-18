@@ -463,6 +463,7 @@ const TietoaEduskunnastaStack = () => {
   );
 };
 
+
 export {
   PlenumsStack,
   RepresentativesStack,
