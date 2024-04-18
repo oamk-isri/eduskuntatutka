@@ -159,7 +159,7 @@ const EsittelyStack = () => {
         component={esittelyList}
         options={{
           header: ({ navigation }) => (
-            <Header navigation={navigation} title="Esitelyvideot" />
+            <Header navigation={navigation} title="Esittelyvideot" />
           ),
         }}
       />
@@ -193,7 +193,7 @@ const EduRyhmatStack = () => {
         component={eduryhmat}
         options={{
           header: ({ navigation }) => (
-            <Header navigation={navigation} title="Eduskuntaryhmät" />
+            <Header navigation={navigation} title="Eduskuntaryhmä" />
           ),
         }}
       />
@@ -346,7 +346,7 @@ const VerkkolahetyksetStack = () => {
         component={PlenumDetails}
         options={{
           header: ({ navigation }) => (
-            <Header navigation={navigation} title="Täysinstunto" />
+            <Header navigation={navigation} title="Täysistunto" />
           ),
         }}
       />
@@ -429,7 +429,7 @@ const VerkkolahetyksetStack = () => {
         component={esittelyList}
         options={{
           header: ({ navigation }) => (
-            <Header navigation={navigation} title="Valiokunta" />
+            <Header navigation={navigation} title="Esittelyvideot" />
           ),
         }}
       />
@@ -438,7 +438,7 @@ const VerkkolahetyksetStack = () => {
         component={esittely}
         options={{
           header: ({ navigation }) => (
-            <Header navigation={navigation} title="Valiokunta" />
+            <Header navigation={navigation} title="Esittelyvideo" />
           ),
         }}
       />
