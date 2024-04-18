@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { NewsCategoryContext } from "../contexts/Contexts";
+import { NewsCategoryContext } from "../../contexts/Contexts";
 
-export default function RssTags({ categoryIndex, categoryName }) {
+export default NewsTags = ({ categoryIndex, categoryName }) => {
   const { selectedCategory, setSelectedCategory } =
     useContext(NewsCategoryContext);
 
@@ -26,7 +26,7 @@ export default function RssTags({ categoryIndex, categoryName }) {
       </Pressable>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   tag: {

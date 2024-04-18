@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { View } from "react-native";
 import axios from "axios";
-import Heading from "../components/Heading";
 import { ActivityIndicator, Card, Text } from "react-native-paper";
+import Heading from "../components/elements/Heading";
 
 export default function Votes() {
   const [data, setData] = useState(null);
