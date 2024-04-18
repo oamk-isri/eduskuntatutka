@@ -1,6 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Image, ScrollView, View, TouchableOpacity, Button } from "react-native";
+import {
+  Image,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 import { Text, Card } from "react-native-paper";
 import PlenumDetails from "./plenum"; // Import the PlenumDetails component
 
@@ -19,11 +25,14 @@ export default PlenumList = ({ navigation }) => {
       )
       .then((response) => {
         if (response.data && response.data.events) {
-          setEvents([...events, ...response.data.events.map(event => {
-            // Split the title at the '|' mark and take the first part
-            const title = event.title.split('|')[0].trim();
-            return { ...event, title };
-          })]);
+          setEvents([
+            ...events,
+            ...response.data.events.map((event) => {
+              // Split the title at the '|' mark and take the first part
+              const title = event.title.split("|")[0].trim();
+              return { ...event, title };
+            }),
+          ]);
           setPage(page + 1);
         }
       })
@@ -35,24 +44,36 @@ export default PlenumList = ({ navigation }) => {
   return (
     <ScrollView>
       {events.map((event) => (
-        <TouchableOpacity key={event._id} onPress={() => navigation.navigate("PlenumDetails", { taysistunnotEvent: event })}>
-          <Card style={{margin:5}}>
-            <Card.Cover source={{ uri: `https://eduskunta.videosync.fi${event.previewImg}` }} />
+        <TouchableOpacity
+          key={event._id}
+          onPress={() =>
+            navigation.navigate("PlenumDetails", { taysistunnotEvent: event })
+          }
+        >
+          <Card style={{ margin: 5 }}>
+            <Card.Cover
+              source={{
+                uri: `https://eduskunta.videosync.fi${event.previewImg}`,
+              }}
+            />
             <Card.Content>
-              <Text style={{fontSize: 18, fontWeight: 'bold', paddingTop: 10}}>{event.title}</Text>
+              <Text
+                style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
+              >
+                {event.title}
+              </Text>
             </Card.Content>
           </Card>
         </TouchableOpacity>
       ))}
-      <View style={{ alignItems: "center", justifyContent: "center", marginVertical: 10 }}>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          marginVertical: 10,
+        }}
+      >
         <Button title="Näytä lisää" onPress={fetchEvents} />
-      </View>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Image
-          source={require("../images/eduskuntatalo.png")}
-          style={{ width: "100%", height: 120 }}
-          resizeMode="stretch"
-        />
       </View>
     </ScrollView>
   );

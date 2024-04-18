@@ -102,11 +102,12 @@ export default verkkolahetykset = ({ navigation }) => {
   };
 
   return (
-    <ScrollView scrollIndicatorInsets={{right: 1}}>
-
+    <ScrollView scrollIndicatorInsets={{ right: 1 }}>
       {/* Verkkolähetysten haku */}
 
-      <TouchableOpacity onPress={() => navigation.navigate("Verkkolähetysten haku")}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Verkkolähetysten haku")}
+      >
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View
             style={{
@@ -125,7 +126,8 @@ export default verkkolahetykset = ({ navigation }) => {
             >
               Verkkolähetysten haku
             </Text>
-            <FontAwesome name="search" 
+            <FontAwesome
+              name="search"
               size={24}
               color="black"
               style={{ paddingEnd: 15 }}
@@ -135,7 +137,9 @@ export default verkkolahetykset = ({ navigation }) => {
       </TouchableOpacity>
 
       {/* Suorat lähetykset */}
-      <TouchableOpacity onPress={() => navigation.navigate("Suorat lähetykset")}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Suorat lähetykset")}
+      >
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View
             style={{
@@ -268,7 +272,13 @@ export default verkkolahetykset = ({ navigation }) => {
       </TouchableOpacity>
 
       {/* Valiokunnat */}
-      <TouchableOpacity onPress={() => navigation.navigate("Valiokuntien julkiset kuulemiset ja avoimet kokoukset")}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate(
+            "Valiokuntien julkiset kuulemiset ja avoimet kokoukset"
+          )
+        }
+      >
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View
             style={{
@@ -380,7 +390,9 @@ export default verkkolahetykset = ({ navigation }) => {
       </TouchableOpacity>
 
       {/* Tiedotustilaisuudet */}
-      <TouchableOpacity onPress={() => navigation.navigate("Tiedotustilaisuudet")}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Tiedotustilaisuudet")}
+      >
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View
             style={{
@@ -552,14 +564,6 @@ export default verkkolahetykset = ({ navigation }) => {
           </Card.Content>
         </Card>
       </TouchableOpacity>
-
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Image
-          source={require("../images/eduskuntatalo.png")}
-          style={{ width: "100%", height: 120 }}
-          resizeMode="stretch"
-        />
-      </View>
     </ScrollView>
   );
 };

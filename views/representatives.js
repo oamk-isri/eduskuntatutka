@@ -4,36 +4,35 @@ import { Image, ScrollView, View } from "react-native";
 import { Text, List, TextInput, ActivityIndicator } from "react-native-paper";
 import Representative from "./representative";
 
-
 export default Representatives = ({ navigation }) => {
-
   const [isLoading, setIsLoading] = useState(true);
   const [seatings, setSeatings] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [filteredSeatings, setFilteredSeatings] = useState([]);
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-    const filteredData = seatings.filter(seat =>
-      seat.firstname.toLowerCase().includes(query.toLowerCase()) ||
-      seat.lastname.toLowerCase().includes(query.toLowerCase()) ||
-      seat.party.toLowerCase().includes(query.toLowerCase())
+    const filteredData = seatings.filter(
+      (seat) =>
+        seat.firstname.toLowerCase().includes(query.toLowerCase()) ||
+        seat.lastname.toLowerCase().includes(query.toLowerCase()) ||
+        seat.party.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredSeatings(filteredData);
-    
   };
 
   useEffect(() => {
-    axios.get("https://avoindata.eduskunta.fi/api/v1/seating/")
+    axios
+      .get("https://avoindata.eduskunta.fi/api/v1/seating/")
       .then((response) => {
-        setSeatings(response.data)
-        setFilteredSeatings(response.data)
+        setSeatings(response.data);
+        setFilteredSeatings(response.data);
         setIsLoading(false);
-      })
-  }, [])
+      });
+  }, []);
 
   return (
-    <ScrollView scrollIndicatorInsets={{right: 1}}>
+    <ScrollView scrollIndicatorInsets={{ right: 1 }}>
       <TextInput
         placeholder="Hae kansanedustajaa"
         value={searchQuery}
@@ -46,28 +45,23 @@ export default Representatives = ({ navigation }) => {
           {filteredSeatings.map((seat, index) => (
             <List.Item
               key={index.toString()}
-              title={<Text>{seat.firstname} {seat.lastname}</Text>}
+              title={
+                <Text>
+                  {seat.firstname} {seat.lastname}
+                </Text>
+              }
               description={<Text>{seat.party}</Text>}
-
-              onPress={() => navigation.navigate(
-                "Kansanedustaja",
-                {
+              onPress={() =>
+                navigation.navigate("Kansanedustaja", {
                   id: seat.hetekaId,
                   image: seat.pictureUrl,
-                  party: seat.party
-                })}
-            >
-            </List.Item>
+                  party: seat.party,
+                })
+              }
+            ></List.Item>
           ))}
         </List.Section>
       )}
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Image
-          source={require('../images/eduskuntatalo.png')}
-          style={{ width: '100%', height: 120 }}
-          resizeMode="stretch"
-        />
-      </View>
     </ScrollView>
   );
 };
