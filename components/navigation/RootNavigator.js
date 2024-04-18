@@ -14,10 +14,10 @@ import {
   NewsStack,
   VerkkolahetyksetStack,
 } from "./StackNavigators";
+import Eduskunta from "../../views/EduskuntaView";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
 import Info from "../../views/info/Info";
-import Parliament from "../../views/parliament/Parliament";
 
 const MainDrawer = createDrawerNavigator();
 
@@ -81,7 +81,7 @@ export default RootNavigator = () => {
         component={RepresentativesStack}
       />
       <MainDrawer.Screen name="Info" component={Info} />
-      <MainDrawer.Screen name="EduskuntaNav" component={Parliament} />
+      <MainDrawer.Screen name="EduskuntaNav" component={Eduskunta} />
     </MainDrawer.Navigator>
   );
 };
