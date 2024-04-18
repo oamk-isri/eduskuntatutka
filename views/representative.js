@@ -4,8 +4,8 @@ import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
 import parties from "../styles/parties";
 import Absence from "../components/parsers/Absence";
 import { ActivityIndicator, List } from "react-native-paper";
-import RepDetails from "../components/elements/RepDetails";
-import RepSpeeches from "../components/elements/RepSpeeches";
+import RepDetails from "../components/representatives/RepDetails";
+import RepSpeeches from "../components/representatives/RepSpeeches";
 
 export default Representative = ({ route }) => {
   const { id, image, party } = route.params;
