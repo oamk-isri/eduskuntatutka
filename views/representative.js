@@ -5,6 +5,7 @@ import Speeches from "../components/repSpeeches";
 import Details from "../components/repDetails";
 import parties from "../styles/parties";
 import Absence from "../components/parsers/Absence";
+import { ActivityIndicator, List } from "react-native-paper";
 
 export default Representative = ({ route }) => {
   const { id, image, party } = route.params;
@@ -18,6 +19,7 @@ export default Representative = ({ route }) => {
     "https://avoindata.eduskunta.fi/" + image
   );
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const link = `https://avoindata.eduskunta.fi/api/v1/memberofparliament/${hetekaId}/fi`;
 
@@ -32,6 +34,7 @@ export default Representative = ({ route }) => {
     setLastname(data.Henkilo.SukuNimi);
     setData(data.Henkilo);
     setLongParty(data.Henkilo.Eduskuntaryhmat.NykyinenEduskuntaryhma.Nimi);
+    setIsLoading(false);
   };
 
   return (
@@ -50,7 +53,17 @@ export default Representative = ({ route }) => {
 
         <Details data={data} longParty={longParty} />
         <Speeches id={hetekaId} />
-        <Absence first={firstname} last={lastname} />
+        {
+          isLoading ? (
+            // mockup list
+            <List.Accordion
+            left={(props) => <List.Icon {...props} icon="account-cancel" />}
+              title={<ActivityIndicator />}
+            />
+          ) : (
+            <Absence first={firstname} last={lastname} />
+          )
+        }
       </ScrollView>
     </View>
   );
