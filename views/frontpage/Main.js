@@ -1,9 +1,9 @@
 import { ScrollView } from "react-native";
-import NewsFeed from "../components/newsfeed/NewsFeed";
-import Events from "../components/events/Events";
-import Votes from "../components/elements/Votes";
+import NewsFeed from "../../components/newsfeed/NewsFeed";
+import Events from "../../components/events/Events";
+import Votes from "../../components/elements/Votes";
 
-const MainView = ({ navigation }) => {
+export default Main = ({ navigation }) => {
   return (
     <>
       <ScrollView>
@@ -14,5 +14,3 @@ const MainView = ({ navigation }) => {
     </>
   );
 };
-
-export default MainView;

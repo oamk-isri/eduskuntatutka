@@ -64,12 +64,12 @@ export default NewsFeed = ({ navigation }) => {
 
   const handlePress = (link) => {
     if (link) {
-      navigation.navigate("WebViewUI", { uri: link });
+      navigation.navigate("Browser", { uri: link });
     }
   };
 
   const handleShowAll = (catIndex, title) => {
-    navigation.navigate("AllNews", { catIndex, title });
+    navigation.navigate("News", { catIndex, title });
   };
 
   const NewsItem = ({ item }) => (
