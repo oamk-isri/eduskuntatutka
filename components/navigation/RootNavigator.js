@@ -32,6 +32,11 @@ const DrawerView = ({ navigation }) => {
     <SafeAreaView>
       <Drawer.Section title="Eduskuntatutka">
         <Drawer.Item
+          icon={() => <Icon name="home" size={20} />}
+          label="Koti"
+          onPress={() => navigation.navigate("NewsStack")}
+        />
+        <Drawer.Item
           icon={() => <Icon name="people" size={20} />}
           label="Kansanedustajat"
           onPress={() => navigation.navigate("RepresentativesStack")}
