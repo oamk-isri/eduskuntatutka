@@ -24,6 +24,7 @@ import Browser from "../../views/frontpage/Browser";
 import RepresentativesList from "../../views/rep/RepresentativesList";
 import Representative from "../../views/rep/Representative";
 import Parliament from "../../views/parliament/Parliament";
+import Info from "../../views/details/Info";
 
 const Stack = createStackNavigator();
 
@@ -463,6 +464,22 @@ const TietoaEduskunnastaStack = () => {
   );
 };
 
+const InfoStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Info"
+        component={Info}
+        options={{
+          header: ({ navigation }) => (
+            <Header navigation={navigation} title="Info" />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 
 export {
   PlenumsStack,
@@ -476,4 +493,5 @@ export {
   NewsStack,
   VerkkolahetyksetStack,
   TietoaEduskunnastaStack,
+  InfoStack,
 };

@@ -10,7 +10,7 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
 
-export default Details = () => {
+export default Info = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [showAuthors, setShowAuthors] = useState(false);
   const [showChannels, setShowChannels] = useState(false);
