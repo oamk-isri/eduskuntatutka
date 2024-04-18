@@ -98,13 +98,6 @@ export default liveList = ({ navigation }) => {
       >
         <Button title="Näytä lisää" onPress={fetchEvents} />
       </View>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Image
-          source={require("../images/eduskuntatalo.png")}
-          style={{ width: "100%", height: 120 }}
-          resizeMode="stretch"
-        />
-      </View>
     </ScrollView>
   );
 };
