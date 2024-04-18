@@ -14,11 +14,10 @@ import {
   NewsStack,
   VerkkolahetyksetStack,
   TietoaEduskunnastaStack,
+  InfoStack,
 } from "./StackNavigators";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
-import Info from "../../views/info/Info";
-import Parliament from "../../views/parliament/Parliament";
 
 const MainDrawer = createDrawerNavigator();
 
@@ -32,6 +31,11 @@ const DrawerView = ({ navigation }) => {
   return (
     <SafeAreaView>
       <Drawer.Section title="Eduskuntatutka">
+      <Drawer.Item
+          icon={() => <Icon name="home" size={20} />}
+          label="Koti"
+          onPress={() => navigation.navigate("NewsStack")}
+        />
         <Drawer.Item
           icon={() => <Icon name="people" size={20} />}
           label="Kansanedustajat"
@@ -50,7 +54,7 @@ const DrawerView = ({ navigation }) => {
         <Drawer.Item
           icon={() => <Icon name="information" size={20} />}
           label="Info"
-          onPress={() => navigation.navigate("Info")}
+          onPress={() => navigation.navigate("InfoStack")}
         />
       </Drawer.Section>
     </SafeAreaView>
@@ -81,7 +85,7 @@ export default RootNavigator = () => {
         name="RepresentativesStack"
         component={RepresentativesStack}
       />
-      <MainDrawer.Screen name="Info" component={Info} />
+      <MainDrawer.Screen name="InfoStack" component={InfoStack} />
       <MainDrawer.Screen name="TietoaEduskunnastaStack" component={TietoaEduskunnastaStack} />
     </MainDrawer.Navigator>
   );
