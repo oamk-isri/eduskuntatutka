@@ -8,9 +8,8 @@ import {
   Button,
 } from "react-native";
 import { Text, Card } from "react-native-paper";
-import PlenumDetails from "./plenum"; // Import the PlenumDetails component
 
-export default PlenumList = ({ navigation }) => {
+export default SeminarList = ({ navigation }) => {
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -21,7 +20,7 @@ export default PlenumList = ({ navigation }) => {
   const fetchEvents = () => {
     axios
       .get(
-        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/taysistunnot?include=events&limit=16&page=${page}`
+        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/seminaarit?include=events&limit=16&page=${page}`
       )
       .then((response) => {
         if (response.data && response.data.events) {
@@ -47,7 +46,7 @@ export default PlenumList = ({ navigation }) => {
         <TouchableOpacity
           key={event._id}
           onPress={() =>
-            navigation.navigate("PlenumDetails", { taysistunnotEvent: event })
+            navigation.navigate("Seminaari", { seminaaritEvent: event })
           }
         >
           <Card style={{ margin: 5 }}>

@@ -10,7 +10,7 @@ import {
 import { Text, Card } from "react-native-paper";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 
-export default verkkolahetykset = ({ navigation }) => {
+export default Broadcasts = ({ navigation }) => {
   const [liveEvent, setLiveEvent] = useState(null);
   const [taysistunnotEvent, setTaysistunnotEvent] = useState(null);
   const [valiokunnatEvent, setValiokunnatEvent] = useState(null);
@@ -174,8 +174,8 @@ export default verkkolahetykset = ({ navigation }) => {
             // Check if urlName contains "taysistunto"
             const { urlName } = liveEvent; // Extracting urlName from the event
             if (urlName.includes("taysistunto")) {
-              // If urlName includes "tayistunto", navigate to PlenumDetails
-              navigation.navigate("PlenumDetails", {
+              // If urlName includes "tayistunto", navigate to Täysistunto
+              navigation.navigate("Täysistunto", {
                 taysistunnotEvent: liveEvent,
               });
             } else {
@@ -245,7 +245,7 @@ export default verkkolahetykset = ({ navigation }) => {
 
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("PlenumDetails", { taysistunnotEvent })
+          navigation.navigate("Täysistunto", { taysistunnotEvent })
         }
       >
         <Card style={{ margin: 5 }}>
