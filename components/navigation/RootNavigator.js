@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Image, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Drawer } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,12 +14,10 @@ import {
   NewsStack,
   VerkkolahetyksetStack,
 } from "./StackNavigators";
-import Info from "../views/info";
-import Eduskunta from "../views/EduskuntaView";
-import RssNewsFeed from "../views/RssNewsFeed";
+import Info from "../../views/info";
+import Eduskunta from "../../views/EduskuntaView";
 import Icon from "react-native-vector-icons/Ionicons";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6"
-import MainView from "../views/MainView";
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
 
 const MainDrawer = createDrawerNavigator();
 
@@ -64,57 +61,27 @@ export default RootNavigator = () => {
     <MainDrawer.Navigator
       drawerContent={({ navigation }) => <DrawerView navigation={navigation} />}
       screenOptions={{
-        headerShown: false
+        headerShown: false,
       }}
     >
-      <MainDrawer.Screen
-        name="NewsStack"
-        component={NewsStack}
-      />
+      <MainDrawer.Screen name="NewsStack" component={NewsStack} />
       <MainDrawer.Screen
         name="VerkkolahetyksetStack"
         component={VerkkolahetyksetStack}
       />
-      <MainDrawer.Screen
-        name="LiveStack"
-        component={LiveStack}
-      />
-      <MainDrawer.Screen
-        name="PlenumsStack"
-        component={PlenumsStack}
-      />
-      <MainDrawer.Screen
-        name="ValiokuntaStack"
-        component={ValiokuntaStack}
-      />
-      <MainDrawer.Screen
-        name="SeminaariStack"
-        component={SeminaariStack}
-      />
-      <MainDrawer.Screen
-        name="TiedotusStack"
-        component={TiedotusStack}
-      />
-      <MainDrawer.Screen
-        name="EsittelyStack"
-        component={EsittelyStack}
-      />
-      <MainDrawer.Screen
-        name="EduRyhmatStack"
-        component={EduRyhmatStack}
-      />
+      <MainDrawer.Screen name="LiveStack" component={LiveStack} />
+      <MainDrawer.Screen name="PlenumsStack" component={PlenumsStack} />
+      <MainDrawer.Screen name="ValiokuntaStack" component={ValiokuntaStack} />
+      <MainDrawer.Screen name="SeminaariStack" component={SeminaariStack} />
+      <MainDrawer.Screen name="TiedotusStack" component={TiedotusStack} />
+      <MainDrawer.Screen name="EsittelyStack" component={EsittelyStack} />
+      <MainDrawer.Screen name="EduRyhmatStack" component={EduRyhmatStack} />
       <MainDrawer.Screen
         name="RepresentativesStack"
         component={RepresentativesStack}
       />
-      <MainDrawer.Screen
-        name="Info"
-        component={Info}
-      />
-      <MainDrawer.Screen
-        name="EduskuntaNav"
-        component={Eduskunta}
-      />
+      <MainDrawer.Screen name="Info" component={Info} />
+      <MainDrawer.Screen name="EduskuntaNav" component={Eduskunta} />
     </MainDrawer.Navigator>
   );
 };

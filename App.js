@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { StyleSheet, Appearance } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { PaperProvider } from "react-native-paper";
-import RootNavigator from "./components/RootNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import DataOriginPopup from "./components/elements/DataOriginPopup";
+import RootNavigator from "./components/navigation/RootNavigator";
 
 export default function App() {
   // Force light mode
