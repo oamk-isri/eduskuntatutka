@@ -1,7 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import Header from "./Header";
-import representatives from "../../views/representatives";
-import representative from "../../views/representative";
 import NewsFeed from "../newsfeed/NewsFeed";
 import News from "../newsfeed/News";
 import Events from "../events/Events";
@@ -23,6 +21,8 @@ import Broadcasts from "../../views/broadcasts/Broadcasts";
 import Search from "../../views/broadcasts/search/Search";
 import Main from "../../views/frontpage/Main";
 import Browser from "../../views/frontpage/Browser";
+import RepresentativesList from "../../views/rep/RepresentativesList";
+import Representative from "../../views/rep/Representative";
 
 const Stack = createStackNavigator();
 
@@ -56,7 +56,7 @@ const RepresentativesStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Kansanedustajat"
-        component={representatives}
+        component={RepresentativesList}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Kansanedustajat" />
@@ -65,7 +65,7 @@ const RepresentativesStack = () => {
       />
       <Stack.Screen
         name="Kansanedustaja"
-        component={representative}
+        component={Representative}
         options={{
           header: ({ navigation }) => (
             <Header navigation={navigation} title="Kansanedustaja" />
