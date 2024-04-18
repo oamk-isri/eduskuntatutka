@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Linking, ScrollView, StyleSheet } from "react-native";
-import { WebView } from 'react-native-webview';
+import { WebView } from "react-native-webview";
 
-export default esittely = ({ route, navigation }) => {
-  const { esittelyvideotEvent } = route.params;
-  const { title, urlName } = esittelyvideotEvent;
+export default Briefing = ({ route, navigation }) => {
+  const { tiedotustilaisuudetEvent } = route.params;
+  const { title, urlName } = tiedotustilaisuudetEvent;
   const webViewRef = useRef(null); // <-- Define a ref for the WebView
   const [eventInfo, setEventInfo] = useState(null);
 
   // Split the title at the '|' mark and take the first part
-  const navigationTitle = title.split('|')[0].trim();
+  const navigationTitle = title.split("|")[0].trim();
 
   // Construct the complete video URL
   const videoUrl = `https://eduskunta.videosync.fi/${urlName}?embed-view=1`;
@@ -20,14 +20,17 @@ export default esittely = ({ route, navigation }) => {
 
   const fetchData = () => {
     fetch(`https://eduskunta.videosync.fi/${urlName}/data`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data && data.about) {
-          const cleanedDescription = data.about.description.replace(/<[^>]+>/g, ''); // Remove HTML-tags
+          const cleanedDescription = data.about.description.replace(
+            /<[^>]+>/g,
+            ""
+          ); // Remove HTML-tags
           setEventInfo({ ...data.about, description: cleanedDescription });
         }
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   };
 
   // Set navigation title dynamically
@@ -73,11 +76,11 @@ export default esittely = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   webView: {
     height: 220, // Adjust the height as needed
-    width: '100%',
+    width: "100%",
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 10,
   },
   description: {

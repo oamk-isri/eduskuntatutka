@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Text, Card } from "react-native-paper";
 
-export default seminaaritList = ({ navigation }) => {
+export default LiveList = ({ navigation }) => {
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -20,13 +20,16 @@ export default seminaaritList = ({ navigation }) => {
   const fetchEvents = () => {
     axios
       .get(
-        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/seminaarit?include=events&limit=16&page=${page}`
+        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskunta-kanava?include=children,events&states=0&limit=8&page=${page}`
       )
       .then((response) => {
-        if (response.data && response.data.events) {
+        const liveEvents = response.data.children
+          .map((child) => child.events)
+          .flat(); // Extracting events from children array
+        if (liveEvents.length > 0) {
           setEvents([
             ...events,
-            ...response.data.events.map((event) => {
+            ...liveEvents.map((event) => {
               // Split the title at the '|' mark and take the first part
               const title = event.title.split("|")[0].trim();
               return { ...event, title };
@@ -40,14 +43,35 @@ export default seminaaritList = ({ navigation }) => {
       });
   };
 
+  const handlePressEvent = (event) => {
+    const { urlName } = event; // Extracting urlName from the event
+    if (urlName.includes("taysistunto")) {
+      // If urlName includes "tayistunto", navigate to Täysistunto
+      navigation.navigate("Täysistunto", { taysistunnotEvent: event });
+    } else {
+      // Otherwise, navigate to Suora lähetys
+      navigation.navigate("Suora lähetys", { liveEvent: event });
+    }
+  };
+
   return (
     <ScrollView>
+      {events.length === 0 && (
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "bold",
+            textAlign: "center",
+            marginVertical: 10,
+          }}
+        >
+          Ei suoria lähetyksiä juuri nyt.
+        </Text>
+      )}
       {events.map((event) => (
         <TouchableOpacity
           key={event._id}
-          onPress={() =>
-            navigation.navigate("Seminaari", { seminaaritEvent: event })
-          }
+          onPress={() => handlePressEvent(event)}
         >
           <Card style={{ margin: 5 }}>
             <Card.Cover

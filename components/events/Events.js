@@ -73,7 +73,7 @@ export default Events = ({ navigation }) => {
   const handlePressEvent = (event) => {
     const { urlName } = event;
     if (urlName.includes("taysistunto")) {
-      navigation.navigate("PlenumDetails", { taysistunnotEvent: event });
+      navigation.navigate("Täysistunto", { taysistunnotEvent: event });
     } else {
       navigation.navigate("Suora lähetys", { liveEvent: event });
     }
