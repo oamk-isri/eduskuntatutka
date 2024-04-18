@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { View } from "react-native";
 import axios from "axios";
 import { ActivityIndicator, Card, Text } from "react-native-paper";
-import Heading from "../components/elements/Heading";
+import Heading from "./Heading";
 
 export default function Votes() {
   const [data, setData] = useState(null);
@@ -127,6 +127,6 @@ function formatDate(dateString) {
   const day = date.getDate();
   const month = date.getMonth() + 1; // Months are zero-indexed
 
-  // Format the date in the desired format
+  // Format the date
   return `${day}.${month}.${date.getFullYear()}`;
 }
