@@ -13,6 +13,7 @@ import {
   LiveStack,
   NewsStack,
   VerkkolahetyksetStack,
+  TietoaEduskunnastaStack,
 } from "./StackNavigators";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
@@ -44,7 +45,7 @@ const DrawerView = ({ navigation }) => {
         <Drawer.Item
           icon={() => <FontAwesomeIcon name="building-columns" size={20} />}
           label="Tietoa eduskunnasta"
-          onPress={() => navigation.navigate("EduskuntaNav")}
+          onPress={() => navigation.navigate("TietoaEduskunnastaStack")}
         />
         <Drawer.Item
           icon={() => <Icon name="information" size={20} />}
@@ -81,7 +82,7 @@ export default RootNavigator = () => {
         component={RepresentativesStack}
       />
       <MainDrawer.Screen name="Info" component={Info} />
-      <MainDrawer.Screen name="EduskuntaNav" component={Parliament} />
+      <MainDrawer.Screen name="TietoaEduskunnastaStack" component={TietoaEduskunnastaStack} />
     </MainDrawer.Navigator>
   );
 };
