@@ -67,6 +67,7 @@ export default RootNavigator = () => {
       drawerContent={({ navigation }) => <DrawerView navigation={navigation} />}
       screenOptions={{
         headerShown: false,
+        drawerPosition: "right",
       }}
     >
       <MainDrawer.Screen name="NewsStack" component={NewsStack} />
