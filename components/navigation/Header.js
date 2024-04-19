@@ -7,7 +7,7 @@ export default Header = ({ navigation, title, isBack = true }) => {
       {isBack ? (
         <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
       ) : (
-        <Appbar.Action />
+        <LogoDark style={{height: 50, width: 35, margin: 8}}/>
       )}
 
       <Appbar.Content title={title} />
