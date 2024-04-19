@@ -36,6 +36,7 @@ export default Broadcasts = ({ navigation }) => {
   };
 
   const fetchFirstLiveEvent = () => {
+    // Fetch categories from the "eduskunta-kanava" category
     axios
       .get(
         `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskunta-kanava?include=children,events&states=0&limit=1&page=1`
@@ -46,12 +47,26 @@ export default Broadcasts = ({ navigation }) => {
           response.data.children &&
           response.data.children.length > 0
         ) {
-          const liveEvents = response.data.children[0].events;
-          if (liveEvents.length > 0) {
-            const liveEvent = liveEvents[0];
-            const title = liveEvent.title.split("|")[0].trim();
-            const previewImg = liveEvent.previewImg;
-            setLiveEvent({ ...liveEvent, title, previewImg });
+          const categories = response.data.children;
+          let liveEventFound = false;
+          
+          // Iterate over categories to search for live events
+          categories.forEach((category) => {
+            const categoryEvents = category.events;
+            if (categoryEvents.length > 0) {
+              const liveEvent = categoryEvents[0];
+              const title = liveEvent.title.split("|")[0].trim();
+              const previewImg = liveEvent.previewImg;
+              setLiveEvent({ ...liveEvent, title, previewImg });
+  
+              // Set liveEventFound flag to true
+              liveEventFound = true;
+            }
+          });
+  
+          // If no live event is found in any category, reset liveEvent state
+          if (!liveEventFound) {
+            setLiveEvent(null);
           }
         }
       })
