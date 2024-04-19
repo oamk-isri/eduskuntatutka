@@ -9,7 +9,6 @@ export default Plenum = ({ route, navigation }) => {
   const [topics, setTopics] = useState([]);
   const [speakersInfo, setSpeakersInfo] = useState([]);
   const webViewRef = useRef(null); // <-- Define a ref for the WebView
-  const [isFetching, setIsFetching] = useState(true);
 
   // Split the title at the '|' mark and take the first part
   const navigationTitle = title.split("|")[0].trim();
@@ -19,50 +18,44 @@ export default Plenum = ({ route, navigation }) => {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 10000); // Fetch data every 10 seconds
-    return () => clearInterval(interval); // Clean up the interval on unmount
   }, []);
 
   const fetchData = () => {
     fetch(`https://eduskunta.videosync.fi/${urlName}/data`)
       .then((response) => response.json())
       .then((data) => {
-        if (data.state === "0") {
-          setIsFetching(true);
-          if (
-            data &&
-            data.eventMeta &&
-            data.eventMeta.plenum &&
-            data.eventMeta.plenum.decisions &&
-            data.eventMeta.plenum.decisions.fi
-          ) {
-            const decisionsFi = data.eventMeta.plenum.decisions.fi;
-            // Split the text into individual decisions
-            const decisionsArray = decisionsFi
-              .split(";")
-              .map((decision) => decision.trim());
-            setDecisions(decisionsArray);
-          }
-          if (
-            data &&
-            data.eventMeta &&
-            data.eventMeta.topics &&
-            data.eventMeta.topics.length > 0
-          ) {
-            setTopics(data.eventMeta.topics);
-          }
-          if (data && data.eventMeta && data.eventMeta.speakers) {
-            const speakers = data.eventMeta.speakers;
-            const speakersInfoArray = speakers.map((speaker) => ({
-              topicId: speaker.topicId,
-              firstname: speaker.firstName,
-              lastname: speaker.lastName,
-              party: speaker.party.fi,
-              time: formatTime(speaker.time),
-            }));
-            setSpeakersInfo(speakersInfoArray);
-          }
-          setIsFetching(false);
+        if (
+          data &&
+          data.eventMeta &&
+          data.eventMeta.plenum &&
+          data.eventMeta.plenum.decisions &&
+          data.eventMeta.plenum.decisions.fi
+        ) {
+          const decisionsFi = data.eventMeta.plenum.decisions.fi;
+          // Split the text into individual decisions
+          const decisionsArray = decisionsFi
+            .split(";")
+            .map((decision) => decision.trim());
+          setDecisions(decisionsArray);
+        }
+        if (
+          data &&
+          data.eventMeta &&
+          data.eventMeta.topics &&
+          data.eventMeta.topics.length > 0
+        ) {
+          setTopics(data.eventMeta.topics);
+        }
+        if (data && data.eventMeta && data.eventMeta.speakers) {
+          const speakers = data.eventMeta.speakers;
+          const speakersInfoArray = speakers.map((speaker) => ({
+            topicId: speaker.topicId,
+            firstname: speaker.firstName,
+            lastname: speaker.lastName,
+            party: speaker.party.fi,
+            time: formatTime(speaker.time),
+          }));
+          setSpeakersInfo(speakersInfoArray);
         }
       })
       .catch((error) => console.error("Error fetching data:", error));
@@ -173,26 +166,29 @@ export default Plenum = ({ route, navigation }) => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        {isFetching ? (
-          <Text>Loading...</Text>
-        ) : (
-          <>
-            <WebView
-              ref={webViewRef}
-              source={{ uri: videoUrl }}
-              style={styles.webView}
-              allowsFullscreenVideo={true}
-              onLoad={handleMessage}
-              javaScriptEnabled={true}
-              onMessage={(event) => console.log(event.nativeEvent.data)}
-            />
-            <View style={{ paddingHorizontal: 10 }}>
-              {renderDecisions()}
-              {renderTopics()}
-              {renderSpeakersInfo()}
-            </View>
-          </>
-        )}
+        <WebView
+          ref={webViewRef}
+          source={{ uri: videoUrl }}
+          style={styles.webView}
+          allowsFullscreenVideo={true}
+          onLoad={handleMessage}
+          javaScriptEnabled={true}
+          onMessage={(event) => console.log(event.nativeEvent.data)}
+        />
+        <View style={{ paddingHorizontal: 10 }}>
+        <Text style={{ 
+          fontSize: 22, 
+          fontWeight: "bold",
+          paddingBottom: 10,
+          paddingTop: 10 
+          }}
+          >
+            {navigationTitle}
+            </Text>
+          {renderDecisions()}
+          {renderTopics()}
+          {renderSpeakersInfo()}
+        </View>
       </View>
     </ScrollView>
   );

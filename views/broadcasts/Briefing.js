@@ -61,6 +61,15 @@ export default Briefing = ({ route, navigation }) => {
           onMessage={(event) => console.log(event.nativeEvent.data)}
         />
         <View style={{ paddingHorizontal: 10 }}>
+        <Text style={{ 
+          fontSize: 22, 
+          fontWeight: "bold",
+          paddingBottom: 10,
+          paddingTop: 10 
+          }}
+          >
+            {navigationTitle}
+            </Text>
           {eventInfo && (
             <>
               <Text style={styles.title}>{eventInfo.title}</Text>
