@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Image, ScrollView, View } from "react-native";
-import { Text, List, TextInput, ActivityIndicator } from "react-native-paper";
+import { FlatList, Text } from "react-native";
+import { TextInput, ActivityIndicator, List, Divider } from "react-native-paper";
 
 export default RepresentativesList = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +31,7 @@ export default RepresentativesList = ({ navigation }) => {
   }, []);
 
   return (
-    <ScrollView scrollIndicatorInsets={{ right: 1 }}>
+    <>
       <TextInput
         placeholder="Hae kansanedustajaa"
         value={searchQuery}
@@ -40,27 +40,28 @@ export default RepresentativesList = ({ navigation }) => {
       {isLoading ? (
         <ActivityIndicator color="red" />
       ) : (
-        <List.Section>
-          {filteredSeatings.map((seat, index) => (
-            <List.Item
-              key={index.toString()}
-              title={
-                <Text>
-                  {seat.firstname} {seat.lastname}
-                </Text>
-              }
-              description={<Text>{seat.party}</Text>}
-              onPress={() =>
-                navigation.navigate("Kansanedustaja", {
-                  id: seat.hetekaId,
-                  image: seat.pictureUrl,
-                  party: seat.party,
-                })
-              }
-            ></List.Item>
-          ))}
-        </List.Section>
+        <FlatList
+          data={filteredSeatings}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <>
+              <List.Item
+                title={<Text>{item.firstname} {item.lastname}</Text>}
+                description={
+                  <Text>{item.party}</Text>}
+                onPress={() =>
+                  navigation.navigate("Kansanedustaja", {
+                    id: item.hetekaId,
+                    image: item.pictureUrl,
+                    party: item.party,
+                  })
+                }
+              />
+              <Divider />
+            </>
+          )}
+        />
       )}
-    </ScrollView>
+    </>
   );
 };
