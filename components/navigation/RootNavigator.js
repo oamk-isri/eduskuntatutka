@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Drawer } from "react-native-paper";
+import { Divider, Drawer } from "react-native-paper";
+import { StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   PlenumsStack,
@@ -18,6 +19,7 @@ import {
 } from "./StackNavigators";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
+import LogoDark from "../../assets/logo/LogoDark.svg"
 
 const MainDrawer = createDrawerNavigator();
 
@@ -30,8 +32,13 @@ const DrawerView = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <Drawer.Section title="Eduskuntatutka">
-      <Drawer.Item
+      <>
+        <LogoDark style={styles.image}/>
+        <Text style={styles.title}>Eduskuntatutka</Text>
+      </>
+      <Drawer.Section />
+      <Drawer.Section>    
+        <Drawer.Item
           icon={() => <Icon name="home" size={20} />}
           label="Koti"
           onPress={() => navigation.navigate("NewsStack")}
@@ -91,3 +98,18 @@ export default RootNavigator = () => {
     </MainDrawer.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  image: {
+    height: 100,
+    width: 100,
+    alignSelf: "center",
+    marginTop: 15,
+  },
+  title: {
+    fontSize: 25,
+    alignSelf: "center",
+    marginTop: 10,
+    marginBottom: 15,
+  }
+});
