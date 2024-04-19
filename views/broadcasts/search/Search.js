@@ -4,9 +4,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Button,
   TextInput,
-  Image,
 } from "react-native";
 import { Card } from "react-native-paper";
 import axios from "axios";
@@ -25,6 +23,7 @@ export default Search = ({ navigation }) => {
   const [displayedResults, setDisplayedResults] = useState(16);
   const [isLoading, setIsLoading] = useState(false); // Added loading state
   const [hasSearched, setHasSearched] = useState(false); // Added search flag
+  const [searchOptionsVisible, setSearchOptionsVisible] = useState(true); // Added state for search options visibility
 
   // Define API URLs for categories
   const categoryUrls = {
@@ -152,6 +151,7 @@ export default Search = ({ navigation }) => {
   // Function to handle press event based on the event's slug
   const handlePressEvent = (event) => {
     const { slug } = event; // Extracting slug from the event
+    console.log("Navigating to page with slug:", slug); // Log the slug before navigating
     switch (slug) {
       case "taysistunnot":
         console.log("Navigating to Täysistunto");
@@ -187,238 +187,294 @@ export default Search = ({ navigation }) => {
   };
 
   const formattedStartDate = startDate
-    ? `${startDate.getDate()}.${
-        startDate.getMonth() + 1
-      }.${startDate.getFullYear()}`
+    ? `${startDate.getDate()}.${startDate.getMonth() + 1
+    }.${startDate.getFullYear()}`
     : "";
   const formattedEndDate = endDate
     ? `${endDate.getDate()}.${endDate.getMonth() + 1}.${endDate.getFullYear()}`
     : "";
 
+  // Function to toggle the visibility of search options
+  const toggleSearchOptionsVisibility = () => {
+    setSearchOptionsVisible(prevState => !prevState);
+  };
+
   return (
+
     <ScrollView>
       <View style={{ margin: 10 }}>
-        <Text style={{ fontWeight: "bold", paddingBottom: 10, fontSize: 16 }}>
-          Rajaa hakua:
-        </Text>
 
-        {/* Checkboxes for categories */}
+        {/* Search options */}
 
-        <View
-          style={{
-            flexDirection: "column",
-            flexWrap: "wrap",
-            marginBottom: 10,
-          }}
-        >
-          {["Kaikki", ...Object.keys(categoryUrls)].map((key) => (
-            <TouchableOpacity
+        {searchOptionsVisible && (
+          <View>
+            <Text style={{ fontWeight: "bold", paddingBottom: 10, fontSize: 16 }}>
+              Rajaa hakua:
+            </Text>
+
+            {/* Checkboxes for categories */}
+
+            <View
               style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: 8,
-                borderBottomWidth: 1,
-                borderBottomColor: "lightgrey",
-              }}
-              key={key}
-              onPress={() => {
-                if (key === "Kaikki") {
-                  setSelectedCategories(["Kaikki"]);
-                } else {
-                  setSelectedCategories((prevState) => {
-                    if (prevState.includes("Kaikki")) {
-                      return prevState
-                        .filter((cat) => cat !== "Kaikki")
-                        .concat(key);
-                    } else {
-                      return prevState.includes(key)
-                        ? prevState.filter((cat) => cat !== key)
-                        : [...prevState, key];
-                    }
-                  });
-                }
+                flexDirection: "column",
+                flexWrap: "wrap",
+                marginBottom: 10
               }}
             >
-              <Text>{key}</Text>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <View
+              {['Kaikki', ...Object.keys(categoryUrls)].map((key) => (
+                <TouchableOpacity
                   style={{
-                    height: 24,
-                    width: 24,
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    marginRight: 5,
-                    justifyContent: "center",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
                     alignItems: "center",
-                    borderColor: selectedCategories.includes(key)
-                      ? "#000000"
-                      : "#CCCCCC",
+                    padding: 8,
+                    borderBottomWidth: 1,
+                    borderBottomColor: "lightgrey"
+                  }}
+                  key={key}
+                  onPress={() => {
+                    if (key === 'Kaikki') {
+                      setSelectedCategories(['Kaikki']);
+                    } else {
+                      setSelectedCategories(prevState => {
+                        if (prevState.includes('Kaikki')) {
+                          return prevState
+                            .filter(cat => cat !== 'Kaikki')
+                            .concat(key);
+                        } else {
+                          return prevState.includes(key)
+                            ? prevState.filter(cat => cat !== key)
+                            : [...prevState, key];
+                        }
+                      });
+                    }
                   }}
                 >
-                  {selectedCategories.includes(key) && (
-                    <FontAwesome
-                      name="check"
-                      size={16}
-                      color={
-                        selectedCategories.includes(key) ? "#000000" : "#CCCCCC"
+                  <Text>{key}</Text>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View
+                      style={{
+                        height: 24,
+                        width: 24,
+                        borderRadius: 5,
+                        borderWidth: 1,
+                        marginRight: 5,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderColor: selectedCategories.includes(key)
+                          ? "#000000"
+                          : "#CCCCCC"
+                      }}
+                    >
+                      {selectedCategories.includes(key) &&
+                        <FontAwesome
+                          name="check"
+                          size={16}
+                          color={selectedCategories.includes(key) ? "#000000" : "#CCCCCC"}
+                        />
                       }
-                    />
-                  )}
-                </View>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Date selection */}
+
+            <View style={{ marginBottom: 10 }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  paddingTop: 5
+                }}
+              >
+                <TouchableOpacity onPress={showStartDatePicker} style={{ flex: 1 }}>
+                  <TextInput
+                    style={{
+                      flex: 1,
+                      height: 40,
+                      borderColor: 'gray',
+                      borderWidth: 1,
+                      marginRight: 5,
+                      textAlign: "center",
+                      borderRadius: 10
+                    }}
+                    value={formattedStartDate || 'Valitse aloituspvm'} // Render preview text if startDate is null
+                    editable={false}
+                  />
+                </TouchableOpacity>
+                <Icon
+                  name="arrow-right"
+                  size={20}
+                  color="black"
+                  style={{ marginRight: 5 }}
+                />
+                <TouchableOpacity onPress={showEndDatePicker} style={{ flex: 1 }}>
+                  <TextInput
+                    style={{
+                      flex: 1,
+                      height: 40,
+                      borderColor: 'gray',
+                      borderWidth: 1,
+                      marginLeft: 5,
+                      textAlign: "center",
+                      borderRadius: 10
+                    }}
+                    value={formattedEndDate || 'Valitse lopetuspvm'} // Render preview text if endDate is null
+                    editable={false}
+                  />
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {/* Date selection */}
-
-        <View style={{ marginBottom: 10 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              paddingTop: 5,
-            }}
-          >
-            <TouchableOpacity onPress={showStartDatePicker} style={{ flex: 1 }}>
-              <TextInput
-                style={{
-                  flex: 1,
-                  height: 40,
-                  borderColor: "gray",
-                  borderWidth: 1,
-                  marginRight: 5,
-                  textAlign: "center",
-                  borderRadius: 10,
-                }}
-                value={formattedStartDate || "Valitse aloituspvm"} // Render preview text if startDate is null
-                editable={false}
+              <DateTimePickerModal
+                isVisible={isStartDatePickerVisible}
+                mode="date"
+                onConfirm={handleStartDateConfirm}
+                onCancel={hideStartDatePicker}
               />
-            </TouchableOpacity>
-            <Icon
-              name="arrow-right"
-              size={20}
-              color="black"
-              style={{ marginRight: 5 }}
-            />
-            <TouchableOpacity onPress={showEndDatePicker} style={{ flex: 1 }}>
-              <TextInput
-                style={{
-                  flex: 1,
-                  height: 40,
-                  borderColor: "gray",
-                  borderWidth: 1,
-                  marginLeft: 5,
-                  textAlign: "center",
-                  borderRadius: 10,
-                }}
-                value={formattedEndDate || "Valitse lopetuspvm"} // Render preview text if endDate is null
-                editable={false}
+              <DateTimePickerModal
+                isVisible={isEndDatePickerVisible}
+                mode="date"
+                onConfirm={handleEndDateConfirm}
+                onCancel={hideEndDatePicker}
+              />
+            </View>
+
+            {/* Search button */}
+
+            <TouchableOpacity
+              onPress={handleSearch}
+              style={{
+                backgroundColor: "lavender",
+                margin: 5,
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 10,
+                elevation: 3,
+                flexDirection: "row",
+              }}
+            >
+              <Text style={{ fontSize: 18, fontWeight: "bold", padding: 5, }}>
+                Hae
+              </Text>
+              <FontAwesome
+                name="search"
+                size={18}
+                color="black"
+                style={{ paddingEnd: 15 }}
               />
             </TouchableOpacity>
           </View>
-          <DateTimePickerModal
-            isVisible={isStartDatePickerVisible}
-            mode="date"
-            onConfirm={handleStartDateConfirm}
-            onCancel={hideStartDatePicker}
-          />
-          <DateTimePickerModal
-            isVisible={isEndDatePickerVisible}
-            mode="date"
-            onConfirm={handleEndDateConfirm}
-            onCancel={hideEndDatePicker}
-          />
-        </View>
+        )}
 
-        {/* Search button */}
+        {/* Toggle button for search options */}
 
-        <TouchableOpacity
-          onPress={handleSearch}
+        <TouchableOpacity onPress={toggleSearchOptionsVisibility}
           style={{
-            backgroundColor: "lavender",
-            margin: 5,
             justifyContent: "center",
             alignItems: "center",
+            backgroundColor: "lavender",
+            margin: 5,
             borderRadius: 10,
             elevation: 3,
-            flexDirection: "row",
+            flexDirection: "row"
           }}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", padding: 5 }}>
-            Hae
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              padding: 5
+            }}
+          >
+            {searchOptionsVisible ? "Piilota hakupalkki" : "Näytä hakupalkki"}
           </Text>
-          <FontAwesome
-            name="search"
-            size={18}
+          <AntDesign
+            name={searchOptionsVisible
+              ? "caretup"
+              : "caretdown"}
+            size={20}
             color="black"
-            style={{ paddingEnd: 15 }}
           />
         </TouchableOpacity>
-      </View>
 
-      {/* Display search results */}
+        {/* Search results */}
 
-      {isLoading && (
-        <Text
-          style={{ textAlign: "center", marginTop: 10, fontWeight: "bold" }}
-        >
-          Ladataan hakutuloksia...
-        </Text>
-      )}
-      {hasSearched && !isLoading && searchResults.length === 0 && (
-        <Text
-          style={{ textAlign: "center", marginTop: 10, fontWeight: "bold" }}
-        >
-          Ei hakutuloksia.
-        </Text>
-      )}
-      {searchResults.slice(0, displayedResults).map((event) => (
-        <TouchableOpacity
-          key={event._id}
-          onPress={() => handlePressEvent(event)}
-        >
-          <Card style={{ margin: 5 }}>
-            <Card.Cover
-              source={{
-                uri: `https://eduskunta.videosync.fi${event.previewImg}`,
-              }}
-            />
-            <Card.Content>
-              <Text
-                style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
-              >
-                {event.title}
-              </Text>
-            </Card.Content>
-          </Card>
-        </TouchableOpacity>
-      ))}
+        {/* Always display search results */}
 
-      {/* "Näytä lisää" button */}
-
-      {!isLoading && displayedResults < totalResults && (
-        <TouchableOpacity
-          onPress={handleLoadMore}
-          style={{
-            backgroundColor: "lavender",
-            margin: 5,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 10,
-            elevation: 3,
-            flexDirection: "row",
-          }}
-        >
-          <Text style={{ fontSize: 18, fontWeight: "bold", padding: 5 }}>
-            Näytä lisää
+        {isLoading &&
+          <Text
+            style={{
+              textAlign: 'center',
+              marginTop: 10,
+              fontWeight: "bold"
+            }}>
+            Ladataan hakutuloksia...
+          </Text>}
+        {hasSearched && !isLoading && searchResults.length === 0 && (
+          <Text
+            style={{
+              textAlign: 'center',
+              marginTop: 10,
+              fontWeight: "bold"
+            }}>
+            Ei hakutuloksia.
           </Text>
-          <AntDesign name="caretdown" size={18} color="black" />
-        </TouchableOpacity>
-      )}
-      {/* Add some marginBottom to create spacing */}
-      <View style={{ marginBottom: 5 }}></View>
+        )}
+        {searchResults.slice(0, displayedResults).map((event) => (
+          <TouchableOpacity
+            key={event._id}
+            onPress={() => handlePressEvent(event)}>
+            <Card style={{ margin: 5 }}>
+              <Card.Cover
+                source={{ uri: `https://eduskunta.videosync.fi${event.previewImg}` }} />
+              <Card.Content>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    paddingTop: 10
+                  }}
+                >
+                  {event.title}
+                </Text>
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+        ))}
+
+        {/* "Näytä lisää" button */}
+
+        {!isLoading && displayedResults < totalResults && (
+          <TouchableOpacity
+            onPress={handleLoadMore}
+            style={{
+              backgroundColor: "lavender",
+              margin: 5,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 10,
+              elevation: 3,
+              flexDirection: "row"
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "bold",
+                padding: 5
+              }}
+              >
+              Näytä lisää
+            </Text>
+            <AntDesign name="caretdown" size={18} color="black" />
+          </TouchableOpacity>
+        )}
+
+        {/* Add some marginBottom to create spacing */}
+
+        <View style={{ marginBottom: 5 }}></View>
+      </View>
     </ScrollView>
   );
 };

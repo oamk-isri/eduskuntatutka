@@ -1,11 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
-  Image,
   ScrollView,
   View,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import { Text, Card } from "react-native-paper";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
@@ -21,6 +19,13 @@ export default Broadcasts = ({ navigation }) => {
   const [eduskuntaryhmatEvent, setEduskuntaryhmatEvent] = useState(null);
 
   useEffect(() => {
+    fetchData();
+    const interval = setInterval(fetchData, 60000); // Fetch data every minute
+
+    return () => clearInterval(interval); // Clean up interval on component unmount
+  }, []);
+
+  const fetchData = () => {
     fetchFirstLiveEvent();
     fetchFirstEvent("taysistunnot", setTaysistunnotEvent);
     fetchFirstEvent("valiokunnat", setValiokunnatEvent);
@@ -28,7 +33,7 @@ export default Broadcasts = ({ navigation }) => {
     fetchFirstEvent("tiedotustilaisuudet", setTiedotustilaisuudetEvent);
     fetchFirstEvent("esittelyvideot", setEsittelyvideotEvent);
     fetchFirstEvent("eduskuntaryhmat", setEduskuntaryhmatEvent);
-  }, []);
+  };
 
   const fetchFirstLiveEvent = () => {
     axios
