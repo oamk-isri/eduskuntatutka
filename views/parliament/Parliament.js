@@ -11,7 +11,7 @@ const EduskuntaScreen = () => (
         Suomen eduskunta
       </Text>
       <Image
-        source={require("../../assets/images/EduskuntaTalo.png")}
+        source={require("../../assets/images/EduskuntaTalo.jpg")}
         style={{ width: "100%", height: 150, marginVertical: 10, marginTop: 5 }}
         resizeMode="stretch"
       />
