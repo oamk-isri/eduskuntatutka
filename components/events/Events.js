@@ -23,13 +23,13 @@ export default Events = ({ navigation }) => {
           `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/valiokuntien-julkiset-kuulemiset-ja-avoimet-kokoukset?include=events&limit=1&page=1`
         );
         const tiedotustilaisuudetResponse = await axios.get(
-          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/tiedotustilaisuudet?include=events&states=1&limit=1&page=1`
+          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/tiedotustilaisuudet?include=events&limit=1&page=1`
         );
         const esittelyResponse = await axios.get(
-          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/esittelyvideot?include=events&states=1&limit=1&page=1`
+          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/esittelyvideot?include=events&limit=1&page=1`
         );
         const eduskuntaryhmatResponse = await axios.get(
-          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskuntaryhmat?include=events&states=1&limit=1&page=1`
+          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskuntaryhmat?include=events&limit=1&page=1`
         );
 
         const taysistuntoEvents = taysistuntoResponse.data.events.flat();
