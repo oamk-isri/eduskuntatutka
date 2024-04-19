@@ -61,7 +61,7 @@ export default function Votes() {
   }
 
   return (
-    <View style={{ padding: 15 }}>
+    <View style={{ paddingRight: 15, paddingLeft: 15 }}>
       <Heading size="h3" style={{ paddingBottom: 20 }}>
         Viimeisimmät äänestystulokset
       </Heading>
