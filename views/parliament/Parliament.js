@@ -54,10 +54,13 @@ const ToimintaScreen = () => (
         lainsäädäntöaloitteen, mikäli vähintään 50 000 kansalaista kannattaa
         aloitetta.
       </Text>
-      <Text style={{ fontSize: 18, marginVertical: 10, paddingBottom: 50 }}>
+      <Text style={{ fontSize: 18, marginVertical: 10, paddingBottom: 15 }}>
         Lisäksi eduskunnassa toimii erilaisia valiokuntia, jotka valmistelevat
         lainsäädäntöä ja käsittelevät erityiskysymyksiä. Eduskunnan jäsenet
         osallistuvat myös erilaisiin kansainvälisiin tehtäviin ja vierailuihin.
+      </Text>
+      <Text style={{ fontSize: 18, marginVertical: 10, paddingBottom: 40 }}>
+        Kuva: Hanne Salonen / Eduskunta
       </Text>
     </View>
   </ScrollView>
@@ -88,10 +91,13 @@ const EduskuntaryhmatScreen = () => (
         usein muutoksia valiokunnissa. Hallitus- ja oppositioryhmien
         kansanedustajat osallistuvat yhdessä valiokuntatyöhön.
       </Text>
-      <Text style={{ fontSize: 18, marginVertical: 10, paddingBottom: 50 }}>
+      <Text style={{ fontSize: 18, marginVertical: 10, paddingBottom: 15 }}>
         Oppositioryhmillä on tärkeä rooli demokratiassa: ne arvostelevat
         hallituksen toimintaa, esittävät vaihtoehtoja ja vaativat ministereitä
         perustelemaan hallituksen tekemiä ratkaisuja.
+      </Text>
+      <Text style={{ fontSize: 18, marginVertical: 10, paddingBottom: 40 }}>
+        Kuva: Hanne Salonen / Eduskunta
       </Text>
     </View>
   </ScrollView>
