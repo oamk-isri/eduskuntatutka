@@ -1,17 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
-  Image,
   ScrollView,
   View,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import { Text, Card } from "react-native-paper";
+import { AntDesign } from '@expo/vector-icons';
 
 export default eduryhmatList = ({ navigation }) => {
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
+  const [hasMoreEvents, setHasMoreEvents] = useState(true);
 
   useEffect(() => {
     fetchEvents();
@@ -24,10 +24,13 @@ export default eduryhmatList = ({ navigation }) => {
       )
       .then((response) => {
         if (response.data && response.data.events) {
+          if (response.data.events.length === 0 || response.data.events.length < 16) {
+            // No more events available
+            setHasMoreEvents(false);
+          }
           setEvents([
             ...events,
             ...response.data.events.map((event) => {
-              // Split the title at the '|' mark and take the first part
               const title = event.title.split("|")[0].trim();
               return { ...event, title };
             }),
@@ -67,15 +70,36 @@ export default eduryhmatList = ({ navigation }) => {
           </Card>
         </TouchableOpacity>
       ))}
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          marginVertical: 10,
-        }}
-      >
-        <Button title="Näytä lisää" onPress={fetchEvents} />
-      </View>
+
+      {/* "Näytä lisää" button */}
+      {hasMoreEvents && (
+        <TouchableOpacity
+          onPress={fetchEvents}
+          style={{
+            backgroundColor: "lavender",
+            margin: 5,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 10,
+            elevation: 3,
+            flexDirection: "row",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              padding: 5,
+            }}
+          >
+            Näytä lisää
+          </Text>
+          <AntDesign name="caretdown" size={18} color="black" />
+        </TouchableOpacity>
+      )}
+
+      {/* Add some marginBottom to create spacing */}
+      <View style={{ marginBottom: 5 }}></View>
     </ScrollView>
   );
 };

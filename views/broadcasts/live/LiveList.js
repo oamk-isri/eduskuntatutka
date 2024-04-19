@@ -1,17 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
-  Image,
   ScrollView,
   View,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import { Text, Card } from "react-native-paper";
+import { AntDesign } from '@expo/vector-icons';
 
 export default LiveList = ({ navigation }) => {
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState(1);
+  const [hasMoreEvents, setHasMoreEvents] = useState(true); // Track availability of more events
 
   useEffect(() => {
     fetchEvents();
@@ -36,6 +36,13 @@ export default LiveList = ({ navigation }) => {
             }),
           ]);
           setPage(page + 1);
+          if (liveEvents.length < 16) {
+            // If less than 16 events fetched, no more events available
+            setHasMoreEvents(false);
+          }
+        } else {
+          // No more events available
+          setHasMoreEvents(false);
         }
       })
       .catch((error) => {
@@ -89,15 +96,36 @@ export default LiveList = ({ navigation }) => {
           </Card>
         </TouchableOpacity>
       ))}
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          marginVertical: 10,
-        }}
-      >
-        <Button title="Näytä lisää" onPress={fetchEvents} />
-      </View>
+
+      {/* "Näytä lisää" button */}
+      {hasMoreEvents && (
+        <TouchableOpacity
+          onPress={fetchEvents}
+          style={{
+            backgroundColor: "lavender",
+            margin: 5,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 10,
+            elevation: 3,
+            flexDirection: "row",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              padding: 5,
+            }}
+          >
+            Näytä lisää
+          </Text>
+          <AntDesign name="caretdown" size={18} color="black" />
+        </TouchableOpacity>
+      )}
+
+      {/* Add some marginBottom to create spacing */}
+      <View style={{ marginBottom: 5 }}></View>
     </ScrollView>
   );
 };
