@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Divider, Drawer } from "react-native-paper";
-import { StyleSheet, Text } from "react-native";
+import { Image, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   PlenumsStack,
@@ -19,7 +19,6 @@ import {
 } from "./StackNavigators";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
-import LogoDark from "../../assets/logo/LogoDark.svg"
 
 const MainDrawer = createDrawerNavigator();
 
@@ -33,11 +32,14 @@ const DrawerView = ({ navigation }) => {
   return (
     <SafeAreaView>
       <>
-        <LogoDark style={styles.image}/>
+        <Image
+          source={require("../../assets/icon_dark.png")}
+          style={styles.image}
+        />
         <Text style={styles.title}>Eduskuntatutka</Text>
       </>
       <Drawer.Section />
-      <Drawer.Section>    
+      <Drawer.Section>
         <Drawer.Item
           icon={() => <Icon name="home" size={20} />}
           label="Koti"
@@ -94,7 +96,10 @@ export default RootNavigator = () => {
         component={RepresentativesStack}
       />
       <MainDrawer.Screen name="InfoStack" component={InfoStack} />
-      <MainDrawer.Screen name="TietoaEduskunnastaStack" component={TietoaEduskunnastaStack} />
+      <MainDrawer.Screen
+        name="TietoaEduskunnastaStack"
+        component={TietoaEduskunnastaStack}
+      />
     </MainDrawer.Navigator>
   );
 };
@@ -111,5 +116,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 10,
     marginBottom: 15,
-  }
+  },
 });
