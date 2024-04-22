@@ -1,5 +1,5 @@
-import "react-native-gesture-handler";
-import React, { useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import { StyleSheet, Appearance } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { PaperProvider } from "react-native-paper";
@@ -19,6 +19,7 @@ export default function App() {
         <DataOriginPopup />
         <NavigationContainer>
           <RootNavigator />
+          <StatusBar style="auto" />
         </NavigationContainer>
       </PaperProvider>
     </SafeAreaProvider>
