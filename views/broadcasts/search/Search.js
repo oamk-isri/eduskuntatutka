@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  ScrollView,
+  FlatList,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from "react-native";
 import { Card } from "react-native-paper";
 import axios from "axios";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import Icon from "react-native-vector-icons/FontAwesome"; // Import your arrow icon component
+import Icon from "react-native-vector-icons/FontAwesome";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 
 export default Search = ({ navigation }) => {
@@ -20,12 +21,11 @@ export default Search = ({ navigation }) => {
   const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisible] = useState(false);
   const [totalResults, setTotalResults] = useState(0);
-  const [displayedResults, setDisplayedResults] = useState(16);
-  const [isLoading, setIsLoading] = useState(false); // Added loading state
-  const [hasSearched, setHasSearched] = useState(false); // Added search flag
-  const [searchOptionsVisible, setSearchOptionsVisible] = useState(true); // Added state for search options visibility
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [searchOptionsVisible, setSearchOptionsVisible] = useState(true);
+  const [displayedResults, setDisplayedResults] = useState(16); // Update displayedResults state
 
-  // Define API URLs for categories
   const categoryUrls = {
     Täysistunnot:
       "https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/taysistunnot?include=events",
@@ -41,19 +41,17 @@ export default Search = ({ navigation }) => {
       "https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskuntaryhmat?include=events",
   };
 
-  // Function to fetch events from the API based on the selected category URL
-  const fetchEvents = async (url) => {
-    console.log("Fetching events from:", url);
+  const fetchEvents = async (url, category) => {
     try {
       const response = await axios.get(url);
-      return response.data.events || [];
+      const events = response.data.events.map(event => ({ ...event, categoryUrl: url }));
+      return events || [];
     } catch (error) {
       console.error("Error fetching data:", error);
       return [];
     }
   };
 
-  // Function to filter events based on date range
   const filterEventsByDate = (events) => {
     if (!startDate || !endDate) {
       return events;
@@ -65,30 +63,23 @@ export default Search = ({ navigation }) => {
     });
   };
 
-  // Function to handle search button press
   const handleSearch = async () => {
-    // Check if both categories and dates are selected
     if (selectedCategories.length === 0 || !startDate || !endDate) {
-      alert(
-        "Valitse vähintään yksi kategoria ja määritä aloitus- ja lopetuspäivämäärä ennen hakua."
-      );
+      alert("Valitse vähintään yksi kategoria ja määritä aloitus- ja lopetuspäivämäärä ennen hakua.");
       return;
     }
 
-    setIsLoading(true); // Set loading state to true
-    setHasSearched(true); // Set search flag to true
+    setIsLoading(true);
+    setHasSearched(true);
 
     let filteredEvents = [];
 
-    // Fetch events based on selected categories
     if (selectedCategories.includes("Kaikki")) {
-      // If "Kaikki" category is selected, fetch events from all URLs
       for (const category of Object.values(categoryUrls)) {
         const events = await fetchEvents(category);
         filteredEvents = [...filteredEvents, ...events];
       }
     } else {
-      // Fetch events based on individual selected categories
       for (const category of selectedCategories) {
         const url = categoryUrls[category];
         const events = await fetchEvents(url);
@@ -96,30 +87,23 @@ export default Search = ({ navigation }) => {
       }
     }
 
-    // Filter events based on date range
     filteredEvents = filterEventsByDate(filteredEvents);
 
-    // Modify titles to remove content after '|'
     const modifiedSearchResults = filteredEvents.map((event) => ({
       ...event,
       title: event.title.split("|")[0].trim(),
     }));
 
-    // Store the total number of results
     setTotalResults(modifiedSearchResults.length);
-
-    // Update displayed results
     setSearchResults(modifiedSearchResults);
-    setDisplayedResults(16);
-    setIsLoading(false); // Set loading state to false after results are fetched
+    setIsLoading(false);
+    setDisplayedResults(16); // Reset displayedResults state
   };
 
-  // Function to load more search results
   const handleLoadMore = () => {
-    setDisplayedResults((prevDisplayedResults) => prevDisplayedResults + 16);
+    setDisplayedResults(prevDisplayedResults => prevDisplayedResults + 16); // Increase displayedResults state
   };
 
-  // Functions to handle date picker visibility
   const showStartDatePicker = () => {
     setStartDatePickerVisible(true);
   };
@@ -136,11 +120,10 @@ export default Search = ({ navigation }) => {
     setEndDatePickerVisible(false);
   };
 
-  // Functions to handle date selection
   const handleStartDateConfirm = (date) => {
     setStartDate(date);
-    setStartDatePickerVisible(false); // Hide the startDate picker
-    setEndDatePickerVisible(); // Show the endDate picker
+    setStartDatePickerVisible(false);
+    setEndDatePickerVisible();
   };
 
   const handleEndDateConfirm = (date) => {
@@ -148,333 +131,281 @@ export default Search = ({ navigation }) => {
     hideEndDatePicker();
   };
 
-  // Function to handle press event based on the event's slug
-  const handlePressEvent = (event) => {
-    const { slug } = event; // Extracting slug from the event
-    console.log("Navigating to page with slug:", slug); // Log the slug before navigating
-    switch (slug) {
-      case "taysistunnot":
-        console.log("Navigating to Täysistunto");
-        navigation.navigate("Täysistunto", { taysistunnotEvent: event });
-        break;
-      case "valiokuntien-julkiset-kuulemiset-ja-avoimet-kokoukset":
-        console.log("Navigating to Valiokunta");
-        navigation.navigate("Valiokunta", { valiokunnatEvent: event });
-        break;
-      case "seminaarit":
-        console.log("Navigating to Seminaari");
-        navigation.navigate("Seminaari", { seminaaritEvent: event });
-        break;
-      case "tiedotustilaisuudet":
-        console.log("Navigating to Tiedotustilaisuus");
-        navigation.navigate("Tiedotustilaisuus", {
-          tiedotustilaisuudetEvent: event,
-        });
-        break;
-      case "esittelyvideot":
-        console.log("Navigating to Esittelyvideo");
-        navigation.navigate("Esittelyvideo", { esittelyvideotEvent: event });
-        break;
-      case "eduskuntaryhmat":
-        console.log("Navigating to Eduskuntaryhmä");
-        navigation.navigate("Eduskuntaryhmä", { eduskuntaryhmatEvent: event });
-        break;
-      default:
-        console.log("Navigating to Suora lähetys");
-        navigation.navigate("Suora lähetys", { liveEvent: event });
-        break;
-    }
-  };
-
-  const formattedStartDate = startDate
-    ? `${startDate.getDate()}.${startDate.getMonth() + 1
-    }.${startDate.getFullYear()}`
-    : "";
-  const formattedEndDate = endDate
-    ? `${endDate.getDate()}.${endDate.getMonth() + 1}.${endDate.getFullYear()}`
-    : "";
-
-  // Function to toggle the visibility of search options
   const toggleSearchOptionsVisibility = () => {
     setSearchOptionsVisible(prevState => !prevState);
   };
 
+    // Function to handle press event based on the event's category URL
+    const handlePressEvent = (event) => {
+      // Extract the category URL of the event
+      const categoryUrl = event.categoryUrl;
+  
+      // Determine the category based on the category URL
+      let category;
+      if (categoryUrl.includes("taysistunnot")) {
+        category = "Täysistunnot";
+      } else if (categoryUrl.includes("valiokuntien-julkiset-kuulemiset-ja-avoimet-kokoukset")) {
+        category = "Valiokuntien julkiset kuulemiset ja avoimet kokoukset";
+      } else if (categoryUrl.includes("seminaarit")) {
+        category = "Seminaarit";
+      } else if (categoryUrl.includes("tiedotustilaisuudet")) {
+        category = "Tiedotustilaisuudet";
+      } else if (categoryUrl.includes("esittelyvideot")) {
+        category = "Esittelyvideot";
+      } else if (categoryUrl.includes("eduskuntaryhmat")) {
+        category = "Eduskuntaryhmät";
+      }
+  
+      // Log the category before navigating
+      console.log("Navigating to", category || "Suora lähetys");
+  
+      // Navigate based on the determined category, or navigate to "Suora lähetys" if category is not found
+      switch (category) {
+        case "Täysistunnot":
+          navigation.navigate("Täysistunto", { taysistunnotEvent: event });
+          break;
+        case "Valiokuntien julkiset kuulemiset ja avoimet kokoukset":
+          navigation.navigate("Valiokunta", { valiokunnatEvent: event });
+          break;
+        case "Seminaarit":
+          navigation.navigate("Seminaari", { seminaaritEvent: event });
+          break;
+        case "Tiedotustilaisuudet":
+          navigation.navigate("Tiedotustilaisuus", { tiedotustilaisuudetEvent: event });
+          break;
+        case "Esittelyvideot":
+          navigation.navigate("Esittelyvideo", { esittelyvideotEvent: event });
+          break;
+        case "Eduskuntaryhmät":
+          navigation.navigate("Eduskuntaryhmä", { eduskuntaryhmatEvent: event });
+          break;
+        default:
+          navigation.navigate("Suora lähetys", { liveEvent: event });
+          break;
+      }
+    };
+
+
   return (
-
-    <ScrollView>
-      <View style={{ margin: 10 }}>
-
-        {/* Search options */}
-
-        {searchOptionsVisible && (
-          <View>
-            <Text style={{ fontWeight: "bold", paddingBottom: 10, fontSize: 16 }}>
-              Rajaa hakua:
-            </Text>
-
-            {/* Checkboxes for categories */}
-
-            <View
-              style={{
-                flexDirection: "column",
-                flexWrap: "wrap",
-                marginBottom: 10
-              }}
-            >
-              {['Kaikki', ...Object.keys(categoryUrls)].map((key) => (
-                <TouchableOpacity
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: 8,
-                    borderBottomWidth: 1,
-                    borderBottomColor: "lightgrey"
-                  }}
-                  key={key}
-                  onPress={() => {
-                    if (key === 'Kaikki') {
-                      setSelectedCategories(['Kaikki']);
-                    } else {
-                      setSelectedCategories(prevState => {
-                        if (prevState.includes('Kaikki')) {
-                          return prevState
-                            .filter(cat => cat !== 'Kaikki')
-                            .concat(key);
-                        } else {
-                          return prevState.includes(key)
-                            ? prevState.filter(cat => cat !== key)
-                            : [...prevState, key];
-                        }
-                      });
-                    }
-                  }}
-                >
-                  <Text>{key}</Text>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <View
-                      style={{
-                        height: 24,
-                        width: 24,
-                        borderRadius: 5,
-                        borderWidth: 1,
-                        marginRight: 5,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderColor: selectedCategories.includes(key)
-                          ? "#000000"
-                          : "#CCCCCC"
-                      }}
-                    >
-                      {selectedCategories.includes(key) &&
-                        <FontAwesome
-                          name="check"
-                          size={16}
-                          color={selectedCategories.includes(key) ? "#000000" : "#CCCCCC"}
-                        />
-                      }
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              ))}
-            </View>
-
-            {/* Date selection */}
-
-            <View style={{ marginBottom: 10 }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingTop: 5
-                }}
-              >
-                <TouchableOpacity onPress={showStartDatePicker} style={{ flex: 1 }}>
-                  <TextInput
-                    style={{
-                      flex: 1,
-                      height: 40,
-                      borderColor: 'gray',
-                      borderWidth: 1,
-                      marginRight: 5,
-                      textAlign: "center",
-                      borderRadius: 10
-                    }}
-                    value={formattedStartDate || 'Valitse aloituspvm'} // Render preview text if startDate is null
-                    editable={false}
-                  />
-                </TouchableOpacity>
-                <Icon
-                  name="arrow-right"
-                  size={20}
-                  color="black"
-                  style={{ marginRight: 5 }}
-                />
-                <TouchableOpacity onPress={showEndDatePicker} style={{ flex: 1 }}>
-                  <TextInput
-                    style={{
-                      flex: 1,
-                      height: 40,
-                      borderColor: 'gray',
-                      borderWidth: 1,
-                      marginLeft: 5,
-                      textAlign: "center",
-                      borderRadius: 10
-                    }}
-                    value={formattedEndDate || 'Valitse lopetuspvm'} // Render preview text if endDate is null
-                    editable={false}
-                  />
-                </TouchableOpacity>
-              </View>
-              <DateTimePickerModal
-                isVisible={isStartDatePickerVisible}
-                mode="date"
-                onConfirm={handleStartDateConfirm}
-                onCancel={hideStartDatePicker}
-              />
-              <DateTimePickerModal
-                isVisible={isEndDatePickerVisible}
-                mode="date"
-                onConfirm={handleEndDateConfirm}
-                onCancel={hideEndDatePicker}
-              />
-            </View>
-
-            {/* Search button */}
-
-            <TouchableOpacity
-              onPress={handleSearch}
-              style={{
-                backgroundColor: "lavender",
-                margin: 5,
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 10,
-                elevation: 3,
-                flexDirection: "row",
-              }}
-            >
-              <Text style={{ fontSize: 18, fontWeight: "bold", padding: 5, }}>
-                Hae
-              </Text>
-              <FontAwesome
-                name="search"
-                size={18}
-                color="black"
-                style={{ paddingEnd: 15 }}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {/* Toggle button for search options */}
-
-        <TouchableOpacity onPress={toggleSearchOptionsVisibility}
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "lavender",
-            margin: 5,
-            borderRadius: 10,
-            elevation: 3,
-            flexDirection: "row"
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              padding: 5
-            }}
-          >
-            {searchOptionsVisible ? "Piilota hakupalkki" : "Näytä hakupalkki"}
-          </Text>
-          <AntDesign
-            name={searchOptionsVisible
-              ? "caretup"
-              : "caretdown"}
-            size={20}
-            color="black"
-          />
-        </TouchableOpacity>
-
-        {/* Search results */}
-
-        {/* Always display search results */}
-
-        {isLoading &&
-          <Text
-            style={{
-              textAlign: 'center',
-              marginTop: 10,
-              fontWeight: "bold"
-            }}>
-            Ladataan hakutuloksia...
-          </Text>}
-        {hasSearched && !isLoading && searchResults.length === 0 && (
-          <Text
-            style={{
-              textAlign: 'center',
-              marginTop: 10,
-              fontWeight: "bold"
-            }}>
-            Ei hakutuloksia.
-          </Text>
-        )}
-        {searchResults.slice(0, displayedResults).map((event) => (
-          <TouchableOpacity
-            key={event._id}
-            onPress={() => handlePressEvent(event)}>
+    <View style={{ flex: 1 }}>
+      <FlatList
+        data={searchResults.slice(0, displayedResults)} // Slice searchResults based on displayedResults state
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handlePressEvent(item)}>
             <Card style={{ margin: 5 }}>
               <Card.Cover
-                source={{ uri: `https://eduskunta.videosync.fi${event.previewImg}` }} />
+                source={{ uri: `https://eduskunta.videosync.fi${item.previewImg}` }}
+              />
               <Card.Content>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: 'bold',
-                    paddingTop: 10
-                  }}
-                >
-                  {event.title}
+                <Text style={{ fontSize: 18, fontWeight: 'bold', paddingTop: 10 }}>
+                  {item.title}
                 </Text>
               </Card.Content>
             </Card>
           </TouchableOpacity>
-        ))}
-
-        {/* "Näytä lisää" button */}
-
-        {!isLoading && displayedResults < totalResults && (
-          <TouchableOpacity
-            onPress={handleLoadMore}
-            style={{
-              backgroundColor: "lavender",
-              margin: 5,
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 10,
-              elevation: 3,
-              flexDirection: "row"
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                padding: 5
-              }}
-              >
-              Näytä lisää
-            </Text>
-            <AntDesign name="caretdown" size={18} color="black" />
-          </TouchableOpacity>
         )}
-
-        {/* Add some marginBottom to create spacing */}
-
-        <View style={{ marginBottom: 5 }}></View>
-      </View>
-    </ScrollView>
+        keyExtractor={(item, index) => index.toString()}
+        ListHeaderComponent={(
+          <View style={{ margin: 10 }}>
+            {searchOptionsVisible && (
+              <View>
+                <Text style={{ fontWeight: "bold", paddingBottom: 10, fontSize: 16 }}>
+                  Rajaa hakua:
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "column",
+                    flexWrap: "wrap",
+                    marginBottom: 10
+                  }}
+                >
+                  {['Kaikki', ...Object.keys(categoryUrls)].map((key) => (
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: 8,
+                        borderBottomWidth: 1,
+                        borderBottomColor: "lightgrey"
+                      }}
+                      key={key}
+                      onPress={() => {
+                        if (key === 'Kaikki') {
+                          setSelectedCategories(['Kaikki']);
+                        } else {
+                          setSelectedCategories(prevState => {
+                            if (prevState.includes('Kaikki')) {
+                              return prevState
+                                .filter(cat => cat !== 'Kaikki')
+                                .concat(key);
+                            } else {
+                              return prevState.includes(key)
+                                ? prevState.filter(cat => cat !== key)
+                                : [...prevState, key];
+                            }
+                          });
+                        }
+                      }}
+                    >
+                      <Text>{key}</Text>
+                      <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <View
+                          style={{
+                            height: 24,
+                            width: 24,
+                            borderRadius: 5,
+                            borderWidth: 1,
+                            marginRight: 5,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderColor: selectedCategories.includes(key)
+                              ? "#000000"
+                              : "#CCCCCC"
+                          }}
+                        >
+                          {selectedCategories.includes(key) &&
+                            <FontAwesome
+                              name="check"
+                              size={16}
+                              color={selectedCategories.includes(key) ? "#000000" : "#CCCCCC"}
+                            />
+                          }
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+                <View style={{ marginBottom: 10 }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingTop: 5
+                    }}
+                  >
+                    <TouchableOpacity onPress={showStartDatePicker} style={{ flex: 1 }}>
+                      <TextInput
+                        style={{
+                          flex: 1,
+                          height: 40,
+                          borderColor: 'gray',
+                          borderWidth: 1,
+                          marginRight: 5,
+                          textAlign: "center",
+                          borderRadius: 10
+                        }}
+                        value={startDate ? `${startDate.getDate()}.${startDate.getMonth() + 1}.${startDate.getFullYear()}` : 'Valitse aloituspvm'}
+                        editable={false}
+                      />
+                    </TouchableOpacity>
+                    <Icon
+                      name="arrow-right"
+                      size={20}
+                      color="black"
+                      style={{ marginRight: 5 }}
+                    />
+                    <TouchableOpacity onPress={showEndDatePicker} style={{ flex: 1 }}>
+                      <TextInput
+                        style={{
+                          flex: 1,
+                          height: 40,
+                          borderColor: 'gray',
+                          borderWidth: 1,
+                          marginLeft: 5,
+                          textAlign: "center",
+                          borderRadius: 10
+                        }}
+                        value={endDate ? `${endDate.getDate()}.${endDate.getMonth() + 1}.${endDate.getFullYear()}` : 'Valitse lopetuspvm'}
+                        editable={false}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <DateTimePickerModal
+                    isVisible={isStartDatePickerVisible}
+                    mode="date"
+                    onConfirm={handleStartDateConfirm}
+                    onCancel={hideStartDatePicker}
+                  />
+                  <DateTimePickerModal
+                    isVisible={isEndDatePickerVisible}
+                    mode="date"
+                    onConfirm={handleEndDateConfirm}
+                    onCancel={hideEndDatePicker}
+                  />
+                </View>
+                <TouchableOpacity
+                  onPress={handleSearch}
+                  style={{
+                    backgroundColor: "lavender",
+                    margin: 5,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 10,
+                    elevation: 3,
+                    flexDirection: "row",
+                  }}
+                >
+                  <Text style={{ fontSize: 18, fontWeight: "bold", padding: 5 }}>
+                    Hae
+                  </Text>
+                  <FontAwesome
+                    name="search"
+                    size={18}
+                    color="black"
+                    style={{ paddingEnd: 15 }}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+            <TouchableOpacity onPress={toggleSearchOptionsVisibility}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "lavender",
+                margin: 5,
+                borderRadius: 10,
+                elevation: 3,
+                flexDirection: "row"
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  padding: 5
+                }}
+              >
+                {searchOptionsVisible ? "Piilota hakupalkki" : "Näytä hakupalkki"}
+              </Text>
+              <AntDesign
+                name={searchOptionsVisible
+                  ? "caretup"
+                  : "caretdown"}
+                size={20}
+                color="black"
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+        ListFooterComponent={(
+          <>
+            {isLoading && (
+              <Text style={{ textAlign: 'center', marginTop: 10, fontWeight: 'bold' }}>
+                Ladataan hakutuloksia...
+              </Text>
+            )}
+            {hasSearched && !isLoading && searchResults.length === 0 && (
+              <Text style={{ textAlign: 'center', marginTop: 10, fontWeight: 'bold' }}>
+                Ei hakutuloksia.
+              </Text>
+            )}
+            <View style={{ marginBottom: 80 }} />
+          </>
+        )}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.5}
+      />
+    </View>
   );
 };

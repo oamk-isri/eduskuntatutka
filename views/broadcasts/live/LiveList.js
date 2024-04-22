@@ -1,10 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  ScrollView,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { View, TouchableOpacity, FlatList } from "react-native";
 import { Text, Card } from "react-native-paper";
 import { AntDesign } from '@expo/vector-icons';
 
@@ -20,21 +16,18 @@ export default LiveList = ({ navigation }) => {
   const fetchEvents = () => {
     axios
       .get(
-        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskunta-kanava?include=children,events&states=0&limit=16&page=${page}`
+        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskunta-kanava?include=children,events&states=0,3`
       )
       .then((response) => {
         const liveEvents = response.data.children
           .map((child) => child.events)
           .flat(); // Extracting events from children array
         if (liveEvents.length > 0) {
-          setEvents([
-            ...events,
-            ...liveEvents.map((event) => {
-              // Split the title at the '|' mark and take the first part
-              const title = event.title.split("|")[0].trim();
-              return { ...event, title };
-            }),
-          ]);
+          // Filter out duplicate events
+          const uniqueEvents = liveEvents.filter((event) => {
+            return !events.some((existingEvent) => existingEvent._id === event._id);
+          });
+          setEvents([...events, ...uniqueEvents]);
           setPage(page + 1);
           if (liveEvents.length < 16) {
             // If less than 16 events fetched, no more events available
@@ -61,71 +54,54 @@ export default LiveList = ({ navigation }) => {
     }
   };
 
-  return (
-    <ScrollView>
-      {events.length === 0 && (
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            textAlign: "center",
-            marginVertical: 10,
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      key={item._id}
+      onPress={() => handlePressEvent(item)}
+    >
+      <Card style={{ margin: 5 }}>
+        <Card.Cover
+          source={{
+            uri: `https://eduskunta.videosync.fi${item.previewImg}`,
           }}
-        >
-          Ei suoria lähetyksiä juuri nyt.
-        </Text>
-      )}
-      {events.map((event) => (
-        <TouchableOpacity
-          key={event._id}
-          onPress={() => handlePressEvent(event)}
-        >
-          <Card style={{ margin: 5 }}>
-            <Card.Cover
-              source={{
-                uri: `https://eduskunta.videosync.fi${event.previewImg}`,
-              }}
-            />
-            <Card.Content>
-              <Text
-                style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
-              >
-                {event.title}
-              </Text>
-            </Card.Content>
-          </Card>
-        </TouchableOpacity>
-      ))}
-
-      {/* "Näytä lisää" button */}
-      {hasMoreEvents && (
-        <TouchableOpacity
-          onPress={fetchEvents}
-          style={{
-            backgroundColor: "lavender",
-            margin: 5,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 10,
-            elevation: 3,
-            flexDirection: "row",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              padding: 5,
-            }}
-          >
-            Näytä lisää
+        />
+        <Card.Content>
+          <Text style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}>
+            {item.title}
           </Text>
-          <AntDesign name="caretdown" size={18} color="black" />
-        </TouchableOpacity>
-      )}
+        </Card.Content>
+      </Card>
+    </TouchableOpacity>
+  );
 
-      {/* Add some marginBottom to create spacing */}
-      <View style={{ marginBottom: 5 }}></View>
-    </ScrollView>
+  // Categorize events based on their state
+  const liveEvents = events.filter(event => event.state === 0);
+  const upcomingEvents = events.filter(event => event.state === 3);
+
+  return (
+    <FlatList
+      data={[
+        { title: "Suorat lähetykset", data: liveEvents },
+        { title: "Tulevat lähetykset", data: upcomingEvents }
+      ].filter(section => section.data.length > 0)}
+      renderItem={({ item }) => (
+        <>
+          <Card style={{ margin: 5, backgroundColor: "lavender" }}>
+            <Text style={{ fontSize: 20, fontWeight: "bold", margin: 10 }}>
+              {item.title}
+            </Text>
+          </Card>
+          <FlatList
+            data={item.data}
+            renderItem={renderItem}
+            keyExtractor={(event) => event._id}
+            contentContainerStyle={{ paddingBottom: 5 }}
+          />
+        </>
+      )}
+      keyExtractor={(item, index) => index.toString()}
+      onEndReached={fetchEvents}
+      onEndReachedThreshold={0.5}
+    />
   );
 };

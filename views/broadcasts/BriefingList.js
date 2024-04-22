@@ -1,107 +1,104 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  ScrollView,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { 
+  View, 
+  TouchableOpacity, 
+  FlatList, 
+  ActivityIndicator } from "react-native";
 import { Text, Card } from "react-native-paper";
-import { AntDesign } from '@expo/vector-icons';
+import axios from "axios";
 
 export default BriefingList = ({ navigation }) => {
   const [events, setEvents] = useState([]);
-  const [page, setPage] = useState(1);
-  const [hasMoreEvents, setHasMoreEvents] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchEvents();
   }, []);
 
   const fetchEvents = () => {
+    setIsLoading(true);
     axios
       .get(
-        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/tiedotustilaisuudet?include=events&limit=16&page=${page}`
+        `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/tiedotustilaisuudet?include=events`
       )
       .then((response) => {
         if (response.data && response.data.events) {
-          if (response.data.events.length === 0 || response.data.events.length < 16) {
-            // No more events available
-            setHasMoreEvents(false);
-          }
-          setEvents([
-            ...events,
-            ...response.data.events.map((event) => {
-              // Split the title at the '|' mark and take the first part
-              const title = event.title.split("|")[0].trim();
-              return { ...event, title };
-            }),
-          ]);
-          setPage(page + 1);
+          const updatedEvents = response.data.events.map((event) => {
+            // Split the title at the '|' mark and take the first part
+            const title = event.title.split("|")[0].trim();
+            return { ...event, title };
+          });
+          setEvents(updatedEvents);
         }
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setIsLoading(false);
       });
   };
 
-  return (
-    <ScrollView>
-      {events.map((event) => (
-        <TouchableOpacity
-          key={event._id}
-          onPress={() =>
-            navigation.navigate("Tiedotustilaisuus", {
-              tiedotustilaisuudetEvent: event,
-            })
-          }
-        >
-          <Card style={{ margin: 5 }}>
-            <Card.Cover
-              source={{
-                uri: `https://eduskunta.videosync.fi${event.previewImg}`,
-              }}
-            />
-            <Card.Content>
-              <Text
-                style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
-              >
-                {event.title}
-              </Text>
-            </Card.Content>
-          </Card>
-        </TouchableOpacity>
-      ))}
-
-      {/* "Näytä lisää" button */}
-      {hasMoreEvents && (
-        <TouchableOpacity
-          onPress={fetchEvents}
-          style={{
-            backgroundColor: "lavender",
-            margin: 5,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 10,
-            elevation: 3,
-            flexDirection: "row",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              padding: 5,
-            }}
-          >
-            Näytä lisää
+  const renderCardItem = ({ item, index }) => {
+    if (index === 0 || item.state !== events[index - 1].state) {
+      return (
+        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold", margin: 10 }}>
+            {item.state === 0
+              ? "Suora lähetys"
+              : item.state === 3
+                ? "Tulevat lähetykset"
+                : "Päättyneet lähetykset"}
           </Text>
-          <AntDesign name="caretdown" size={18} color="black" />
-        </TouchableOpacity>
+        </Card>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const renderItem = ({ item, index }) => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Tiedotustilaisuus", {
+        tiedotustilaisuudetEvent: item,
+      })}
+    >
+      <Card style={{ margin: 5 }}>
+        <Card.Cover
+          source={{
+            uri: `https://eduskunta.videosync.fi${item.previewImg}`,
+          }}
+        />
+        <Card.Content>
+          <Text style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}>
+            {item.title}
+          </Text>
+        </Card.Content>
+      </Card>
+    </TouchableOpacity>
+  );
+
+  return (
+    <View style={{ flex: 1 }}>
+      {isLoading ? (
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <ActivityIndicator size="large" color="black" />
+          <Text style={{ marginTop: 10, fontWeight: "bold", fontSize: 20 }}>
+            Haetaan lähetyksiä...
+            </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={events}
+          renderItem={({ item, index }) => (
+            <>
+              {renderCardItem({ item, index })}
+              {renderItem({ item, index })}
+            </>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={{ paddingBottom: 5 }}
+        />
       )}
-      {/* Add some marginBottom to create spacing */}
-
-      <View style={{ marginBottom: 5 }}></View>
-
-    </ScrollView>
+    </View>
   );
 };
