@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Linking,
+  ScrollView,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
@@ -17,17 +18,14 @@ export default Info = () => {
 
   const toggleInfo = () => {
     setShowInfo(!showInfo);
-    setShowAuthors(false);
   };
 
   const toggleAuthors = () => {
     setShowAuthors(!showAuthors);
-    setShowInfo(false);
   };
 
   const toggleChannels = () => {
     setShowChannels(!showChannels);
-    setShowInfo(false);
   };
 
   const openFacebook = () => {
@@ -55,7 +53,7 @@ export default Info = () => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <TouchableOpacity onPress={toggleInfo}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Tietoa sovelluksesta</Text>
@@ -101,7 +99,7 @@ export default Info = () => {
         </View>
       </TouchableOpacity>
       {showChannels && (
-        <View>
+        <View style={{paddingBottom: 40}}>
           <TouchableOpacity onPress={openFacebook}>
             <View style={styles.channelItem}>
               <Icon name="logo-facebook" size={50} color="#1877F2" />
@@ -145,7 +143,7 @@ export default Info = () => {
           </TouchableOpacity>
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
