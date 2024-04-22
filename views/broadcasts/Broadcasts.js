@@ -55,11 +55,11 @@ export default Broadcasts = ({ navigation }) => {
           categories.forEach((category) => {
             const categoryEvents = category.events;
             categoryEvents.forEach((event) => {
-              const eventDate = new Date(event.publishingDate).getTime();
-              if (event.state === 0 && (!nearestLiveEvent || eventDate > nearestLiveEvent.publishingDate)) {
+              const eventDateTime = new Date(event.publishingDate).getTime();
+              if (event.state === 0 && (!nearestLiveEvent || eventDateTime > new Date(nearestLiveEvent.publishingDate).getTime())) {
                 nearestLiveEvent = { ...event, title: event.title.split("|")[0].trim(), previewImg: event.previewImg };
               }
-              if (eventDate > currentTime && (!nearestFutureEvent || eventDate < nearestFutureEvent.publishingDate)) {
+              if (eventDateTime > currentTime && (!nearestFutureEvent || eventDateTime < new Date(nearestFutureEvent.publishingDate).getTime())) {
                 nearestFutureEvent = { ...event, title: event.title.split("|")[0].trim(), previewImg: event.previewImg };
               }
             });
