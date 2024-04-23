@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Text, List, ActivityIndicator } from "react-native-paper";
 import { View } from "react-native";
 import { usePapaParse } from "react-papaparse";
+import styles from "../../styles/components/representatives"
 
-export default Absence = (props) => {
+export default RepAbsences = (props) => {
   const { readRemoteFile } = usePapaParse();
   const url = "https://datawrapper.dwcdn.net/cJbCO/260/dataset.csv";
 

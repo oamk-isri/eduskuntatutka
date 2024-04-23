@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Text, List } from "react-native-paper";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
+import styles from "../../styles/components/representatives"
 
 export default RepDetails = (props) => {
   const [expanded, setExpanded] = useState();
@@ -68,13 +69,3 @@ export default RepDetails = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    fontWeight: "bold",
-    paddingBottom: 4,
-  },
-  content: {
-    fontSize: 16,
-  },
-});
