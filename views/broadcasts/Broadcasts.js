@@ -50,21 +50,41 @@ export default Broadcasts = ({ navigation }) => {
           let nearestLiveEvent = null;
           let nearestFutureEvent = null;
           const currentTime = new Date().getTime();
-  
+
           // Iterate over categories to search for live events and future events
           categories.forEach((category) => {
-            const categoryEvents = category.events;
-            categoryEvents.forEach((event) => {
+            const { slug, events } = category;
+            if (events.length > 0) {
+              const event = events[0]; // Take the first event in the array
               const eventDateTime = new Date(event.publishingDate).getTime();
-              if (event.state === 0 && (!nearestLiveEvent || eventDateTime > new Date(nearestLiveEvent.publishingDate).getTime())) {
-                nearestLiveEvent = { ...event, title: event.title.split("|")[0].trim(), previewImg: event.previewImg };
+              if (
+                event.state === 0 &&
+                (!nearestLiveEvent ||
+                  eventDateTime >
+                  new Date(nearestLiveEvent.publishingDate).getTime())
+              ) {
+                nearestLiveEvent = {
+                  ...event,
+                  title: event.title.split("|")[0].trim(),
+                  previewImg: event.previewImg,
+                  categorySlug: slug, // Add the category slug to the live event
+                };
               }
-              if (eventDateTime > currentTime && (!nearestFutureEvent || eventDateTime < new Date(nearestFutureEvent.publishingDate).getTime())) {
-                nearestFutureEvent = { ...event, title: event.title.split("|")[0].trim(), previewImg: event.previewImg };
+              if (
+                eventDateTime > currentTime &&
+                (!nearestFutureEvent ||
+                  eventDateTime <
+                  new Date(nearestFutureEvent.publishingDate).getTime())
+              ) {
+                nearestFutureEvent = {
+                  ...event,
+                  title: event.title.split("|")[0].trim(),
+                  previewImg: event.previewImg,
+                };
               }
-            });
+            }
           });
-  
+
           // Set the live event to the nearest live event, if available; otherwise, set it to the nearest future event
           if (nearestLiveEvent) {
             setLiveEvent(nearestLiveEvent);
@@ -79,7 +99,7 @@ export default Broadcasts = ({ navigation }) => {
         console.error("Error fetching live event data:", error);
       });
   };
-  
+
 
   const fetchFirstEvent = (categorySlug, setEvent) => {
     let apiUrl;
@@ -195,55 +215,92 @@ export default Broadcasts = ({ navigation }) => {
       </TouchableOpacity>
 
       {liveEvent !== null ? (
-  <TouchableOpacity
-    onPress={() => {
-      // Check if urlName contains "taysistunto"
-      const { urlName } = liveEvent; // Extracting urlName from the event
-      if (urlName.includes("taysistunto")) {
-        // If urlName includes "tayistunto", navigate to Täysistunto
-        navigation.navigate("Täysistunto", {
-          taysistunnotEvent: liveEvent,
-        });
-      } else {
-        // Otherwise, navigate to Suora lähetys
-        navigation.navigate("Suora lähetys", { liveEvent: liveEvent });
-      }
-    }}
-  >
-    <Card style={{ margin: 5 }}>
-      <Card.Content>
-      <Text style={{ paddingBottom: 10 }}>
-          {liveEvent.state === 0
-            ? "Suorana nyt:"
-            : liveEvent.state === 3
-            ? "Seuraava suora lähetys:"
-            : ""}
-        </Text>
-        <Card.Cover
-          source={{
-            uri: `https://eduskunta.videosync.fi${liveEvent.previewImg}`,
+        <TouchableOpacity
+          onPress={() => {
+            const { categorySlug } = liveEvent;
+            switch (categorySlug) {
+              case "taysistunnot":
+                navigation.navigate("Täysistunto", {
+                  taysistunnotEvent: liveEvent,
+                });
+                break;
+              case "valiokuntien-julkiset-kuulemiset-ja-avoimet-kokoukset":
+                navigation.navigate("Valiokunta", {
+                  valiokunnatEvent: liveEvent,
+                });
+                break;
+              case "seminaarit":
+                navigation.navigate("Seminaari", {
+                  seminaaritEvent: liveEvent,
+                });
+                break;
+              case "tiedotustilaisuudet":
+                navigation.navigate("Tiedotustilaisuus", {
+                  tiedotustilaisuudetEvent: liveEvent,
+                });
+                break;
+              case "esittelyvideot":
+                navigation.navigate("Esittelyvideo", {
+                  esittelyvideotEvent: liveEvent,
+                });
+                break;
+              case "eduskuntaryhmat":
+                navigation.navigate("Eduskuntaryhmä", {
+                  eduskuntaryhmatEvent: liveEvent,
+                });
+                break;
+              default:
+                console.error("Invalid category slug");
+            }
           }}
-        />
-        <Text
-          style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
         >
-          {liveEvent.title}
-        </Text>
-        {/* Render other details of liveEvent if needed */}
-      </Card.Content>
-    </Card>
-  </TouchableOpacity>
-) : (
-  <View>
-    {/* Render a default card or whatever you prefer */}
-    <Card style={{ margin: 5 }}>
-      <Card.Content>
-        <Text>Ei suoria lähetyksiä juuri nyt.</Text>
-        {/* Render other default details */}
-      </Card.Content>
-    </Card>
-  </View>
-)}
+          <Card style={{ margin: 5 }}>
+            <Card.Content>
+              {liveEvent !== null && (
+                <View style={{ flexDirection: "row", alignItems: "center", paddingBottom: 10 }}>
+                  {liveEvent.state === 0 && (
+                    <FontAwesome
+                      name="dot-circle-o"
+                      size={14}
+                      color="red"
+                      style={{ marginRight: 5 }} // Add margin here
+                    />
+                  )}
+                  <Text>
+                    {liveEvent.state === 0
+                      ? "Suorana nyt:"
+                      : liveEvent.state === 3
+                        ? "Seuraava suora lähetys:"
+                        : ""}
+                  </Text>
+                </View>
+              )}
+              <Card.Cover
+                source={{
+                  uri: `https://eduskunta.videosync.fi${liveEvent.previewImg}`,
+                }}
+              />
+              <Text
+                style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
+              >
+                {liveEvent.title}
+              </Text>
+              {/* Render other details of liveEvent if needed */}
+            </Card.Content>
+          </Card>
+        </TouchableOpacity>
+      ) : (
+        <View>
+          {/* Render a default card or whatever you prefer */}
+          <Card style={{ margin: 5 }}>
+            <Card.Content>
+              <Text>Ei suoria lähetyksiä juuri nyt.</Text>
+              {/* Render other default details */}
+            </Card.Content>
+          </Card>
+        </View>
+      )}
+
 
       {/* Täysistunnot */}
 
