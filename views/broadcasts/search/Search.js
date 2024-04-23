@@ -5,7 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
-  ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { Card } from "react-native-paper";
 import axios from "axios";
@@ -56,7 +56,14 @@ export default Search = ({ navigation }) => {
     if (!startDate || !endDate) {
       return events;
     }
-
+  
+    // Sort events by publishing date
+    events.sort((a, b) => {
+      const dateA = new Date(a.publishingDate);
+      const dateB = new Date(b.publishingDate);
+      return dateB - dateA; // Reverse the order to sort from newest to oldest
+    });
+  
     return events.filter((event) => {
       const eventDate = new Date(event.publishingDate);
       return eventDate >= startDate && eventDate <= endDate;
@@ -68,12 +75,16 @@ export default Search = ({ navigation }) => {
       alert("Valitse vähintään yksi kategoria ja määritä aloitus- ja lopetuspäivämäärä ennen hakua.");
       return;
     }
-
+  
+    // Reset searchResults to an empty array at the beginning of the search
+    setSearchResults([]);
+  
+    // Set isLoading to true at the beginning of the search
     setIsLoading(true);
     setHasSearched(true);
-
+  
     let filteredEvents = [];
-
+  
     if (selectedCategories.includes("Kaikki")) {
       for (const category of Object.values(categoryUrls)) {
         const events = await fetchEvents(category);
@@ -86,17 +97,17 @@ export default Search = ({ navigation }) => {
         filteredEvents = [...filteredEvents, ...events];
       }
     }
-
+  
     filteredEvents = filterEventsByDate(filteredEvents);
-
+  
     const modifiedSearchResults = filteredEvents.map((event) => ({
       ...event,
       title: event.title.split("|")[0].trim(),
     }));
-
+  
     setTotalResults(modifiedSearchResults.length);
     setSearchResults(modifiedSearchResults);
-    setIsLoading(false);
+    setIsLoading(false); // Set isLoading to false when the search is complete
     setDisplayedResults(16); // Reset displayedResults state
   };
 
@@ -391,9 +402,12 @@ export default Search = ({ navigation }) => {
         ListFooterComponent={(
           <>
             {isLoading && (
-              <Text style={{ textAlign: 'center', marginTop: 10, fontWeight: 'bold' }}>
-                Ladataan hakutuloksia...
-              </Text>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="black" />
+        <Text style={{ marginTop: 10, fontWeight: "bold", fontSize: 20 }}>
+          Haetaan lähetyksiä...
+          </Text>
+      </View>
             )}
             {hasSearched && !isLoading && searchResults.length === 0 && (
               <Text style={{ textAlign: 'center', marginTop: 10, fontWeight: 'bold' }}>
