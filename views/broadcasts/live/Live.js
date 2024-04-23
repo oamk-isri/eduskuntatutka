@@ -16,6 +16,9 @@ export default Live = ({ route, navigation }) => {
 
   useEffect(() => {
     fetchData();
+    const interval = setInterval(fetchData, 60000); // Fetch data every minute
+
+    return () => clearInterval(interval); // Clean up interval on component unmount
   }, []);
 
   const fetchData = () => {

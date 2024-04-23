@@ -13,6 +13,9 @@ export default IntroList = ({ navigation }) => {
 
   useEffect(() => {
     fetchEvents();
+    const interval = setInterval(fetchEvents, 60000); // Fetch data every minute
+
+    return () => clearInterval(interval); // Clean up interval on component unmount
   }, []);
 
   const fetchEvents = () => {

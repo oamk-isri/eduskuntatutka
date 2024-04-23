@@ -16,8 +16,11 @@ export default Seminar = ({ route, navigation }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    const interval = setInterval(fetchData, 60000); // Fetch data every minute
 
+    return () => clearInterval(interval); // Clean up interval on component unmount
+  }, []);
+  
   const fetchData = () => {
     fetch(`https://eduskunta.videosync.fi/${urlName}/data`)
       .then((response) => response.json())
