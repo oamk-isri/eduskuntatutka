@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
-
-  // separate component specific definitions with commments 
+export default styles = StyleSheet.create({
 
   example: {
     fontSize: 20,
