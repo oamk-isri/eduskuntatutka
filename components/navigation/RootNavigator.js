@@ -2,7 +2,6 @@ import { useState } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Divider, Drawer } from "react-native-paper";
 import { StyleSheet, Text } from "react-native";
-import LogoDark from "../../assets/logo/LogoDark.svg";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   PlenumsStack,
@@ -20,6 +19,7 @@ import {
 } from "./StackNavigators";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
+import LottieAnimation from "../startup/LottieAnimation";
 
 const MainDrawer = createDrawerNavigator();
 
@@ -33,7 +33,7 @@ const DrawerView = ({ navigation }) => {
   return (
     <SafeAreaView>
       <>
-        <LogoDark style={styles.image} />
+        <LottieAnimation />
         <Text style={styles.title}>Eduskuntatutka</Text>
       </>
       <Drawer.Section />
