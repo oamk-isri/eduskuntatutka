@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Divider, Drawer } from "react-native-paper";
-import { Image, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
+import LogoDark from "../../assets/logo/LogoDark.svg";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   PlenumsStack,
@@ -32,10 +33,7 @@ const DrawerView = ({ navigation }) => {
   return (
     <SafeAreaView>
       <>
-        <Image
-          source={require("../../assets/icon_dark.png")}
-          style={styles.image}
-        />
+        <LogoDark style={styles.image} />
         <Text style={styles.title}>Eduskuntatutka</Text>
       </>
       <Drawer.Section />

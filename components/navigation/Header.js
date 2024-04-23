@@ -1,5 +1,5 @@
 import { Appbar } from "react-native-paper";
-import { Image } from "react-native";
+import LogoDark from "../../assets/logo/LogoDark.svg";
 
 export default Header = ({ navigation, title, isBack = true }) => {
   return (
@@ -7,10 +7,7 @@ export default Header = ({ navigation, title, isBack = true }) => {
       {isBack ? (
         <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
       ) : (
-        <Image
-          source={require("../../assets/icon_dark.png")}
-          style={{ width: 50, height: 50, marginEnd: 10 }}
-        />
+        <LogoDark style={{ height: 50, width: 35, margin: 8 }} />
       )}
 
       <Appbar.Content title={title} />
