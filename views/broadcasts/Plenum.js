@@ -18,6 +18,9 @@ export default Plenum = ({ route, navigation }) => {
 
   useEffect(() => {
     fetchData();
+    const interval = setInterval(fetchData, 60000); // Fetch data every minute
+
+    return () => clearInterval(interval); // Clean up interval on component unmount
   }, []);
 
   const fetchData = () => {
@@ -66,9 +69,8 @@ export default Plenum = ({ route, navigation }) => {
     const hours = Math.floor(timeInSeconds / 3600);
     const minutes = Math.floor((timeInSeconds % 3600) / 60);
     const seconds = timeInSeconds % 60;
-    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
-      seconds < 10 ? "0" : ""
-    }${seconds}`;
+    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""
+      }${seconds}`;
   };
 
   // Function to open the document
@@ -176,15 +178,15 @@ export default Plenum = ({ route, navigation }) => {
           onMessage={(event) => console.log(event.nativeEvent.data)}
         />
         <View style={{ paddingHorizontal: 10 }}>
-        <Text style={{ 
-          fontSize: 22, 
-          fontWeight: "bold",
-          paddingBottom: 10,
-          paddingTop: 10 
+          <Text style={{
+            fontSize: 22,
+            fontWeight: "bold",
+            paddingBottom: 10,
+            paddingTop: 10
           }}
           >
             {navigationTitle}
-            </Text>
+          </Text>
           {renderDecisions()}
           {renderTopics()}
           {renderSpeakersInfo()}
