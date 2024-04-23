@@ -77,21 +77,7 @@ export default Info = () => {
           </View>
         </View>
       )}
-      <TouchableOpacity onPress={toggleAuthors}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Tekijät</Text>
-          <Text style={styles.dropdownIcon}>{showAuthors ? "▲" : "▼"}</Text>
-        </View>
-      </TouchableOpacity>
-      {showAuthors && (
-        <View>
-          <Text style={styles.author}>Aleksi Kallio</Text>
-          <Text style={styles.author}>Riku Puonti</Text>
-          <Text style={styles.author}>Risto-Matti Isola</Text>
-          <Text style={styles.author}>Ossi Juvani</Text>
-        </View>
-      )}
-
+      
       <TouchableOpacity onPress={toggleChannels}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Eduskunta muissa kanavissa</Text>
@@ -141,6 +127,21 @@ export default Info = () => {
               <Text style={styles.channelText}>LinkedIn</Text>
             </View>
           </TouchableOpacity>
+        </View>
+      )}
+
+        <TouchableOpacity onPress={toggleAuthors}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Tekijät</Text>
+          <Text style={styles.dropdownIcon}>{showAuthors ? "▲" : "▼"}</Text>
+        </View>
+        </TouchableOpacity>
+        {showAuthors && (
+        <View>
+          <Text style={styles.author}>Aleksi Kallio</Text>
+          <Text style={styles.author}>Riku Puonti</Text>
+          <Text style={styles.author}>Risto-Matti Isola</Text>
+          <Text style={styles.author}>Ossi Juvani</Text>
         </View>
       )}
     </ScrollView>

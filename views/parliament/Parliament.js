@@ -82,11 +82,11 @@ const EduskuntaryhmatScreen = () => (
       </Text>
       <Text style={{ fontSize: 18, marginVertical: 10 }}>
         Eduskuntaryhmät vaikuttavat lainsäädäntötyöhön, tekevät yhteisiä
-        päätöksiä ja valitset omat johtajansa. Niiden kautta edustajat voivat
+        päätöksiä ja valitsevat omat johtajansa. Niiden kautta edustajat voivat
         yhdessä ajaa omia näkemyksiään ja vaikuttaa päätöksentekoon.
       </Text>
       <Text style={{ fontSize: 18, marginVertical: 10 }}>
-        Eduskuntaryhmät hallituksessa ja oppositiossa oleviin ryhmiin.
+        Eduskuntaryhmät jakautuvat hallituksessa ja oppositiossa oleviin ryhmiin.
         Hallitusryhmät tukevat hallituksen lakiesityksiä mutta esittävät niihin
         usein muutoksia valiokunnissa. Hallitus- ja oppositioryhmien
         kansanedustajat osallistuvat yhdessä valiokuntatyöhön.
