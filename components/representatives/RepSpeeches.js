@@ -2,7 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { ActivityIndicator, List } from "react-native-paper";
-import { parse, isAfter, isBefore } from "date-fns";
+import { parse, isBefore } from "date-fns";
+import styles from "../../styles/components/representatives"
 
 export default RepSpeeches = (props) => {
   const [speeches, setSpeeches] = useState([]);

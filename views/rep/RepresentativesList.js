@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FlatList, Text } from "react-native";
 import { TextInput, ActivityIndicator, List, Divider } from "react-native-paper";
+import styles from "../../styles/views/rep"
 
 export default RepresentativesList = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
