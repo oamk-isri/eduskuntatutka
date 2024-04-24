@@ -1,32 +1,33 @@
 import React from "react";
 import { Image, Text, View, ScrollView } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import styles from "../../styles/views/parliament"
 
 const Tab = createMaterialTopTabNavigator();
 
 const EduskuntaScreen = () => (
   <ScrollView>
-    <View style={{ paddingHorizontal: 10 }}>
-      <Text style={{ fontSize: 24, paddingVertical: 10, marginTop: 5 }}>
+    <View style={styles.container}>
+      <Text style={styles.heading}>
         Suomen eduskunta
       </Text>
       <Image
         source={require("../../assets/images/EduskuntaTalo.jpg")}
-        style={{ width: "100%", height: 150, marginVertical: 10, marginTop: 5 }}
+        style={styles.imageParliament}
         resizeMode="stretch"
       />
-      <Text style={{ fontSize: 18 }}>
+      <Text style={styles.bodyText}>
         Suomen eduskunta on maamme lainsäädäntöelin, joka vastaa Suomen
         yhteiskunnan päätöksenteosta. Se koostuu 200 kansanedustajasta, jotka
         valitaan neljän vuoden välein vaaleilla.
       </Text>
 
-      <Text style={{ fontSize: 18, marginVertical: 10 }}>
+      <Text style={styles.bodyText}>
         Eduskunta käsittelee lakeja ja säätää niitä, hyväksyy valtion budjetin
         ja valvoo hallituksen toimintaa.
       </Text>
 
-      <Text style={{ fontSize: 18, marginVertical: 10 }}>
+      <Text style={styles.bodyText}>
         Eduskunta on keskeinen osa Suomen demokraattista järjestelmää, ja vastaa
         kansalaisten äänen kuulumisesta päätöksenteossa.
       </Text>
@@ -36,30 +37,32 @@ const EduskuntaScreen = () => (
 
 const ToimintaScreen = () => (
   <ScrollView>
-    <View style={{ paddingHorizontal: 10 }}>
-      <Text style={{ fontSize: 24, paddingVertical: 10 }}>Toiminta</Text>
+    <View style={styles.container}>
+      <Text style={styles.heading}>
+        Toiminta
+      </Text>
       <Image
         source={require("../../assets/images/Taysistunto.jpg")}
-        style={{ width: "100%", height: 200, marginVertical: 10, marginTop: 5 }}
+        style={styles.image}
         resizeMode="stretch"
       />
-      <Text style={{ fontSize: 18 }}>
+      <Text style={styles.bodyText}>
         Eduskunta kokoontuu täysistuntoihin, joissa käsitellään lakiesityksiä,
         tehdään päätöksiä ja keskustellaan ajankohtaisista aiheista.
       </Text>
-      <Text style={{ fontSize: 18, marginVertical: 10 }}>
+      <Text style={styles.bodyText}>
         Eduskunta säätää uuden lain tai muuttaa vanhaa lakia hallituksen
         esityksestä tai kansanedustajan aloitteesta. Eduskunta on myös
         velvollinen ottamaan käsittelyyn kansalaisten tekemän
         lainsäädäntöaloitteen, mikäli vähintään 50 000 kansalaista kannattaa
         aloitetta.
       </Text>
-      <Text style={{ fontSize: 18, marginVertical: 10, paddingBottom: 15 }}>
+      <Text style={styles.bodyText}>
         Lisäksi eduskunnassa toimii erilaisia valiokuntia, jotka valmistelevat
         lainsäädäntöä ja käsittelevät erityiskysymyksiä. Eduskunnan jäsenet
         osallistuvat myös erilaisiin kansainvälisiin tehtäviin ja vierailuihin.
       </Text>
-      <Text style={{ fontSize: 18, marginVertical: 10, paddingBottom: 40 }}>
+      <Text style={styles.credits}>
         Kuva: Hanne Salonen / Eduskunta
       </Text>
     </View>
@@ -68,35 +71,37 @@ const ToimintaScreen = () => (
 
 const EduskuntaryhmatScreen = () => (
   <ScrollView>
-    <View style={{ paddingHorizontal: 10 }}>
-      <Text style={{ fontSize: 24, paddingVertical: 10 }}>Eduskuntaryhmät</Text>
+    <View style={styles.container}>
+      <Text style={styles.heading}>
+        Eduskuntaryhmät
+      </Text>
       <Image
         source={require("../../assets/images/EduskuntaRyhmat.jpg")}
-        style={{ width: "100%", height: 200, marginVertical: 10, marginTop: 5 }}
+        style={styles.image}
         resizeMode="stretch"
       />
-      <Text style={{ fontSize: 18 }}>
+      <Text style={styles.bodyText}>
         Eduskuntaryhmät ovat poliittisia ryhmiä, jotka koostuvat eduskunnan
         jäsenistä saman puolueen tai poliittisen liikkeen taustalta. Ne toimivat
         yhteistyössä ja edustavat yhteisiä poliittisia tavoitteita eduskunnassa.
       </Text>
-      <Text style={{ fontSize: 18, marginVertical: 10 }}>
+      <Text style={styles.bodyText}>
         Eduskuntaryhmät vaikuttavat lainsäädäntötyöhön, tekevät yhteisiä
         päätöksiä ja valitsevat omat johtajansa. Niiden kautta edustajat voivat
         yhdessä ajaa omia näkemyksiään ja vaikuttaa päätöksentekoon.
       </Text>
-      <Text style={{ fontSize: 18, marginVertical: 10 }}>
+      <Text style={styles.bodyText}>
         Eduskuntaryhmät jakautuvat hallituksessa ja oppositiossa oleviin ryhmiin.
         Hallitusryhmät tukevat hallituksen lakiesityksiä mutta esittävät niihin
         usein muutoksia valiokunnissa. Hallitus- ja oppositioryhmien
         kansanedustajat osallistuvat yhdessä valiokuntatyöhön.
       </Text>
-      <Text style={{ fontSize: 18, marginVertical: 10, paddingBottom: 15 }}>
+      <Text style={styles.bodyText}>
         Oppositioryhmillä on tärkeä rooli demokratiassa: ne arvostelevat
         hallituksen toimintaa, esittävät vaihtoehtoja ja vaativat ministereitä
         perustelemaan hallituksen tekemiä ratkaisuja.
       </Text>
-      <Text style={{ fontSize: 18, marginVertical: 10, paddingBottom: 40 }}>
+      <Text style={styles.credits}>
         Kuva: Hanne Salonen / Eduskunta
       </Text>
     </View>
