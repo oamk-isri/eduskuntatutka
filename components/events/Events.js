@@ -5,51 +5,25 @@ import { Text } from "react-native-paper";
 import { isSameDay, parseISO, isAfter } from "date-fns";
 import TodayEvents from "./TodayEvents";
 import UpcomingEvents from "./UpcomingEvents";
-import styles from "../../styles/components/events";
 
 export default Events = ({ navigation }) => {
-  const [eventsToday, setEventsToday] = useState([]);
-  const [eventsUpcoming, setEventsUpcoming] = useState([]);
+  const [todayEvents, setTodayEvents] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const taysistuntoResponse = await axios.get(
-          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/taysistunnot?include=events&limit=1&page=1`
+        const response = await axios.get(
+          "https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskunta-kanava?include=children,events&states=0,3"
         );
-        const seminaaritResponse = await axios.get(
-          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/seminaarit?include=events&limit=1&page=1`
-        );
-        const valiokunnatResponse = await axios.get(
-          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/valiokuntien-julkiset-kuulemiset-ja-avoimet-kokoukset?include=events&limit=1&page=1`
-        );
-        const tiedotustilaisuudetResponse = await axios.get(
-          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/tiedotustilaisuudet?include=events&limit=1&page=1`
-        );
-        const esittelyResponse = await axios.get(
-          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/esittelyvideot?include=events&limit=1&page=1`
-        );
-        const eduskuntaryhmatResponse = await axios.get(
-          `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/eduskuntaryhmat?include=events&limit=1&page=1`
-        );
+        const data = response.data;
 
-        const taysistuntoEvents = taysistuntoResponse.data.events.flat();
-        const seminaaritEvents = seminaaritResponse.data.events.flat();
-        const valiokunnatEvents = valiokunnatResponse.data.events.flat();
-        const tiedotustilaisuudetEvents =
-          tiedotustilaisuudetResponse.data.events.flat();
-        const esittelyEvents = esittelyResponse.data.events.flat();
-        const eduskuntaryhmatEvents =
-          eduskuntaryhmatResponse.data.events.flat();
-
-        const allEvents = [
-          ...taysistuntoEvents,
-          ...seminaaritEvents,
-          ...valiokunnatEvents,
-          ...tiedotustilaisuudetEvents,
-          ...esittelyEvents,
-          ...eduskuntaryhmatEvents,
-        ];
+        const allEvents = data.children.flatMap((category) =>
+          category.events.map((event) => ({
+            ...event,
+            categorySlug: category.slug,
+          }))
+        );
 
         const todaysEvents = allEvents.filter((event) =>
           isSameDay(parseISO(event.publishingDate), new Date())
@@ -61,8 +35,8 @@ export default Events = ({ navigation }) => {
             !todaysEvents.some((todayEvent) => todayEvent._id === event._id)
         );
 
-        setEventsToday(todaysEvents);
-        setEventsUpcoming(upcomingEvents);
+        setTodayEvents(todaysEvents);
+        setUpcomingEvents(upcomingEvents);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -72,27 +46,60 @@ export default Events = ({ navigation }) => {
   }, []);
 
   const handlePressEvent = (event) => {
-    const { urlName } = event;
-    if (urlName.includes("taysistunto")) {
-      navigation.navigate("Täysistunto", { taysistunnotEvent: event });
-    } else {
-      navigation.navigate("Suora lähetys", { liveEvent: event });
+    const { state, categorySlug } = event;
+    switch (categorySlug) {
+      case "taysistunnot":
+        navigation.navigate("Täysistunto", {
+          taysistunnotEvent: event,
+          title: state === 0 ? "Suora lähetys" : "Täysistunto",
+        });
+        break;
+      case "valiokuntien-julkiset-kuulemiset-ja-avoimet-kokoukset":
+        navigation.navigate("Valiokunta", {
+          valiokunnatEvent: event,
+          title: state === 0 ? "Suora lähetys" : "Valiokunta",
+        });
+        break;
+      case "seminaarit":
+        navigation.navigate("Seminaari", {
+          seminaaritEvent: event,
+          title: state === 0 ? "Suora lähetys" : "Seminaari",
+        });
+        break;
+      case "tiedotustilaisuudet":
+        navigation.navigate("Tiedotustilaisuus", {
+          tiedotustilaisuudetEvent: event,
+          title: state === 0 ? "Suora lähetys" : "Tiedotustilaisuus",
+        });
+        break;
+      case "esittelyvideot":
+        navigation.navigate("Esittelyvideo", {
+          esittelyvideotEvent: event,
+          title: state === 0 ? "Suora lähetys" : "Esittelyvideo",
+        });
+        break;
+      case "eduskuntaryhmat":
+        navigation.navigate("Eduskuntaryhmä", {
+          eduskuntaryhmatEvent: event,
+          title: state === 0 ? "Suora lähetys" : "Esittelyvideo",
+        });
+        break;
     }
   };
 
   return (
     <View>
-      {eventsToday.length > 0 && (
-        <TodayEvents events={eventsToday} handlePressEvent={handlePressEvent} />
+      {todayEvents.length > 0 && (
+        <TodayEvents events={todayEvents} handlePressEvent={handlePressEvent} />
       )}
-      {eventsUpcoming.length > 0 && (
+      {upcomingEvents.length > 0 && (
         <UpcomingEvents
-          events={eventsUpcoming}
+          events={upcomingEvents}
           handlePressEvent={handlePressEvent}
         />
       )}
-      {eventsToday.length === 0 && eventsUpcoming.length === 0 && (
-        <Text style={styles.noEvents}>
+      {todayEvents.length === 0 && upcomingEvents.length === 0 && (
+        <Text style={{ textAlign: "center", marginVertical: 10 }}>
           Ei suoria lähetyksiä tai tulevia tapahtumia.
         </Text>
       )}

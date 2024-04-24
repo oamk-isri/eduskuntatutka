@@ -271,13 +271,58 @@ const NewsStack = () => {
           ),
         }}
       />
-      <Stack.Screen name="Events" component={Events} />
       <Stack.Screen
         name="Täysistunto"
         component={Plenum}
+        options={({ route }) => ({
+          header: ({ navigation }) => (
+            <Header navigation={navigation} title={route.params.title} />
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name="Valiokunta"
+        component={Committee}
         options={{
           header: ({ navigation }) => (
-            <Header navigation={navigation} title="Täysistunto" />
+            <Header navigation={navigation} title="Valiokunta" />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Eduskuntaryhmä"
+        component={RepGroup}
+        options={{
+          header: ({ navigation }) => (
+            <Header navigation={navigation} title="Eduskuntaryhmä" />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Seminaari"
+        component={Seminar}
+        options={{
+          header: ({ navigation }) => (
+            <Header navigation={navigation} title="Seminaari" />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Tiedotustilaisuus"
+        component={Briefing}
+        options={{
+          header: ({ navigation }) => (
+            <Header navigation={navigation} title="Tiedotustilaisuus" />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Esittelyvideo"
+        component={Intro}
+        options={{
+          header: ({ navigation }) => (
+            <Header navigation={navigation} title="Esittelyvideo" />
           ),
         }}
       />
@@ -479,7 +524,6 @@ const InfoStack = () => {
     </Stack.Navigator>
   );
 };
-
 
 export {
   PlenumsStack,
