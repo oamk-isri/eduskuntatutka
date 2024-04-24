@@ -50,7 +50,7 @@ export default Broadcasts = ({ navigation }) => {
           let nearestLiveEvent = null;
           let nearestFutureEvent = null;
           const currentTime = new Date().getTime();
-
+  
           // Iterate over categories to search for live events and future events
           categories.forEach((category) => {
             const { slug, events } = category;
@@ -61,7 +61,7 @@ export default Broadcasts = ({ navigation }) => {
                 event.state === 0 &&
                 (!nearestLiveEvent ||
                   eventDateTime >
-                  new Date(nearestLiveEvent.publishingDate).getTime())
+                    new Date(nearestLiveEvent.publishingDate).getTime())
               ) {
                 nearestLiveEvent = {
                   ...event,
@@ -73,18 +73,18 @@ export default Broadcasts = ({ navigation }) => {
               if (
                 eventDateTime > currentTime &&
                 (!nearestFutureEvent ||
-                  eventDateTime <
-                  new Date(nearestFutureEvent.publishingDate).getTime())
+                  eventDateTime < new Date(nearestFutureEvent.publishingDate).getTime())
               ) {
                 nearestFutureEvent = {
                   ...event,
                   title: event.title.split("|")[0].trim(),
                   previewImg: event.previewImg,
+                  categorySlug: slug, // Add the category slug to the future event
                 };
               }
             }
           });
-
+  
           // Set the live event to the nearest live event, if available; otherwise, set it to the nearest future event
           if (nearestLiveEvent) {
             setLiveEvent(nearestLiveEvent);
@@ -99,7 +99,6 @@ export default Broadcasts = ({ navigation }) => {
         console.error("Error fetching live event data:", error);
       });
   };
-
 
   const fetchFirstEvent = (categorySlug, setEvent) => {
     let apiUrl;
