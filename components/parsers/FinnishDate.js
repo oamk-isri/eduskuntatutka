@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { format } from "date-fns";
 import fi from "date-fns/locale/fi";
-import { StyleSheet } from "react-native";
+import styles from "../../styles/components/parsers"
 
 export default FinnishDate = ({ dateString }) => {
   const parsedDate = parseDateStringToNumber(dateString);
@@ -43,25 +43,3 @@ const parseDateStringToNumber = (dateString) => {
     year,
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    //   flex: 0.3,
-    paddingRight: 10,
-  },
-  date: {
-    fontSize: 20,
-    color: "#114d9d",
-    fontWeight: "bold",
-  },
-  year: {
-    fontSize: 10,
-    color: "#114d9d",
-    marginTop: 2,
-  },
-  weekday: {
-    fontSize: 12,
-    color: "#888",
-  },
-});

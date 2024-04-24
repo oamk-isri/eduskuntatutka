@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { ActivityIndicator, Divider } from "react-native-paper";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import FinnishDate from "../parsers/FinnishDate";
@@ -9,6 +9,7 @@ import SwipeableList from "../elements/SwipeableList";
 import NewsTags from "./NewsTags";
 import { RssFeeds } from "../../constants/RssFeeds";
 import { NewsCategoryContext } from "../../contexts/Contexts";
+import styles from "../../styles/components/newsfeed"
 
 export default NewsFeed = ({ navigation }) => {
   const { getData, data, isLoading, error } = Xml();
@@ -75,10 +76,10 @@ export default NewsFeed = ({ navigation }) => {
   const NewsItem = ({ item }) => (
     <TouchableOpacity onPress={() => handlePress(item.link)}>
       <View style={styles.newsContainer}>
-        <View style={{ flex: 0.2, paddingTop: 10, paddingBottom: 10 }}>
+        <View style={styles.newsLeft}>
           <FinnishDate dateString={item.pubDate} />
         </View>
-        <View style={{ flex: 0.8 }}>
+        <View style={styles.newsRight}>
           {item.title.length > 40 || !item.description.length ? (
             <Text style={styles.title}>{item.title}</Text>
           ) : (
@@ -172,38 +173,3 @@ export default NewsFeed = ({ navigation }) => {
     </NewsCategoryContext.Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  tagContainer: {
-    padding: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    overflow: "scroll",
-  },
-
-  newsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  title: {
-    flex: 0.7,
-    fontSize: 14,
-    paddingBottom: 20,
-    paddingTop: 20,
-  },
-  headingContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  buttonRight: {
-    marginLeft: "auto",
-    marginRight: 30,
-    marginTop: 20,
-  },
-  buttonText: {
-    fontWeight: "bold",
-    fontSize: 15,
-  },
-});
