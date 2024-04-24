@@ -3,6 +3,7 @@ import { View } from "react-native";
 import axios from "axios";
 import { ActivityIndicator, Card, Text } from "react-native-paper";
 import Heading from "./Heading";
+import styles from "../../styles/components/elements"
 
 export default function Votes() {
   const [data, setData] = useState(null);
@@ -61,56 +62,32 @@ export default function Votes() {
   }
 
   return (
-    <View style={{ paddingRight: 15, paddingLeft: 15 }}>
-      <Heading size="h3" style={{ paddingBottom: 20 }}>
+    <View style={styles.votesContainer}>
+      <Heading size="h3" style={styles.heading}>
         Viimeisimmät äänestystulokset
       </Heading>
       {data.map((item) => (
         <Card
           key={item[0]}
-          style={{
-            backgroundColor: "rgba(255, 525, 255, 0.8)",
-            marginBottom: 15,
-            padding: 10,
-            shadowColor: "transparent",
-          }}
+          style={styles.votesBackground}
         >
-          <View style={{ paddingTop: 5 }}>
-            <View style={{ flexDirection: "row" }}>
-              <View
-                style={{
-                  flex: 0.7,
-                  justifyContent: "center",
-                  alignItems: "flex-start",
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "600",
-                    paddingBottom: 5,
-                    marginRight: 10,
-                  }}
-                >
-                  {item[21]}
+          <View style={styles.votesTextContainer}>
+            <View style={styles.votesTextLeft}>
+              <Text style={styles.votesTopic}>
+                {item[21]}
+              </Text>
+              <View style={styles.votesDateContainer}>
+                <Text style={styles.votesDate}>
+                  {formatDate(item[5])}
                 </Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={{ fontSize: 14 }}>{formatDate(item[5])}</Text>
-                </View>
               </View>
-              <View
-                style={{
-                  flex: 0.3,
-                  alignItems: "flex-end",
-                  justifyContent: "center",
-                }}
-              >
-                <Text>Jaa: {item[23]}</Text>
-                <Text>Ei: {item[24]}</Text>
-                <Text>Tyhjiä: {item[25]}</Text>
-                <Text>Poissa: {item[26]}</Text>
-                <Text>Yhteensä: {item[27]}</Text>
-              </View>
+            </View>
+            <View style={styles.votesTextRight}>
+              <Text>Jaa: {item[23]}</Text>
+              <Text>Ei: {item[24]}</Text>
+              <Text>Tyhjiä: {item[25]}</Text>
+              <Text>Poissa: {item[26]}</Text>
+              <Text>Yhteensä: {item[27]}</Text>
             </View>
           </View>
         </Card>

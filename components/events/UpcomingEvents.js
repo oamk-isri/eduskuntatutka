@@ -1,11 +1,12 @@
 import { TouchableOpacity } from "react-native";
 import { Text, Card } from "react-native-paper";
 import Heading from "../elements/Heading";
+import styles from "../../styles/components/events";
 
 export default UpcomingEvents = ({ events, handlePressEvent }) => {
   return (
     <>
-      <Heading size="h3" style={{ paddingBottom: 20 }}>
+      <Heading size="h3" style={styles.heading}>
         Tulevat lähetykset
       </Heading>
       {events.map((event) => (
@@ -13,7 +14,7 @@ export default UpcomingEvents = ({ events, handlePressEvent }) => {
           key={event._id}
           onPress={() => handlePressEvent(event)}
         >
-          <Card style={{ margin: 5 }}>
+          <Card style={styles.preview}>
             <Card.Cover
               source={{
                 uri: `https://eduskunta.videosync.fi${event.previewImg}`,
@@ -21,7 +22,7 @@ export default UpcomingEvents = ({ events, handlePressEvent }) => {
             />
             <Card.Content>
               <Text
-                style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
+                style={styles.previewTitle}
               >
                 {event.title.split("|")[0].trim().toLowerCase()}
               </Text>
