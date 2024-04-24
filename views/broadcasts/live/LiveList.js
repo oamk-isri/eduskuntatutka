@@ -31,8 +31,7 @@ export default LiveList = ({ navigation }) => {
   }, []);
 
   const fetchEvents = async () => {
-    setIsLoading(true); // Set loading to true when fetching events
-
+ 
     const promises = Object.entries(categoryUrls).map(([category, url]) => {
       return axios.get(url).then(response => ({
         category,
@@ -116,10 +115,10 @@ export default LiveList = ({ navigation }) => {
       <>
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-            {section.title === "Suorana nyt" && (
+            {section.title === "Suora lähetys" && (
               <FontAwesome name="dot-circle-o" size={24} color="red" style={{ paddingLeft: 10, paddingRight: 5 }} />
             )}
-            <Text style={{ fontSize: 20, fontWeight: "bold", margin: 10 }}>
+            <Text style={{ fontSize: 18, fontWeight: "bold", margin: 10 }}>
               {section.title}
             </Text>
           </View>
@@ -158,7 +157,7 @@ export default LiveList = ({ navigation }) => {
   return (
     <FlatList
       data={[
-        { title: "Suorana nyt", data: events.filter(event => event.state === 0) },
+        { title: "Suora lähetys", data: events.filter(event => event.state === 0) },
         { title: "Tulevat lähetykset", data: events.filter(event => event.state === 3) }
       ]}
       renderItem={({ item }) => renderSection(item)}
