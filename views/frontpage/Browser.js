@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { WebView } from "react-native-webview";
+import styles from "../../styles/views/frontpage"
 
 export default Browser = (props) => {
   const webviewRef = useRef(null);
@@ -245,36 +246,3 @@ export default Browser = (props) => {
 
   return <>{renderWebview()}</>;
 };
-
-const styles = StyleSheet.create({
-  loadingContainer: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  flexContainer: {
-    flex: 1,
-  },
-  tabBarContainer: {
-    backgroundColor: "#d3d3d3",
-    height: 56,
-    alignItems: "center",
-    flexDirection: "row",
-    paddingHorizontal: 16,
-    justifyContent: "space-between",
-  },
-  button: {
-    fontSize: 24,
-  },
-  arrow: {
-    color: "#ef4771",
-  },
-  icon: {
-    width: 20,
-    height: 20,
-  },
-});
