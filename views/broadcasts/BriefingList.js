@@ -6,10 +6,11 @@ import {
   ActivityIndicator } from "react-native";
 import { Text, Card } from "react-native-paper";
 import axios from "axios";
+import { FontAwesome } from '@expo/vector-icons';
 
 export default BriefingList = ({ navigation }) => {
   const [events, setEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchEvents();
@@ -19,7 +20,6 @@ export default BriefingList = ({ navigation }) => {
   }, []);
 
   const fetchEvents = () => {
-    setIsLoading(true);
     axios
       .get(
         `https://verkkolahetys.eduskunta.fi/api/v1/categories/slug/tiedotustilaisuudet?include=events`
@@ -45,13 +45,18 @@ export default BriefingList = ({ navigation }) => {
     if (index === 0 || item.state !== events[index - 1].state) {
       return (
         <Card style={{ margin: 5, backgroundColor: "lavender" }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold", margin: 10 }}>
-            {item.state === 0
-              ? "Suora lähetys"
-              : item.state === 3
-                ? "Tulevat lähetykset"
-                : "Päättyneet lähetykset"}
-          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            {item.state === 0 && ( // Render the icon only for "Suora lähetys"
+              <FontAwesome name="dot-circle-o" size={24} color="red" style={{ paddingLeft: 10, paddingRight: 5 }} />
+            )}
+            <Text style={{ fontSize: 18, fontWeight: "bold", margin: 10 }}>
+              {item.state === 0
+                ? "Suora lähetys"
+                : item.state === 3
+                  ? "Tulevat lähetykset"
+                  : "Päättyneet lähetykset"}
+            </Text>
+          </View>
         </Card>
       );
     } else {
