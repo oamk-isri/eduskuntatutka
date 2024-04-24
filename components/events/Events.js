@@ -5,6 +5,7 @@ import { Text } from "react-native-paper";
 import { isSameDay, parseISO, isAfter } from "date-fns";
 import TodayEvents from "./TodayEvents";
 import UpcomingEvents from "./UpcomingEvents";
+import styles from "../../styles/components/events";
 
 export default Events = ({ navigation }) => {
   const [eventsToday, setEventsToday] = useState([]);
@@ -91,7 +92,7 @@ export default Events = ({ navigation }) => {
         />
       )}
       {eventsToday.length === 0 && eventsUpcoming.length === 0 && (
-        <Text style={{ textAlign: "center", marginVertical: 10 }}>
+        <Text style={styles.noEvents}>
           Ei suoria lähetyksiä tai tulevia tapahtumia.
         </Text>
       )}

@@ -8,6 +8,7 @@ import {
   Linking,
   StatusBar,
 } from "react-native";
+import styles from "../../styles/components/elements"
 
 export default DataOriginPopup = () => {
   const [showPopup, setShowPopup] = useState(true);
@@ -30,36 +31,21 @@ export default DataOriginPopup = () => {
       onRequestClose={() => setShowPopup(false)}
     >
       <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-        }}
+        style={styles.modalBackground}
       >
         <View
-          style={{
-            backgroundColor: "white",
-            padding: 20,
-            borderRadius: 10,
-            margin: 20,
-            alignItems: 'center'
-          }}
+          style={styles.popupBackground}
         >
           <Text>{dataOrigin}</Text>
           <StatusBar backgroundColor="rgba(0, 0, 0, 0.5)" translucent={true} />
-          <TouchableOpacity onPress={handleLinkPress} style={{alignSelf: "flex-start"}}>
+          <TouchableOpacity onPress={handleLinkPress} style={styles.popupOriginContainer}>
             <Text
-              style={{
-                textDecorationLine: "underline",
-                marginTop: 10,
-                color: "blue",
-              }}
+              style={styles.popupOriginText}
             >
               Lue lisää
             </Text>
           </TouchableOpacity>
-          <View style={{ borderRadius: 5, marginTop: 15, width: 75, alignItems: 'center'}}>
+          <View style={styles.popupButton}>
           <Button title="Ok" onPress={() => setShowPopup(false)} />
           </View>
         </View>

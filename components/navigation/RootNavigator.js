@@ -20,6 +20,7 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
 import LottieAnimation from "../startup/LottieAnimation";
+import styles from "../../styles/components/navigation";
 
 const MainDrawer = createDrawerNavigator();
 
@@ -101,18 +102,3 @@ export default RootNavigator = () => {
     </MainDrawer.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  image: {
-    height: 100,
-    width: 100,
-    alignSelf: "center",
-    marginTop: 15,
-  },
-  title: {
-    fontSize: 25,
-    alignSelf: "center",
-    marginTop: 10,
-    marginBottom: 15,
-  },
-});
