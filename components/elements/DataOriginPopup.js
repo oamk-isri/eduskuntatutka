@@ -36,7 +36,7 @@ export default DataOriginPopup = () => {
         <View
           style={styles.popupBackground}
         >
-          <Text>{dataOrigin}</Text>
+          <Text style={styles.infoText}>{dataOrigin}</Text>
           <StatusBar backgroundColor="rgba(0, 0, 0, 0.5)" translucent={true} />
           <TouchableOpacity onPress={handleLinkPress} style={styles.popupOriginContainer}>
             <Text
@@ -46,7 +46,14 @@ export default DataOriginPopup = () => {
             </Text>
           </TouchableOpacity>
           <View style={styles.popupButton}>
-          <Button title="Ok" onPress={() => setShowPopup(false)} />
+          <TouchableOpacity
+                onPress={() => setShowPopup(false)}
+                  style={styles.pButton}>
+                  <Text style={styles.buttonText}>
+                    OK
+                  </Text>
+                </TouchableOpacity>
+
           </View>
         </View>
       </View>

@@ -23,13 +23,32 @@ export default styles = StyleSheet.create({
   popupOriginText: {
     textDecorationLine: "underline",
     marginTop: 10,
-    color: "blue",
+    fontWeight: "bold",
+    fontSize: 18
   },
   popupButton: {
-    borderRadius: 5,
-    marginTop: 15,
-    width: 75,
-    alignItems: 'center'
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 5,
+  },
+  pButton: {
+    backgroundColor: "lavender",
+    margin: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    elevation: 3,
+    flexDirection: "row",
+    width: 100
+  },
+
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    padding: 5
+  },
+  infoText:{
+    fontSize: 18
   },
 
   // Heading.js
