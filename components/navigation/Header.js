@@ -11,7 +11,7 @@ export default Header = ({ navigation, title, isBack = true }) => {
         <LogoDark style={styles.logo} />
       )}
 
-      <Appbar.Content title={title} />
+      <Appbar.Content title={title} titleStyle={styles.titleStyle} />
       <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
     </Appbar.Header>
   );
