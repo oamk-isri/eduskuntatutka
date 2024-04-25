@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { View, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
 import { Text, Card } from "react-native-paper";
 import { FontAwesome } from '@expo/vector-icons';
+import styles from "../../../styles/views/broadcasts";
 
 export default LiveList = ({ navigation }) => {
   const [events, setEvents] = useState([]);
@@ -31,11 +32,15 @@ export default LiveList = ({ navigation }) => {
   }, []);
 
   const fetchEvents = async () => {
- 
+
     const promises = Object.entries(categoryUrls).map(([category, url]) => {
       return axios.get(url).then(response => ({
         category,
-        events: response.data.events.map(event => ({ ...event, categoryUrl: url }))
+        events: response.data.events.map(event => ({
+          ...event, categoryUrl: url,
+          // Extracting and trimming the title
+          title: event.title.split("|")[0].trim()
+        }))
       }));
     });
 
@@ -61,8 +66,6 @@ export default LiveList = ({ navigation }) => {
         category = cat;
       }
     });
-
-    console.log("Navigating to", category || "Suora lähetys");
 
     switch (category) {
       case "Täysistunnot":
@@ -94,14 +97,14 @@ export default LiveList = ({ navigation }) => {
       key={item._id}
       onPress={() => handlePressEvent(item)}
     >
-      <Card style={{ margin: 5 }}>
+      <Card style={styles.listEventCard}>
         <Card.Cover
           source={{
             uri: `https://eduskunta.videosync.fi${item.previewImg}`,
           }}
         />
         <Card.Content>
-          <Text style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}>
+          <Text style={styles.listEventTitle}>
             {item.title}
           </Text>
         </Card.Content>
@@ -113,12 +116,12 @@ export default LiveList = ({ navigation }) => {
     if (section.data.length === 0) return null;
     return (
       <>
-        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+        <Card style={styles.listNavCard}>
+          <View style={styles.listNavView}>
             {section.title === "Suora lähetys" && (
-              <FontAwesome name="dot-circle-o" size={24} color="red" style={{ paddingLeft: 10, paddingRight: 5 }} />
+              <FontAwesome name="dot-circle-o" size={24} color="red" style={styles.liveIcon} />
             )}
-            <Text style={{ fontSize: 18, fontWeight: "bold", margin: 10 }}>
+            <Text style={styles.listNavText}>
               {section.title}
             </Text>
           </View>
@@ -127,7 +130,7 @@ export default LiveList = ({ navigation }) => {
           data={section.data}
           renderItem={renderItem}
           keyExtractor={(event) => event._id}
-          contentContainerStyle={{ paddingBottom: 5 }}
+          contentContainerStyle={styles.flatPad}
         />
       </>
     );
@@ -136,9 +139,9 @@ export default LiveList = ({ navigation }) => {
 
   if (isLoading) { // Show loading indicator while fetching events
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View style={styles.loadingView}>
         <ActivityIndicator size="large" color="black" />
-        <Text style={{ marginTop: 10, fontWeight: "bold", fontSize: 20 }}>
+        <Text style={styles.loadingText}>
           Haetaan lähetyksiä...
         </Text>
       </View>
@@ -146,12 +149,9 @@ export default LiveList = ({ navigation }) => {
   }
 
   if (events.length === 0) {
-    return <Text style={{
-      fontSize: 22,
-      fontWeight: "bold",
-      paddingBottom: 10,
-      paddingTop: 10
-    }}>Ei suoria lähetyksiä.</Text>;
+    return <Text style={styles.noLives}>
+      Ei suoria lähetyksiä.
+      </Text>;
   }
 
   return (

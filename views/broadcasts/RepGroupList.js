@@ -7,6 +7,7 @@ import {
 import { Text, Card } from "react-native-paper";
 import axios from "axios";
 import { FontAwesome } from '@expo/vector-icons';
+import styles from "../../styles/views/broadcasts";
 
 export default eduryhmatList = ({ navigation }) => {
   const [events, setEvents] = useState([]);
@@ -44,12 +45,12 @@ export default eduryhmatList = ({ navigation }) => {
   const renderCardItem = ({ item, index }) => {
     if (index === 0 || item.state !== events[index - 1].state) {
       return (
-        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Card style={styles.listNavCard}>
+          <View style={styles.cardItemView}>
             {item.state === 0 && ( // Render the icon only for "Suora lähetys"
-              <FontAwesome name="dot-circle-o" size={24} color="red" style={{ paddingLeft: 10, paddingRight: 5 }} />
+              <FontAwesome name="dot-circle-o" size={24} color="red" style={styles.liveIcon} />
             )}
-            <Text style={{ fontSize: 18, fontWeight: "bold", margin: 10 }}>
+            <Text style={styles.listNavText}>
               {item.state === 0
                 ? "Suora lähetys"
                 : item.state === 3
@@ -69,14 +70,14 @@ export default eduryhmatList = ({ navigation }) => {
       onPress={() => navigation.navigate("Eduskuntaryhmä", {
         eduskuntaryhmatEvent: item })}
     >
-      <Card style={{ margin: 5 }}>
+      <Card style={styles.listEventCard}>
         <Card.Cover
           source={{
             uri: `https://eduskunta.videosync.fi${item.previewImg}`,
           }}
         />
         <Card.Content>
-          <Text style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}>
+          <Text style={styles.listEventTitle}>
             {item.title}
           </Text>
         </Card.Content>
@@ -85,11 +86,11 @@ export default eduryhmatList = ({ navigation }) => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.listView}>
       {isLoading ? (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={styles.loadingView}>
           <ActivityIndicator size="large" color="black" />
-          <Text style={{ marginTop: 10, fontWeight: "bold", fontSize: 20 }}>
+          <Text style={styles.loadingText}>
             Haetaan lähetyksiä...
             </Text>
         </View>
@@ -103,7 +104,7 @@ export default eduryhmatList = ({ navigation }) => {
             </>
           )}
           keyExtractor={(item, index) => index.toString()}
-          contentContainerStyle={{ paddingBottom: 5 }}
+          contentContainerStyle={styles.flatPad}
         />
       )}
     </View>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Linking, ScrollView, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
+import styles from "../../styles/views/broadcasts";
 
 export default Plenum = ({ route, navigation }) => {
   const { taysistunnotEvent } = route.params;
@@ -93,17 +94,13 @@ export default Plenum = ({ route, navigation }) => {
         {decisions.map((decision, index) => (
           <Text
             key={index}
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              textDecorationLine: "underline",
-            }}
+            style={styles.recordLink}
             onPress={() => openDocument(decision)}
           >
             Linkki täysistunnon pöytäkirjaan
           </Text>
         ))}
-        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 20 }}>
+        <Text style={styles.eventDetails}>
           Käsiteltävät asiat:
         </Text>
       </View>
@@ -112,17 +109,17 @@ export default Plenum = ({ route, navigation }) => {
 
   const renderTopics = () => {
     return (
-      <View style={{ marginTop: 20 }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+      <View>
+        <Text style={styles.eventDetails}>
           Keskusteluaiheet:
         </Text>
         {topics.map((topic, index) => {
           return (
-            <View key={index} style={{ marginTop: 10 }}>
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+            <View key={index}>
+              <Text style={styles.eventDetails}>
                 {topic.id}. {topic.title.fi}
               </Text>
-              <Text style={{ marginLeft: 10 }}>
+              <Text style={styles.plenumContent}>
                 {topic.content.kasittelyvaiheNimi.fi}
               </Text>
             </View>
@@ -134,18 +131,18 @@ export default Plenum = ({ route, navigation }) => {
 
   const renderSpeakersInfo = () => {
     return (
-      <View style={{ marginTop: 20 }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+      <View>
+        <Text style={styles.eventDetails}>
           Puheenvuorot ({speakersInfo.length})
         </Text>
         {speakersInfo.map((speaker, index) => (
-          <View key={index} style={{ marginTop: 10 }}>
-            <Text style={{ fontWeight: "bold" }}>Puheaika: {speaker.time}</Text>
-            <View style={{ flexDirection: "row", marginTop: 5 }}>
-              <Text style={{ fontWeight: "bold" }}>
+          <View key={index} style={styles.speakersView}>
+            <Text style={styles.speakersText}>Puheaika: {speaker.time}</Text>
+            <View style={styles.speakerView2}>
+              <Text style={styles.speakersText}>
                 Aihe: {speaker.topicId}
               </Text>
-              <Text style={{ fontWeight: "bold", marginLeft: 10 }}>
+              <Text style={styles.speakersName}>
                 {speaker.firstname} {speaker.lastname} / {speaker.party}
               </Text>
             </View>
@@ -166,8 +163,8 @@ export default Plenum = ({ route, navigation }) => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
+    <ScrollView style={styles.eventScroll}>
+      <View style={styles.eventView}>
         <WebView
           ref={webViewRef}
           source={{ uri: videoUrl }}
@@ -177,14 +174,8 @@ export default Plenum = ({ route, navigation }) => {
           javaScriptEnabled={true}
           onMessage={(event) => console.log(event.nativeEvent.data)}
         />
-        <View style={{ paddingHorizontal: 10 }}>
-          <Text style={{
-            fontSize: 22,
-            fontWeight: "bold",
-            paddingBottom: 10,
-            paddingTop: 10
-          }}
-          >
+        <View style={styles.eventView2}>
+          <Text style={styles.eventTitle}>
             {navigationTitle}
           </Text>
           {renderDecisions()}
@@ -195,10 +186,3 @@ export default Plenum = ({ route, navigation }) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  webView: {
-    height: 220, // Adjust the height as needed
-    width: "100%",
-  },
-});

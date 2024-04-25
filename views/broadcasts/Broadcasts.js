@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import { Text, Card } from "react-native-paper";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import styles from "../../styles/views/broadcasts";
 
 export default Broadcasts = ({ navigation }) => {
   const [liveEvent, setLiveEvent] = useState(null);
@@ -153,29 +154,16 @@ export default Broadcasts = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => navigation.navigate("Verkkolähetysten haku")}
       >
-        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                padding: 10,
-                margin: 5,
-              }}
-            >
+        <Card style={styles.listNavCard}>
+          <View style={styles.listNavView}>
+            <Text style={styles.listNavText}>
               Verkkolähetysten haku
             </Text>
             <FontAwesome
               name="search"
               size={24}
               color="black"
-              style={{ paddingEnd: 15 }}
+              style={styles.listNavIcon}
             />
           </View>
         </Card>
@@ -185,29 +173,18 @@ export default Broadcasts = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => navigation.navigate("Suorat lähetykset")}
       >
-        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
+        <Card style={styles.listNavCard}>
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+            style={styles.listNavView}>
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                padding: 10,
-                margin: 5,
-              }}
-            >
+              style={styles.listNavText}>
               Suorat lähetykset
             </Text>
             <AntDesign
               name="caretright"
               size={16}
               color="black"
-              style={{ paddingEnd: 15 }}
+              style={styles.listNavIcon}
             />
           </View>
         </Card>
@@ -253,16 +230,16 @@ export default Broadcasts = ({ navigation }) => {
             }
           }}
         >
-          <Card style={{ margin: 5 }}>
+          <Card style={styles.listEventCard}>
             <Card.Content>
               {liveEvent !== null && (
-                <View style={{ flexDirection: "row", alignItems: "center", paddingBottom: 10 }}>
+                <View style={styles.listEventView}>
                   {liveEvent.state === 0 && (
                     <FontAwesome
                       name="dot-circle-o"
                       size={14}
                       color="red"
-                      style={{ marginRight: 5 }} // Add margin here
+                      style={styles.listLiveIcon} // Add margin here
                     />
                   )}
                   <Text>
@@ -279,9 +256,7 @@ export default Broadcasts = ({ navigation }) => {
                   uri: `https://eduskunta.videosync.fi${liveEvent.previewImg}`,
                 }}
               />
-              <Text
-                style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
-              >
+              <Text style={styles.listEventTitle}>
                 {liveEvent.title}
               </Text>
               {/* Render other details of liveEvent if needed */}
@@ -291,9 +266,11 @@ export default Broadcasts = ({ navigation }) => {
       ) : (
         <View>
           {/* Render a default card or whatever you prefer */}
-          <Card style={{ margin: 5 }}>
+          <Card style={styles.listEventCard}>
             <Card.Content>
-              <Text>Ei suoria lähetyksiä juuri nyt.</Text>
+              <Text style={styles.listPrevText}>
+                Ei suoria lähetyksiä juuri nyt.
+                </Text>
               {/* Render other default details */}
             </Card.Content>
           </Card>
@@ -304,29 +281,18 @@ export default Broadcasts = ({ navigation }) => {
       {/* Täysistunnot */}
 
       <TouchableOpacity onPress={() => navigation.navigate("Täysistunnot")}>
-        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
+        <Card style={styles.listNavCard}>
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+            style={styles.listNavView}>
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                padding: 10,
-                margin: 5,
-              }}
-            >
+              style={styles.listNavText}>
               Täysistunnot
             </Text>
             <AntDesign
               name="caretright"
               size={16}
               color="black"
-              style={{ paddingEnd: 15 }}
+              style={styles.listNavIcon}
             />
           </View>
         </Card>
@@ -337,9 +303,9 @@ export default Broadcasts = ({ navigation }) => {
           navigation.navigate("Täysistunto", { taysistunnotEvent })
         }
       >
-        <Card style={{ margin: 5 }}>
+        <Card style={styles.listEventCard}>
           <Card.Content>
-            <Text style={{ paddingBottom: 10 }}>Viimeisin tallenne:</Text>
+            <Text style={styles.listPrevText}>Viimeisin tallenne:</Text>
 
             {taysistunnotEvent && (
               <>
@@ -349,8 +315,7 @@ export default Broadcasts = ({ navigation }) => {
                   }}
                 />
                 <Text
-                  style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
-                >
+                  style={styles.listEventTitle}>
                   {taysistunnotEvent.title}
                 </Text>
                 {/* Render other details of taysistunnotEvent if needed */}
@@ -368,29 +333,18 @@ export default Broadcasts = ({ navigation }) => {
           )
         }
       >
-        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
+        <Card style={styles.listNavCard}>
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+            style={styles.listNavView}>
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                padding: 10,
-                margin: 5,
-              }}
-            >
+              style={styles.listNavText}>
               Valiokuntien julkiset kuulemiset ja avoimet kokoukset
             </Text>
             <AntDesign
               name="caretright"
               size={16}
               color="black"
-              style={{ paddingEnd: 15 }}
+              style={styles.listNavIcon}
             />
           </View>
         </Card>
@@ -399,9 +353,9 @@ export default Broadcasts = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => navigation.navigate("Valiokunta", { valiokunnatEvent })}
       >
-        <Card style={{ margin: 5 }}>
+        <Card style={styles.listEventCard}>
           <Card.Content>
-            <Text style={{ paddingBottom: 10 }}>Viimeisin tallenne:</Text>
+            <Text style={styles.listPrevText}>Viimeisin tallenne:</Text>
 
             {valiokunnatEvent && (
               <>
@@ -411,7 +365,7 @@ export default Broadcasts = ({ navigation }) => {
                   }}
                 />
                 <Text
-                  style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
+                  style={styles.listEventTitle}
                 >
                   {valiokunnatEvent.title}
                 </Text>
@@ -424,29 +378,18 @@ export default Broadcasts = ({ navigation }) => {
 
       {/* Seminaarit */}
       <TouchableOpacity onPress={() => navigation.navigate("Seminaarit")}>
-        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
+        <Card style={styles.listNavCard}>
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+            style={styles.listNavView}>
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                padding: 10,
-                margin: 5,
-              }}
-            >
+              style={styles.listNavText}>
               Seminaarit
             </Text>
             <AntDesign
               name="caretright"
               size={16}
               color="black"
-              style={{ paddingEnd: 15 }}
+              style={styles.listNavIcon}
             />
           </View>
         </Card>
@@ -455,9 +398,9 @@ export default Broadcasts = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => navigation.navigate("Seminaari", { seminaaritEvent })}
       >
-        <Card style={{ margin: 5 }}>
+        <Card style={styles.listEventCard}>
           <Card.Content>
-            <Text style={{ paddingBottom: 10 }}>Viimeisin tallenne:</Text>
+            <Text style={styles.listPrevText}>Viimeisin tallenne:</Text>
 
             {seminaaritEvent && (
               <>
@@ -467,8 +410,7 @@ export default Broadcasts = ({ navigation }) => {
                   }}
                 />
                 <Text
-                  style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
-                >
+                  style={styles.listEventTitle}>
                   {seminaaritEvent.title}
                 </Text>
                 {/* Render other details of seminaaritEvent if needed */}
@@ -482,29 +424,18 @@ export default Broadcasts = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => navigation.navigate("Tiedotustilaisuudet")}
       >
-        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
+        <Card style={styles.listNavCard}>
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+            style={styles.listNavView}>
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                padding: 10,
-                margin: 5,
-              }}
-            >
+              style={styles.listNavText}>
               Tiedotustilaisuudet
             </Text>
             <AntDesign
               name="caretright"
               size={16}
               color="black"
-              style={{ paddingEnd: 15 }}
+              style={styles.listNavIcon}
             />
           </View>
         </Card>
@@ -515,9 +446,9 @@ export default Broadcasts = ({ navigation }) => {
           navigation.navigate("Tiedotustilaisuus", { tiedotustilaisuudetEvent })
         }
       >
-        <Card style={{ margin: 5 }}>
+        <Card style={styles.listEventCard}>
           <Card.Content>
-            <Text style={{ paddingBottom: 10 }}>Viimeisin tallenne:</Text>
+            <Text style={styles.listPrevText}>Viimeisin tallenne:</Text>
 
             {tiedotustilaisuudetEvent && (
               <>
@@ -527,7 +458,7 @@ export default Broadcasts = ({ navigation }) => {
                   }}
                 />
                 <Text
-                  style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
+                  style={styles.listEventTitle}
                 >
                   {tiedotustilaisuudetEvent.title}
                 </Text>
@@ -540,29 +471,18 @@ export default Broadcasts = ({ navigation }) => {
 
       {/* Esittelyvideot */}
       <TouchableOpacity onPress={() => navigation.navigate("Esittelyvideot")}>
-        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
+        <Card style={styles.listNavCard}>
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+            style={styles.listNavView}>
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                padding: 10,
-                margin: 5,
-              }}
-            >
+              style={styles.listNavText}>
               Esittelyvideot
             </Text>
             <AntDesign
               name="caretright"
               size={16}
               color="black"
-              style={{ paddingEnd: 15 }}
+              style={styles.listNavIcon}
             />
           </View>
         </Card>
@@ -573,9 +493,9 @@ export default Broadcasts = ({ navigation }) => {
           navigation.navigate("Esittelyvideo", { esittelyvideotEvent })
         }
       >
-        <Card style={{ margin: 5 }}>
+        <Card style={styles.listEventCard}>
           <Card.Content>
-            <Text style={{ paddingBottom: 10 }}>Viimeisin tallenne:</Text>
+            <Text style={styles.listPrevText}>Viimeisin tallenne:</Text>
 
             {esittelyvideotEvent && (
               <>
@@ -585,7 +505,7 @@ export default Broadcasts = ({ navigation }) => {
                   }}
                 />
                 <Text
-                  style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
+                  style={styles.listEventTitle}
                 >
                   {esittelyvideotEvent.title}
                 </Text>
@@ -598,22 +518,11 @@ export default Broadcasts = ({ navigation }) => {
 
       {/* Eduskuntaryhmät */}
       <TouchableOpacity onPress={() => navigation.navigate("Eduskuntaryhmät")}>
-        <Card style={{ margin: 5, backgroundColor: "lavender" }}>
+        <Card style={styles.listNavCard}>
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+            style={styles.listNavView}>
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                padding: 10,
-                margin: 5,
-              }}
-            >
+              style={styles.listNavText}>
               Eduskuntaryhmät
             </Text>
             <AntDesign
@@ -631,9 +540,9 @@ export default Broadcasts = ({ navigation }) => {
           navigation.navigate("Eduskuntaryhmä", { eduskuntaryhmatEvent })
         }
       >
-        <Card style={{ margin: 5 }}>
+        <Card style={styles.listEventCard}>
           <Card.Content>
-            <Text style={{ paddingBottom: 10 }}>Viimeisin tallenne:</Text>
+            <Text style={styles.listPrevText}>Viimeisin tallenne:</Text>
 
             {eduskuntaryhmatEvent && (
               <>
@@ -643,7 +552,7 @@ export default Broadcasts = ({ navigation }) => {
                   }}
                 />
                 <Text
-                  style={{ fontSize: 18, fontWeight: "bold", paddingTop: 10 }}
+                  style={styles.listEventTitle}
                 >
                   {eduskuntaryhmatEvent.title}
                 </Text>
