@@ -9,7 +9,7 @@ import SwipeableList from "../elements/SwipeableList";
 import NewsTags from "./NewsTags";
 import { RssFeeds } from "../../constants/RssFeeds";
 import { NewsCategoryContext } from "../../contexts/Contexts";
-import styles from "../../styles/components/newsfeed"
+import styles from "../../styles/components/newsfeed";
 
 export default NewsFeed = ({ navigation }) => {
   const { getData, data, isLoading, error } = Xml();
@@ -64,7 +64,7 @@ export default NewsFeed = ({ navigation }) => {
   }, [selectedCategory]);
 
   const handlePress = (link) => {
-    if (link) {
+    if (link && link !== "no-new-items") {
       navigation.navigate("Browser", { uri: link });
     }
   };
@@ -74,16 +74,16 @@ export default NewsFeed = ({ navigation }) => {
   };
 
   const NewsItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handlePress(item.link)}>
+    <TouchableOpacity onPress={() => handlePress(item?.link)}>
       <View style={styles.newsContainer}>
         <View style={styles.newsLeft}>
-          <FinnishDate dateString={item.pubDate} />
+          <FinnishDate dateString={item?.pubDate} />
         </View>
         <View style={styles.newsRight}>
-          {item.title.length > 40 || !item.description.length ? (
-            <Text style={styles.title}>{item.title}</Text>
+          {item?.title.length > 40 || !item?.description.length ? (
+            <Text style={styles.title}>{item?.title}</Text>
           ) : (
-            <Text style={styles.title}>{item.description}</Text>
+            <Text style={styles.title}>{item?.description}</Text>
           )}
           <Divider />
         </View>
@@ -91,13 +91,13 @@ export default NewsFeed = ({ navigation }) => {
     </TouchableOpacity>
   );
 
-  const sortedData = [...data].sort(
+  const sortedData = data?.sort(
     (a, b) => new Date(b.pubDate) - new Date(a.pubDate)
   );
 
   const newsList = sortedData
     .slice(0, 5)
-    .map((item) => <NewsItem key={item.link} item={item} />);
+    .map((item) => <NewsItem key={item?.link} item={item} />);
 
   return (
     <NewsCategoryContext.Provider
@@ -160,12 +160,14 @@ export default NewsFeed = ({ navigation }) => {
                   { top: measuredHeight / 2 - 12 },
                 ]}
               />
-            ) : (
+            ) : data?.length > 0 ? (
               <ScrollView onContentSizeChange={onContentSizeChange}>
                 <SwipeableList>
                   <View>{newsList}</View>
                 </SwipeableList>
               </ScrollView>
+            ) : (
+              <Text>No data</Text>
             )}
           </View>
         </View>

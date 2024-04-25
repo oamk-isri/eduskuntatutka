@@ -20,14 +20,27 @@ export default Xml = () => {
       const textResponse = await response.text();
       const result = parse(textResponse);
 
-      let items;
-      if (Array.isArray(result.rss.channel.item)) {
-        items = result.rss.channel.item.flat();
+      if (result.rss?.channel?.item) {
+        let items;
+        if (Array.isArray(result.rss.channel.item)) {
+          items = result.rss.channel.item.flat();
+        } else {
+          items = [result.rss.channel.item];
+        }
+        setData([...items]);
       } else {
-        items = [result.rss.channel.item];
+        const today = new Date();
+        setData([
+          {
+            pubDate: today,
+            title: "Ei uusia tiedotteita",
+            link: "no-new-items",
+            description: "",
+          },
+        ]);
       }
 
-      setData([...items]);
+      console.log(data);
       setIsLoading(false);
     } catch (error) {
       setError(error.message);
