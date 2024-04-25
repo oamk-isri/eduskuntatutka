@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export default styles = StyleSheet.create({
-  
   // Header.js
 
   header: {
@@ -10,7 +9,7 @@ export default styles = StyleSheet.create({
   logo: {
     height: 50,
     width: 35,
-    margin: 8
+    margin: 8,
   },
 
   // RootNavigator.js
@@ -22,8 +21,11 @@ export default styles = StyleSheet.create({
     marginBottom: 15,
   },
 
+  titleStyle: {
+    textAlign: "center",
+  },
+
   // StackNavigators.js
 
   // -> nothing to style!
-
 });
