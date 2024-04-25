@@ -12,6 +12,7 @@ import axios from "axios";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import styles from "../../../styles/views/broadcasts";
 
 export default Search = ({ navigation }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -167,9 +168,6 @@ export default Search = ({ navigation }) => {
         category = "Eduskuntaryhmät";
       }
   
-      // Log the category before navigating
-      console.log("Navigating to", category || "Suora lähetys");
-  
       // Navigate based on the determined category, or navigate to "Suora lähetys" if category is not found
       switch (category) {
         case "Täysistunnot":
@@ -198,17 +196,17 @@ export default Search = ({ navigation }) => {
 
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.searchMainView}>
       <FlatList
         data={searchResults.slice(0, displayedResults)} // Slice searchResults based on displayedResults state
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handlePressEvent(item)}>
-            <Card style={{ margin: 5 }}>
+            <Card style={styles.listEventCard}>
               <Card.Cover
                 source={{ uri: `https://eduskunta.videosync.fi${item.previewImg}` }}
               />
               <Card.Content>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', paddingTop: 10 }}>
+                <Text style={styles.listEventTitle}>
                   {item.title}
                 </Text>
               </Card.Content>
@@ -217,29 +215,17 @@ export default Search = ({ navigation }) => {
         )}
         keyExtractor={(item, index) => index.toString()}
         ListHeaderComponent={(
-          <View style={{ margin: 10 }}>
+          <View style={styles.searchOptView}>
             {searchOptionsVisible && (
               <View>
-                <Text style={{ fontWeight: "bold", paddingBottom: 10, fontSize: 16 }}>
+                <Text style={styles.searchTitle}>
                   Rajaa hakua:
                 </Text>
                 <View
-                  style={{
-                    flexDirection: "column",
-                    flexWrap: "wrap",
-                    marginBottom: 10
-                  }}
-                >
+                  style={styles.searchView}>
                   {['Kaikki', ...Object.keys(categoryUrls)].map((key) => (
                     <TouchableOpacity
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: 8,
-                        borderBottomWidth: 1,
-                        borderBottomColor: "lightgrey"
-                      }}
+                      style={styles.searchCateg}
                       key={key}
                       onPress={() => {
                         if (key === 'Kaikki') {
@@ -260,20 +246,14 @@ export default Search = ({ navigation }) => {
                       }}
                     >
                       <Text>{key}</Text>
-                      <View style={{ flexDirection: "row", alignItems: "center" }}>
+                      <View style={styles.searchView2}>
                         <View
-                          style={{
-                            height: 24,
-                            width: 24,
-                            borderRadius: 5,
-                            borderWidth: 1,
-                            marginRight: 5,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderColor: selectedCategories.includes(key)
-                              ? "#000000"
-                              : "#CCCCCC"
-                          }}
+                          style={[
+                            styles.checkboxView,
+                            selectedCategories.includes(key)
+                              ? styles.selected
+                              : styles.unselected
+                          ]}
                         >
                           {selectedCategories.includes(key) &&
                             <FontAwesome
@@ -287,25 +267,13 @@ export default Search = ({ navigation }) => {
                     </TouchableOpacity>
                   ))}
                 </View>
-                <View style={{ marginBottom: 10 }}>
+                <View style={styles.dateView}>
                   <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      paddingTop: 5
-                    }}
+                    style={styles.dateView2}
                   >
-                    <TouchableOpacity onPress={showStartDatePicker} style={{ flex: 1 }}>
+                    <TouchableOpacity onPress={showStartDatePicker} style={styles.pickerTouch}>
                       <TextInput
-                        style={{
-                          flex: 1,
-                          height: 40,
-                          borderColor: 'gray',
-                          borderWidth: 1,
-                          marginRight: 5,
-                          textAlign: "center",
-                          borderRadius: 10
-                        }}
+                        style={styles.dateTextInput}
                         value={startDate ? `${startDate.getDate()}.${startDate.getMonth() + 1}.${startDate.getFullYear()}` : 'Valitse aloituspvm'}
                         editable={false}
                       />
@@ -314,19 +282,11 @@ export default Search = ({ navigation }) => {
                       name="arrow-right"
                       size={20}
                       color="black"
-                      style={{ marginRight: 5 }}
+                      style={styles.searchArrow}
                     />
-                    <TouchableOpacity onPress={showEndDatePicker} style={{ flex: 1 }}>
+                    <TouchableOpacity onPress={showEndDatePicker} style={styles.pickerTouch}>
                       <TextInput
-                        style={{
-                          flex: 1,
-                          height: 40,
-                          borderColor: 'gray',
-                          borderWidth: 1,
-                          marginLeft: 5,
-                          textAlign: "center",
-                          borderRadius: 10
-                        }}
+                        style={styles.dateTextInput}
                         value={endDate ? `${endDate.getDate()}.${endDate.getMonth() + 1}.${endDate.getFullYear()}` : 'Valitse lopetuspvm'}
                         editable={false}
                       />
@@ -347,45 +307,23 @@ export default Search = ({ navigation }) => {
                 </View>
                 <TouchableOpacity
                   onPress={handleSearch}
-                  style={{
-                    backgroundColor: "lavender",
-                    margin: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 10,
-                    elevation: 3,
-                    flexDirection: "row",
-                  }}
-                >
-                  <Text style={{ fontSize: 18, fontWeight: "bold", padding: 5 }}>
+                  style={styles.searchButton}>
+                  <Text style={styles.searchButtonText}>
                     Hae
                   </Text>
                   <FontAwesome
                     name="search"
                     size={18}
                     color="black"
-                    style={{ paddingEnd: 15 }}
+                    style={styles.searchButtonIcon}
                   />
                 </TouchableOpacity>
               </View>
             )}
             <TouchableOpacity onPress={toggleSearchOptionsVisibility}
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "lavender",
-                margin: 5,
-                borderRadius: 10,
-                elevation: 3,
-                flexDirection: "row"
-              }}
-            >
+              style={styles.hideButton}>
               <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  padding: 5
-                }}
+                style={styles.hideButtonText}
               >
                 {searchOptionsVisible ? "Piilota hakupalkki" : "Näytä hakupalkki"}
               </Text>
@@ -402,19 +340,19 @@ export default Search = ({ navigation }) => {
         ListFooterComponent={(
           <>
             {isLoading && (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={styles.loadingView}>
         <ActivityIndicator size="large" color="black" />
-        <Text style={{ marginTop: 10, fontWeight: "bold", fontSize: 20 }}>
+        <Text style={styles.loadingText}>
           Haetaan lähetyksiä...
           </Text>
       </View>
             )}
             {hasSearched && !isLoading && searchResults.length === 0 && (
-              <Text style={{ textAlign: 'center', marginTop: 10, fontWeight: 'bold' }}>
+              <Text style={styles.noResults}>
                 Ei hakutuloksia.
               </Text>
             )}
-            <View style={{ marginBottom: 80 }} />
+            <View style={styles.searchBottomView} />
           </>
         )}
         onEndReached={handleLoadMore}

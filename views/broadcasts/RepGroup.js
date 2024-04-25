@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, Linking, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { WebView } from "react-native-webview";
+import styles from "../../styles/views/broadcasts";
 
 export default RepGroup = ({ route, navigation }) => {
   const { eduskuntaryhmatEvent } = route.params;
@@ -52,8 +53,8 @@ export default RepGroup = ({ route, navigation }) => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
+    <ScrollView style={styles.eventScroll}>
+      <View style={styles.eventView}>
         <WebView
           ref={webViewRef}
           source={{ uri: videoUrl }}
@@ -63,20 +64,14 @@ export default RepGroup = ({ route, navigation }) => {
           javaScriptEnabled={true}
           onMessage={(event) => console.log(event.nativeEvent.data)}
         />
-        <View style={{ paddingHorizontal: 10 }}>
-        <Text style={{ 
-          fontSize: 22, 
-          fontWeight: "bold",
-          paddingBottom: 10,
-          paddingTop: 10 
-          }}
-          >
+        <View style={styles.eventView2}>
+        <Text style={styles.eventTitle}>
             {navigationTitle}
             </Text>
           {eventInfo && (
             <>
-              <Text style={styles.title}>{eventInfo.title}</Text>
-              <Text style={styles.description}>{eventInfo.description}</Text>
+              <Text style={styles.eventDetails}>{eventInfo.title}</Text>
+              <Text style={styles.eventDescript}>{eventInfo.description}</Text>
             </>
           )}
         </View>
@@ -84,19 +79,3 @@ export default RepGroup = ({ route, navigation }) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  webView: {
-    height: 220, // Adjust the height as needed
-    width: "100%",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 10,
-  },
-  description: {
-    fontSize: 16,
-    marginTop: 5,
-  },
-});
