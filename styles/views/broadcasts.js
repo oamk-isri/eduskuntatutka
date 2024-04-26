@@ -29,6 +29,12 @@ export default styles = StyleSheet.create({
     alignItems: "center",
   },
 
+  listLiveView:{
+    alignItems: "center",
+    flexDirection: "row",
+
+  },
+
   listNavText: {
     fontSize: 18,
     fontWeight: "bold",

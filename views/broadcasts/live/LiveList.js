@@ -117,7 +117,7 @@ export default LiveList = ({ navigation }) => {
     return (
       <>
         <Card style={styles.listNavCard}>
-          <View style={styles.listNavView}>
+          <View style={styles.listLiveView}>
             {section.title === "Suora lähetys" && (
               <FontAwesome name="dot-circle-o" size={24} color="red" style={styles.liveIcon} />
             )}
