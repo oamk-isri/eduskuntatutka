@@ -56,33 +56,33 @@ export default Broadcasts = ({ navigation }) => {
           categories.forEach((category) => {
             const { slug, events } = category;
             if (events.length > 0) {
-              const event = events[0]; // Take the first event in the array
-              const eventDateTime = new Date(event.publishingDate).getTime();
-              if (
-                event.state === 0 &&
-                (!nearestLiveEvent ||
-                  eventDateTime >
-                    new Date(nearestLiveEvent.publishingDate).getTime())
-              ) {
-                nearestLiveEvent = {
-                  ...event,
-                  title: event.title.split("|")[0].trim(),
-                  previewImg: event.previewImg,
-                  categorySlug: slug, // Add the category slug to the live event
-                };
-              }
-              if (
-                eventDateTime > currentTime &&
-                (!nearestFutureEvent ||
-                  eventDateTime < new Date(nearestFutureEvent.publishingDate).getTime())
-              ) {
-                nearestFutureEvent = {
-                  ...event,
-                  title: event.title.split("|")[0].trim(),
-                  previewImg: event.previewImg,
-                  categorySlug: slug, // Add the category slug to the future event
-                };
-              }
+              events.forEach((event) => {
+                const eventDateTime = new Date(event.publishingDate).getTime();
+                if (
+                  event.state === 0 &&
+                  (!nearestLiveEvent ||
+                    eventDateTime >
+                      new Date(nearestLiveEvent.publishingDate).getTime())
+                ) {
+                  nearestLiveEvent = {
+                    ...event,
+                    title: event.title.split("|")[0].trim(),
+                    previewImg: event.previewImg,
+                    categorySlug: slug, // Add the category slug to the live event
+                  };
+                } else if (
+                  event.state === 3 &&
+                  (!nearestFutureEvent ||
+                    eventDateTime < new Date(nearestFutureEvent.publishingDate).getTime())
+                ) {
+                  nearestFutureEvent = {
+                    ...event,
+                    title: event.title.split("|")[0].trim(),
+                    previewImg: event.previewImg,
+                    categorySlug: slug, // Add the category slug to the future event
+                  };
+                }
+              });
             }
           });
   
@@ -100,6 +100,8 @@ export default Broadcasts = ({ navigation }) => {
         console.error("Error fetching live event data:", error);
       });
   };
+  
+  
 
   const fetchFirstEvent = (categorySlug, setEvent) => {
     let apiUrl;

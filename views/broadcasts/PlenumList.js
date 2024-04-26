@@ -36,6 +36,14 @@ export default PlenumList = ({ navigation }) => {
             const title = event.title.split("|")[0].trim();
             return { ...event, title };
           });
+          // Sort events based on state, placing "Suora lähetys" on top
+          updatedEvents.sort((a, b) => {
+            if (a.state === 0) return -1; // "Suora lähetys" comes first
+            if (b.state === 0) return 1;
+            if (a.state === 3 && b.state !== 0) return -1; // "Tulevat lähetykset" comes after "Suora lähetys"
+            if (b.state === 3 && a.state !== 0) return 1;
+            return a.state - b.state;
+          });
           setEvents(updatedEvents);
         }
         setIsLoading(false); // Set loading state to false after data is fetched
