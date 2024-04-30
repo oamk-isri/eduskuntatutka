@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { ActivityIndicator, List } from "react-native-paper";
-import { parse, isBefore } from "date-fns";
+import { parse, isBefore, format } from "date-fns";
 import styles from "../../styles/components/representatives"
 
 export default RepSpeeches = (props) => {
@@ -71,6 +71,11 @@ export default RepSpeeches = (props) => {
     }
   };
 
+  const formatDate = (speechDate) => {
+    dates = parse(speechDate, "yyyy-MM-dd HH:mm:ss", new Date())
+    return format(dates, "dd.MM.y")
+  };
+
   return (
     <View>
       <List.Accordion
@@ -88,7 +93,7 @@ export default RepSpeeches = (props) => {
         {speeches.map((speech, index) => (
           <List.Item
             key={index.toString()}
-            title={speech[11]}
+            title={formatDate(speech[11])}
             description={<Text>{speech[0]}</Text>}
           ></List.Item>
         ))}
