@@ -4,7 +4,7 @@ import { View } from "react-native";
 import styles from "../../styles/components/representatives"
 
 export default RepDetails = (props) => {
-  const [expanded, setExpanded] = useState();
+  const [expanded, setExpanded] = useState(true);
   const handlePress = () => setExpanded(!expanded);
 
   return (
