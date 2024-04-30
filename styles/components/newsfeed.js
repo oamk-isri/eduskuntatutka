@@ -5,7 +5,9 @@ export default styles = StyleSheet.create({
   // News.js & NewsFeed.js
   
   tagContainer: {
-    padding: 15,
+    paddingBottom: 15,
+    paddingRight: 15,
+    paddingLeft: 15,
     flexDirection: "row",
     justifyContent: "space-between",
     overflow: "scroll",
@@ -37,11 +39,21 @@ export default styles = StyleSheet.create({
   buttonRight: {
     marginLeft: "auto",
     marginRight: 30,
-    marginTop: 20,
+   
   },
   buttonText: {
     fontWeight: "bold",
     fontSize: 15,
+  },
+  listNavCard: {
+    margin: 5,
+    backgroundColor: "lavender"
+  },
+  listNavText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    padding: 10,
+    margin: 5,
   },
 
   // NewsTags.js
