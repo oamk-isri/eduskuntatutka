@@ -70,8 +70,9 @@ export default Plenum = ({ route, navigation }) => {
     const hours = Math.floor(timeInSeconds / 3600);
     const minutes = Math.floor((timeInSeconds % 3600) / 60);
     const seconds = timeInSeconds % 60;
-    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""
-      }${seconds}`;
+    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
+      seconds < 10 ? "0" : ""
+    }${seconds}`;
   };
 
   // Function to open the document
@@ -80,7 +81,7 @@ export default Plenum = ({ route, navigation }) => {
     const decisionUrl = decision.startsWith("https://")
       ? decision
       : `https://${decision}`;
-    Linking.openURL(decisionUrl);
+    navigation.navigate("Browser", { uri: decisionUrl });
   };
 
   // Set navigation title dynamically
@@ -100,9 +101,7 @@ export default Plenum = ({ route, navigation }) => {
             Linkki täysistunnon pöytäkirjaan
           </Text>
         ))}
-        <Text style={styles.eventDetails}>
-          Käsiteltävät asiat:
-        </Text>
+        <Text style={styles.eventDetails}>Käsiteltävät asiat:</Text>
       </View>
     );
   };
@@ -110,9 +109,7 @@ export default Plenum = ({ route, navigation }) => {
   const renderTopics = () => {
     return (
       <View>
-        <Text style={styles.eventDetails}>
-          Keskusteluaiheet:
-        </Text>
+        <Text style={styles.eventDetails}>Keskusteluaiheet:</Text>
         {topics.map((topic, index) => {
           return (
             <View key={index}>
@@ -139,9 +136,7 @@ export default Plenum = ({ route, navigation }) => {
           <View key={index} style={styles.speakersView}>
             <Text style={styles.speakersText}>Puheaika: {speaker.time}</Text>
             <View style={styles.speakerView2}>
-              <Text style={styles.speakersText}>
-                Aihe: {speaker.topicId}
-              </Text>
+              <Text style={styles.speakersText}>Aihe: {speaker.topicId}</Text>
               <Text style={styles.speakersName}>
                 {speaker.firstname} {speaker.lastname} / {speaker.party}
               </Text>
@@ -175,9 +170,7 @@ export default Plenum = ({ route, navigation }) => {
           onMessage={(event) => console.log(event.nativeEvent.data)}
         />
         <View style={styles.eventView2}>
-          <Text style={styles.eventTitle}>
-            {navigationTitle}
-          </Text>
+          <Text style={styles.eventTitle}>{navigationTitle}</Text>
           {renderDecisions()}
           {renderTopics()}
           {renderSpeakersInfo()}
