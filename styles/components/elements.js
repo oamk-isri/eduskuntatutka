@@ -107,7 +107,7 @@ export default styles = StyleSheet.create({
   cardItemView: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+
   },
   listNavText: {
     fontSize: 18,

@@ -397,6 +397,15 @@ const VerkkolahetyksetStack = () => {
           ),
         }}
       />
+      <Stack.Screen
+        name="Browser"
+        component={Browser}
+        options={{
+          header: ({ navigation }) => (
+            <Header navigation={navigation} title="Verkkonäkymä" />
+          ),
+        }}
+      />
 
       <Stack.Screen
         name="Valiokuntien julkiset kuulemiset ja avoimet kokoukset"
