@@ -8,7 +8,7 @@ import {
   Linking,
   StatusBar,
 } from "react-native";
-import styles from "../../styles/components/elements"
+import styles from "../../styles/components/elements";
 
 export default DataOriginPopup = () => {
   const [showPopup, setShowPopup] = useState(true);
@@ -19,41 +19,26 @@ export default DataOriginPopup = () => {
     setDataOrigin(origin);
   }, []);
 
-  const handleLinkPress = () => {
-    Linking.openURL("https://avoindata.eduskunta.fi/#/fi/home");
-  };
-
   return (
     <Modal
       visible={showPopup}
       animationType="slide"
       transparent={true}
+      statusBarTranslucent
       onRequestClose={() => setShowPopup(false)}
     >
-      <View
-        style={styles.modalBackground}
-      >
-        <View
-          style={styles.popupBackground}
-        >
+      <View style={styles.modalBackground}>
+        <View style={styles.popupBackground}>
           <Text style={styles.infoText}>{dataOrigin}</Text>
           <StatusBar backgroundColor="rgba(0, 0, 0, 0.5)" translucent={true} />
-          <TouchableOpacity onPress={handleLinkPress} style={styles.popupOriginContainer}>
-            <Text
-              style={styles.popupOriginText}
-            >
-              Lue lisää
-            </Text>
-          </TouchableOpacity>
-          <View style={styles.popupButton}>
-          <TouchableOpacity
-                onPress={() => setShowPopup(false)}
-                  style={styles.pButton}>
-                  <Text style={styles.buttonText}>
-                    OK
-                  </Text>
-                </TouchableOpacity>
 
+          <View style={styles.popupButton}>
+            <TouchableOpacity
+              onPress={() => setShowPopup(false)}
+              style={styles.pButton}
+            >
+              <Text style={styles.buttonText}>OK</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

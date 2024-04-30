@@ -39,8 +39,6 @@ export default Xml = () => {
           },
         ]);
       }
-
-      console.log(data);
       setIsLoading(false);
     } catch (error) {
       setError(error.message);
