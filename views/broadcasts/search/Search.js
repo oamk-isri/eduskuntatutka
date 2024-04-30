@@ -57,14 +57,14 @@ export default Search = ({ navigation }) => {
     if (!startDate || !endDate) {
       return events;
     }
-  
+
     // Sort events by publishing date
     events.sort((a, b) => {
       const dateA = new Date(a.publishingDate);
       const dateB = new Date(b.publishingDate);
       return dateB - dateA; // Reverse the order to sort from newest to oldest
     });
-  
+
     return events.filter((event) => {
       const eventDate = new Date(event.publishingDate);
       return eventDate >= startDate && eventDate <= endDate;
@@ -76,16 +76,16 @@ export default Search = ({ navigation }) => {
       alert("Valitse vähintään yksi kategoria ja määritä aloitus- ja lopetuspäivämäärä ennen hakua.");
       return;
     }
-  
+
     // Reset searchResults to an empty array at the beginning of the search
     setSearchResults([]);
-  
+
     // Set isLoading to true at the beginning of the search
     setIsLoading(true);
     setHasSearched(true);
-  
+
     let filteredEvents = [];
-  
+
     if (selectedCategories.includes("Kaikki")) {
       for (const category of Object.values(categoryUrls)) {
         const events = await fetchEvents(category);
@@ -98,14 +98,14 @@ export default Search = ({ navigation }) => {
         filteredEvents = [...filteredEvents, ...events];
       }
     }
-  
+
     filteredEvents = filterEventsByDate(filteredEvents);
-  
+
     const modifiedSearchResults = filteredEvents.map((event) => ({
       ...event,
       title: event.title.split("|")[0].trim(),
     }));
-  
+
     setTotalResults(modifiedSearchResults.length);
     setSearchResults(modifiedSearchResults);
     setIsLoading(false); // Set isLoading to false when the search is complete
@@ -147,52 +147,52 @@ export default Search = ({ navigation }) => {
     setSearchOptionsVisible(prevState => !prevState);
   };
 
-    // Function to handle press event based on the event's category URL
-    const handlePressEvent = (event) => {
-      // Extract the category URL of the event
-      const categoryUrl = event.categoryUrl;
-  
-      // Determine the category based on the category URL
-      let category;
-      if (categoryUrl.includes("taysistunnot")) {
-        category = "Täysistunnot";
-      } else if (categoryUrl.includes("valiokuntien-julkiset-kuulemiset-ja-avoimet-kokoukset")) {
-        category = "Valiokuntien julkiset kuulemiset ja avoimet kokoukset";
-      } else if (categoryUrl.includes("seminaarit")) {
-        category = "Seminaarit";
-      } else if (categoryUrl.includes("tiedotustilaisuudet")) {
-        category = "Tiedotustilaisuudet";
-      } else if (categoryUrl.includes("esittelyvideot")) {
-        category = "Esittelyvideot";
-      } else if (categoryUrl.includes("eduskuntaryhmat")) {
-        category = "Eduskuntaryhmät";
-      }
-  
-      // Navigate based on the determined category, or navigate to "Suora lähetys" if category is not found
-      switch (category) {
-        case "Täysistunnot":
-          navigation.navigate("Täysistunto", { taysistunnotEvent: event });
-          break;
-        case "Valiokuntien julkiset kuulemiset ja avoimet kokoukset":
-          navigation.navigate("Valiokunta", { valiokunnatEvent: event });
-          break;
-        case "Seminaarit":
-          navigation.navigate("Seminaari", { seminaaritEvent: event });
-          break;
-        case "Tiedotustilaisuudet":
-          navigation.navigate("Tiedotustilaisuus", { tiedotustilaisuudetEvent: event });
-          break;
-        case "Esittelyvideot":
-          navigation.navigate("Esittelyvideo", { esittelyvideotEvent: event });
-          break;
-        case "Eduskuntaryhmät":
-          navigation.navigate("Eduskuntaryhmä", { eduskuntaryhmatEvent: event });
-          break;
-        default:
-          navigation.navigate("Suora lähetys", { liveEvent: event });
-          break;
-      }
-    };
+  // Function to handle press event based on the event's category URL
+  const handlePressEvent = (event) => {
+    // Extract the category URL of the event
+    const categoryUrl = event.categoryUrl;
+
+    // Determine the category based on the category URL
+    let category;
+    if (categoryUrl.includes("taysistunnot")) {
+      category = "Täysistunnot";
+    } else if (categoryUrl.includes("valiokuntien-julkiset-kuulemiset-ja-avoimet-kokoukset")) {
+      category = "Valiokuntien julkiset kuulemiset ja avoimet kokoukset";
+    } else if (categoryUrl.includes("seminaarit")) {
+      category = "Seminaarit";
+    } else if (categoryUrl.includes("tiedotustilaisuudet")) {
+      category = "Tiedotustilaisuudet";
+    } else if (categoryUrl.includes("esittelyvideot")) {
+      category = "Esittelyvideot";
+    } else if (categoryUrl.includes("eduskuntaryhmat")) {
+      category = "Eduskuntaryhmät";
+    }
+
+    // Navigate based on the determined category, or navigate to "Suora lähetys" if category is not found
+    switch (category) {
+      case "Täysistunnot":
+        navigation.navigate("Täysistunto", { taysistunnotEvent: event });
+        break;
+      case "Valiokuntien julkiset kuulemiset ja avoimet kokoukset":
+        navigation.navigate("Valiokunta", { valiokunnatEvent: event });
+        break;
+      case "Seminaarit":
+        navigation.navigate("Seminaari", { seminaaritEvent: event });
+        break;
+      case "Tiedotustilaisuudet":
+        navigation.navigate("Tiedotustilaisuus", { tiedotustilaisuudetEvent: event });
+        break;
+      case "Esittelyvideot":
+        navigation.navigate("Esittelyvideo", { esittelyvideotEvent: event });
+        break;
+      case "Eduskuntaryhmät":
+        navigation.navigate("Eduskuntaryhmä", { eduskuntaryhmatEvent: event });
+        break;
+      default:
+        navigation.navigate("Suora lähetys", { liveEvent: event });
+        break;
+    }
+  };
 
 
   return (
@@ -215,12 +215,16 @@ export default Search = ({ navigation }) => {
         )}
         keyExtractor={(item, index) => index.toString()}
         ListHeaderComponent={(
-          <View style={styles.searchOptView}>
+          <View>
             {searchOptionsVisible && (
               <View>
-                <Text style={styles.searchTitle}>
-                  Rajaa hakua:
-                </Text>
+                <Card style={styles.listNavCard}>
+                  <View style={styles.cardItemView}>
+                    <Text style={styles.listNavText}>
+                      Rajaa hakua:
+                    </Text>
+                  </View>
+                </Card>
                 <View
                   style={styles.searchView}>
                   {['Kaikki', ...Object.keys(categoryUrls)].map((key) => (
@@ -340,12 +344,12 @@ export default Search = ({ navigation }) => {
         ListFooterComponent={(
           <>
             {isLoading && (
-        <View style={styles.loadingView}>
-        <ActivityIndicator size="large" color="black" />
-        <Text style={styles.loadingText}>
-          Haetaan lähetyksiä...
-          </Text>
-      </View>
+              <View style={styles.loadingView}>
+                <ActivityIndicator size="large" color="black" />
+                <Text style={styles.loadingText}>
+                  Haetaan lähetyksiä...
+                </Text>
+              </View>
             )}
             {hasSearched && !isLoading && searchResults.length === 0 && (
               <Text style={styles.noResults}>
