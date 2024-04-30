@@ -8,6 +8,7 @@ import {
   Linking,
   ScrollView,
 } from "react-native";
+import { Card } from "react-native-paper";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome6";
 import styles from "../../styles/views/details"
@@ -56,10 +57,12 @@ export default Info = () => {
   return (
     <ScrollView>
       <TouchableOpacity onPress={toggleInfo}>
+      <Card style={styles.listNavCard}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Tietoa sovelluksesta</Text>
           <Text style={styles.dropdownIcon}>{showInfo ? "▲" : "▼"}</Text>
         </View>
+        </Card>
       </TouchableOpacity>
       {showInfo && (
         <View style={styles.infoContainer}>
@@ -80,10 +83,12 @@ export default Info = () => {
       )}
       
       <TouchableOpacity onPress={toggleChannels}>
+      <Card style={styles.listNavCard}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Eduskunta muissa kanavissa</Text>
           <Text style={styles.dropdownIcon}>{showChannels ? "▲" : "▼"}</Text>
         </View>
+        </Card>
       </TouchableOpacity>
       {showChannels && (
         <View style={{paddingBottom: 40}}>
@@ -132,10 +137,12 @@ export default Info = () => {
       )}
 
         <TouchableOpacity onPress={toggleAuthors}>
+        <Card style={styles.listNavCard}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Tekijät</Text>
           <Text style={styles.dropdownIcon}>{showAuthors ? "▲" : "▼"}</Text>
         </View>
+        </Card>
         </TouchableOpacity>
         {showAuthors && (
         <View>

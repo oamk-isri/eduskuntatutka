@@ -6,18 +6,19 @@ export default styles = StyleSheet.create({
 
   titleContainer: {
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    borderBottomWidth: 1,
+   
   },
   title: {
-    flex: 1,
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "bold",
+    padding: 10,
+    margin: 5,
   },
   dropdownIcon: {
     fontSize: 20,
+    paddingEnd: 10
   },
   infoContainer: {
     marginHorizontal: 20,
@@ -41,4 +42,9 @@ export default styles = StyleSheet.create({
     fontSize: 16,
     margin: 5,
   },
+  listNavCard: {
+    margin: 5,
+    backgroundColor: "lavender"
+  },
+
 });

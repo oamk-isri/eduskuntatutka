@@ -187,7 +187,8 @@ export default styles = StyleSheet.create({
   searchView: {
     flexDirection: "column",
     flexWrap: "wrap",
-    marginBottom: 10
+    marginBottom: 10,
+    margin: 10
   },
 
   searchCateg: {
@@ -233,7 +234,8 @@ export default styles = StyleSheet.create({
   },
 
   dateView: {
-    marginBottom: 10
+    marginBottom: 10,
+    margin: 10
   },
 
   dateView2: {
@@ -273,7 +275,7 @@ export default styles = StyleSheet.create({
   searchButtonText: {
     fontSize: 18,
     fontWeight: "bold",
-    padding: 5
+    padding: 10
   },
 
   searchButtonIcon: {
