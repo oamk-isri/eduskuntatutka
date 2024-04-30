@@ -13,7 +13,7 @@ export default RepAbsences = (props) => {
   const [lastname, setLastname] = useState(props.last);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const handlePress = () => setExpanded(!expanded);
 
   const handleReadRemoteFile = () => {

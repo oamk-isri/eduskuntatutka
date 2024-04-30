@@ -9,7 +9,7 @@ export default RepSpeeches = (props) => {
   const [speeches, setSpeeches] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const handlePress = () => setExpanded(!expanded);
 
   const valtiopaiva_start = "2023-4-12";
