@@ -1,4 +1,4 @@
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { Text, Card } from "react-native-paper";
 import Heading from "../elements/Heading";
 import styles from "../../styles/components/events";
@@ -6,9 +6,13 @@ import styles from "../../styles/components/events";
 export default UpcomingEvents = ({ events, handlePressEvent }) => {
   return (
     <>
-      <Heading size="h3" style={styles.heading}>
+    <Card style={styles.listNavCard}>
+    <View style={styles.cardItemView}>
+      <Text style={styles.listNavText}>
         Tulevat lähetykset
-      </Heading>
+      </Text>
+      </View>
+      </Card>
       {events.map((event) => (
         <TouchableOpacity
           key={event._id}

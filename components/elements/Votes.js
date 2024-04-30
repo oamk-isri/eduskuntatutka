@@ -62,10 +62,15 @@ export default function Votes() {
   }
 
   return (
-    <View style={styles.votesContainer}>
-      <Heading size="h3" style={styles.heading}>
+<>
+    <Card style={styles.listNavCard}>
+    <View style={styles.cardItemView}>
+      <Text style={styles.listNavText}>
         Viimeisimmät äänestystulokset
-      </Heading>
+      </Text>
+      </View>
+      </Card>
+      <View style={styles.votesContainer}>
       {data.map((item) => (
         <Card
           key={item[0]}
@@ -93,6 +98,7 @@ export default function Votes() {
         </Card>
       ))}
     </View>
+    </>
   );
 }
 

@@ -99,5 +99,21 @@ export default styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "center",
   },
+  listNavCard: {
+    margin: 5,
+    backgroundColor: "lavender",
+    marginBottom: 10
+  },
+  cardItemView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  listNavText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    padding: 10,
+    margin: 5,
+  },
   
 });

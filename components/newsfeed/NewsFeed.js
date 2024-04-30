@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { ActivityIndicator, Divider } from "react-native-paper";
+import { ActivityIndicator, Divider, Card } from "react-native-paper";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import FinnishDate from "../parsers/FinnishDate";
 import Xml from "../parsers/Xml";
@@ -104,8 +104,9 @@ export default NewsFeed = ({ navigation }) => {
       value={{ selectedCategory, setSelectedCategory }}
     >
       <ScrollView>
+      <Card style={styles.listNavCard}>
         <View style={styles.headingContainer}>
-          <Heading size="h3">Uutisvirta</Heading>
+        <Text style={styles.listNavText}>Uutisvirta</Text>
           <TouchableOpacity
             onPress={() =>
               handleShowAll(
@@ -119,6 +120,8 @@ export default NewsFeed = ({ navigation }) => {
             <Text style={styles.buttonText}>Näytä kaikki {">"}</Text>
           </TouchableOpacity>
         </View>
+        </Card>
+
         <View style={styles.tagContainer}>
           <FlatList
             ref={flatListRef}

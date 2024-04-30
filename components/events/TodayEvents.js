@@ -6,9 +6,13 @@ import styles from "../../styles/components/events";
 export default TodayEvents = ({ events, handlePressEvent }) => {
   return (
     <>
-      <Heading size="h3" style={styles.heading}>
+    <Card style={styles.listNavCard}>
+    <View style={styles.cardItemView}>
+      <Text style={styles.listNavText}>
         Lähetykset tänään
-      </Heading>
+      </Text>
+      </View>
+      </Card>
       {events.map((event) => (
         <TouchableOpacity
           key={event._id}
