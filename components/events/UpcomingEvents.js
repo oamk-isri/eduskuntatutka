@@ -28,7 +28,7 @@ export default UpcomingEvents = ({ events, handlePressEvent }) => {
               <Text
                 style={styles.previewTitle}
               >
-                {event.title.split("|")[0].trim().toLowerCase()}
+                {event.title.split("|")[0].trim()}
               </Text>
             </Card.Content>
           </Card>
