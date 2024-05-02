@@ -25,11 +25,24 @@ export default RepresentativesList = ({ navigation }) => {
     axios
       .get("https://avoindata.eduskunta.fi/api/v1/seating/")
       .then((response) => {
+        sortList(response.data)
         setSeatings(response.data);
         setFilteredSeatings(response.data);
         setIsLoading(false);
       });
   }, []);
+
+  const sortList = (list) => {
+    list.sort((a, b) => {
+      if (a.lastname < b.lastname) {
+        return -1;
+      }
+      if (a.lastname > b.lastname) {
+        return 1;
+      }
+      return 0;
+    })
+  }
 
   return (
     <>
@@ -47,7 +60,7 @@ export default RepresentativesList = ({ navigation }) => {
           renderItem={({ item }) => (
             <>
               <List.Item
-                title={<Text>{item.firstname} {item.lastname}</Text>}
+                title={<Text>{item.lastname} {item.firstname}</Text>}
                 description={
                   <Text>{item.party}</Text>}
                 onPress={() =>
