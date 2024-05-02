@@ -1,4 +1,4 @@
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { Text, Card } from "react-native-paper";
 import Heading from "../elements/Heading";
 import styles from "../../styles/components/events";
